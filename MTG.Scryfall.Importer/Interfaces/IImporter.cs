@@ -1,6 +1,6 @@
 ﻿using MTG.Importer.Models;
 
-namespace MTG.Scryfall.Interfaces;
+namespace MTG.Scryfall.Importer.Interfaces;
 
 public interface IImporter
 {

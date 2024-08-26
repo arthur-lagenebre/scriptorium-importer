@@ -1,4 +1,5 @@
 ﻿using MTG.Importer.Models;
+using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Interfaces;
 
 namespace MTG.Scryfall.Importer;
