@@ -1,6 +1,6 @@
 ﻿namespace MTG.Importer.Models;
 
-public record CardFace
+public class CardFace
 {
     public CardCost CardCost { get; }
     public CardName Name { get; }

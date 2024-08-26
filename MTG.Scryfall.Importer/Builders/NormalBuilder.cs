@@ -142,7 +142,7 @@ public class NormalBuilder : IBuilder
     {
         if (scryfallAllParts != null)
             foreach (var part in scryfallAllParts)
-                _relatedCards.Add(new RelatedCard(StringHelper.GetDefaultValue(part.Component), StringHelper.GetDefaultValue(part.Name), StringHelper.GetDefaultValue(part.TypeLine)));
+                _relatedCards.Add(new RelatedCard(RelatedCardComponentHelper.GetRelatedCardComponent(part.Component), StringHelper.GetDefaultValue(part.Name), StringHelper.GetDefaultValue(part.TypeLine)));
         return this;
     }
 
