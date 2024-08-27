@@ -110,7 +110,9 @@ public class VanguardBuilder : IBuilder
 
     public IBuilder AddSet(string? set, string? artist, string? collectorNumber, string? rarity, string? flavorText, string? flavorName, string? releasedAt)
     {
-        _set = new CardSet(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(artist), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName), DateHelper.GetDate(releasedAt));
+        var flavors = new List<CardFlavor> { new(0, StringHelper.GetDefaultValue(artist), StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
+
+        _set = new CardSet(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors, DateHelper.GetDate(releasedAt));
         return this;
     }
 

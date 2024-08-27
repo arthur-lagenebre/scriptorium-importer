@@ -113,19 +113,21 @@ public class NormalBuilder : IBuilder
 
     public IBuilder AddSet(string? set, string? artist, string? collectorNumber, string? rarity, string? flavorText, string? flavorName, string? releasedAt)
     {
-        _set = new CardSet(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(artist), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName), DateHelper.GetDate(releasedAt));
+        var flavors = new List<CardFlavor> { new(0, StringHelper.GetDefaultValue(artist), StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
+
+        _set = new CardSet(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors, DateHelper.GetDate(releasedAt));
         return this;
     }
 
     public IBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces)
     {
         if (scryfallCardFaces != null)
-            foreach (var face in scryfallCardFaces)
-                _cardFaces.Add(CreateCardFace(face));
+            foreach (var face in scryfallCardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
+                _cardFaces.Add(CreateCardFace(face.Index, face.ScryfallCardFace));
         return this;
     }
 
-    private CardFace CreateCardFace(ScryfallCardFace face)
+    private CardFace CreateCardFace(int index, ScryfallCardFace face)
     {
         var cost = new CardCost(StringHelper.GetDefaultValue(face.ManaCost), face.Cmc);
         var name = new CardName(_language, LanguageHelper.GetLanguageValue(_language, face.Name, face.PrintedName));
@@ -135,7 +137,7 @@ public class NormalBuilder : IBuilder
         var planeswalker = !string.IsNullOrWhiteSpace(face.Loyalty) ? new CardPlaneswalker(face.Loyalty) : null;
         var battle = !string.IsNullOrWhiteSpace(face.Defense) ? new CardBattle(int.Parse(face.Defense)) : null;
 
-        return new CardFace(cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), creature, planeswalker, battle);
+        return new CardFace(index, cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), creature, planeswalker, battle);
     }
 
     public IBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts)
