@@ -31,6 +31,15 @@ public class TransformBuilder : IBuilder
 
     public void Reset()
     {
+        _oracleId = Guid.Empty;
+        _cost = new CardCost(string.Empty, double.NaN);
+        _language = string.Empty;
+        _name = new CardName(string.Empty, string.Empty);
+        _typeline = new CardTypeline(string.Empty, string.Empty);
+        _text = new CardText(string.Empty, string.Empty);
+        _color = CardColor.Unknown;
+        _colorIdentity = CardColor.Unknown;
+        _colorIndicator = CardColor.Unknown;
         _keywords = [];
         _producedMana = [];
         _cardFaces = [];
