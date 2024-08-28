@@ -5,9 +5,9 @@ using MTG.Scryfall.Models;
 
 namespace MTG.Scryfall.Importer.Builders;
 
-public class NormalBuilder : IBuilder
+public class TransformBuilder : IBuilder
 {
-    private const string _layout = "normal";
+    private const string _layout = "transform";
 
     private Guid _oracleId;
     private CardCost _cost;
@@ -27,7 +27,7 @@ public class NormalBuilder : IBuilder
     private CardPlaneswalker? _planeswalker;
     private CardVanguard? _vanguard;
 
-    public NormalBuilder() => Reset();
+    public TransformBuilder() => Reset();
 
     public void Reset()
     {
@@ -51,7 +51,27 @@ public class NormalBuilder : IBuilder
 
     public IBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces)
     {
+        if (scryfallCardFaces != null)
+        {
+            foreach (var face in scryfallCardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
+                _cardFaces.Add(CreateCardFace(face.Index, face.ScryfallCardFace));
+
+            _name = new CardName(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Name)));
+        }
         return this;
+    }
+
+    private CardFace CreateCardFace(int index, ScryfallCardFace face)
+    {
+        var cost = new CardCost(StringHelper.GetDefaultValue(face.ManaCost), face.Cmc);
+        var name = new CardName(_language, LanguageHelper.GetLanguageValue(_language, face.Name, face.PrintedName));
+        var typeline = new CardTypeline(_language, LanguageHelper.GetLanguageValue(_language, face.TypeLine, face.PrintedTypeLine));
+        var text = new CardText(_language, LanguageHelper.GetLanguageValue(_language, face.OracleText, face.PrintedText));
+        var creature = !string.IsNullOrWhiteSpace(face.Power) && !string.IsNullOrWhiteSpace(face.Toughness) ? new CardCreature(face.Power, face.Toughness) : null;
+        var planeswalker = !string.IsNullOrWhiteSpace(face.Loyalty) ? new CardPlaneswalker(face.Loyalty) : null;
+        var battle = !string.IsNullOrWhiteSpace(face.Defense) ? new CardBattle(int.Parse(face.Defense)) : null;
+
+        return new CardFace(index, cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), creature, planeswalker, battle);
     }
 
     public IBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)

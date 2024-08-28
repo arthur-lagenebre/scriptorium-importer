@@ -22,9 +22,9 @@ public class Mapper : IMapper
 
                 builder.AddOracleId(scryfallCard.OracleId)
                        .AddLanguage(scryfallCard.Lang)
-                       .AddCardName(scryfallCard.Name, scryfallCard.PrintedName)
-                       .AddCardTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
-                       .AddCardText(scryfallCard.OracleText, scryfallCard.PrintedText)
+                       .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+                       .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+                       .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
                        .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                        .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
                        .AddKeywords(scryfallCard.Keywords)
@@ -36,7 +36,7 @@ public class Mapper : IMapper
                        .AddPlaneswalker(scryfallCard.Loyalty)
                        .AddVanguard(scryfallCard.HandModifier, scryfallCard.LifeModifier);
 
-                cards.Add(builder.GetCard());
+                cards.Add(builder.Build());
             }
             catch (NotSupportedException)
             {

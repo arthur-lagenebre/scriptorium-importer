@@ -40,7 +40,7 @@ public class VanguardBuilder : IBuilder
         _vanguard = null;
     }
 
-    public Card GetCard()
+    public Card Build()
     {
         var card = new Card(_oracleId, _cost, _language, _name, _text, _typeline, _color, _colorIdentity, _colorIndicator, _layout, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _creature, _planeswalker, _vanguard);
 
@@ -65,19 +65,19 @@ public class VanguardBuilder : IBuilder
         return this;
     }
 
-    public IBuilder AddCardName(string? name, string? printedName)
+    public IBuilder AddName(string? name, string? printedName)
     {
         _name = new CardName(_language, LanguageHelper.GetLanguageValue(_language, name, printedName));
         return this;
     }
 
-    public IBuilder AddCardTypeLine(string? typeLine, string? printedTypeLine)
+    public IBuilder AddTypeLine(string? typeLine, string? printedTypeLine)
     {
         _typeline = new CardTypeline(_language, LanguageHelper.GetLanguageValue(_language, typeLine, printedTypeLine));
         return this;
     }
 
-    public IBuilder AddCardText(string? oracleText, string? printedText)
+    public IBuilder AddText(string? oracleText, string? printedText)
     {
         _text = new CardText(_language, LanguageHelper.GetLanguageValue(_language, oracleText, printedText));
         return this;

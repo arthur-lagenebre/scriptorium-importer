@@ -11,6 +11,7 @@ public static class ScryfallBuilder
         {
             "normal" => new NormalBuilder(),
             "vanguard" => new VanguardBuilder(),
+            "transform" => new TransformBuilder(),
             _ => throw new NotSupportedException(),
         };
     }

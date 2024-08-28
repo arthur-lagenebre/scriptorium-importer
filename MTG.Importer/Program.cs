@@ -19,7 +19,7 @@ static void LaunchImport(IServiceProvider services)
     using IServiceScope serviceScope = services.CreateScope();
     IServiceProvider provider = serviceScope.ServiceProvider;
     IImporter importer = provider.GetRequiredService<IImporter>();
-    var cards = importer.Import(@"D:\MTG\_scryfall\Scryfall_layout_vanguard.json");
+    var cards = importer.Import(@"C:\MTG\_scryfall\Scryfall_layout_transform.json");
 
     foreach (var card in cards)
         Console.WriteLine($"{card.OracleId} & {card.Name}");
