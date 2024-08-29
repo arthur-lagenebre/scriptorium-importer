@@ -6,7 +6,7 @@ using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Builders;
 
-public class NormalBuilder : IScryfallBuilder
+public class SagaBuilder : IScryfallBuilder
 {
     private Guid _oracleId;
     private Cost _cost;
@@ -26,9 +26,9 @@ public class NormalBuilder : IScryfallBuilder
     private Planeswalker? _planeswalker;
     private Vanguard? _vanguard;
 
-    public Layout Layout => new("normal");
+    public Layout Layout => new("saga");
 
-    public NormalBuilder() => Reset();
+    public SagaBuilder() => Reset();
 
     public void Reset()
     {
@@ -80,8 +80,6 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCreature(string? power, string? toughness)
     {
-        if (!string.IsNullOrWhiteSpace(power) && !string.IsNullOrWhiteSpace(toughness))
-            _creature = new Creature(power, toughness);
         return this;
     }
 
@@ -116,8 +114,6 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddPlaneswalker(string? loyalty)
     {
-        if (!string.IsNullOrWhiteSpace(loyalty))
-            _planeswalker = new Planeswalker(loyalty);
         return this;
     }
 

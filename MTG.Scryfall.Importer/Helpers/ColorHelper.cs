@@ -1,18 +1,18 @@
-﻿using MTG.Importer.Models;
+﻿using MTG.Importer.Models.Card;
 
 namespace MTG.Scryfall.Importer.Helpers;
 
 public static class ColorHelper
 {
-    public static CardColor GetCardColor(List<string>? colors)
+    public static Color GetCardColor(List<string>? colors)
     {
         if (colors == null || colors.Count == 0)
-            return CardColor.None;
+            return Color.None;
 
-        var cardColor = CardColor.Unknown;
+        var cardColor = Color.Unknown;
 
         foreach (var color in colors)
-            cardColor |= Enum.Parse<CardColor>(color);
+            cardColor |= Enum.Parse<Color>(color);
 
         return cardColor;
     }
