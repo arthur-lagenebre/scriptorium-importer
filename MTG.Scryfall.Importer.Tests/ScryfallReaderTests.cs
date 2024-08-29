@@ -9,6 +9,6 @@ public class ScryfallReaderTests
         var reader = new ScryfallReader();
 
         // Act & Assert
-        Assert.Throws<FileNotFoundException>(() => reader.Read(null));
+        Assert.Throws<ArgumentNullException>(() => reader.Read(null));
     }
 }

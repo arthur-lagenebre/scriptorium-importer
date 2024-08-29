@@ -6,7 +6,7 @@ namespace MTG.Scryfall.Importer;
 
 public class ScryfallReader : IScryfallReader
 {
-    public IList<ScryfallCard> Read(StreamReader streamReader)
+    public IList<ScryfallCard> Read(StreamReader? streamReader)
     {
         ArgumentNullException.ThrowIfNull(streamReader);
 

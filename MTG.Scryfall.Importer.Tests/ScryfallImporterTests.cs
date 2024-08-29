@@ -5,8 +5,8 @@ namespace MTG.Scryfall.Importer.Tests;
 
 public class ScryfallImporterTests
 {
-    private IScryfallMapper _mapper = Substitute.For<IScryfallMapper>();
-    private IScryfallReader _reader = Substitute.For<IScryfallReader>();
+    private readonly IScryfallMapper _mapper = Substitute.For<IScryfallMapper>();
+    private readonly IScryfallReader _reader = Substitute.For<IScryfallReader>();
 
     [Fact]
     public void ShouldThrowFileNotFoundExceptionWhenPathIsEmpty()
