@@ -5,8 +5,19 @@ namespace MTG.Scryfall.Importer.Tests.Helpers;
 
 public class ColorHelperTests
 {
+    [Theory]
+    [InlineData(null, Color.None)]
+    public void Should_Have_None(List<string>? colors, Color expected)
+    {
+        // Act
+        var result = ColorHelper.GetCardColor(colors);
+
+        //Assert
+        Assert.Equal(expected, result);
+    }
+
     [Fact]
-    public void ShouldHaveNoneWhenListIsEmpty()
+    public void Should_Have_None_When_List_Is_Empty()
     {
         //Arrange
         var colors = new List<string>();
@@ -20,20 +31,7 @@ public class ColorHelperTests
     }
 
     [Fact]
-    public void ShouldHaveNoneWhenListIsNull()
-    {
-        //Arrange
-        var expected = Color.None;
-
-        // Act
-        var result = ColorHelper.GetCardColor(null);
-
-        //Assert
-        Assert.Equal(expected, result);
-    }
-
-    [Fact]
-    public void ShouldHaveBWhenListHaveB()
+    public void Should_Have_B_When_List_Have_B()
     {
         //Arrange
         var colors = new List<string> { "B" };
@@ -47,7 +45,7 @@ public class ColorHelperTests
     }
 
     [Fact]
-    public void ShouldHaveWBWhenListHaveWB()
+    public void Should_Have_WB_When_List_Have_W_And_B()
     {
         //Arrange
         var colors = new List<string> { "W", "B" };

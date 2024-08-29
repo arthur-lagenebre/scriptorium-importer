@@ -9,7 +9,7 @@ public class ScryfallImporterTests
     private readonly IScryfallReader _reader = Substitute.For<IScryfallReader>();
 
     [Fact]
-    public void ShouldThrowFileNotFoundExceptionWhenPathIsEmpty()
+    public void Should_Throw_FileNotFoundException_When_Path_Is_Empty()
     {
         //Arrange
         var importer = new ScryfallImporter(_reader, _mapper);
@@ -19,7 +19,7 @@ public class ScryfallImporterTests
     }
 
     [Fact]
-    public void ShouldThrowFileNotFoundExceptionWhenPathIsIncorrect()
+    public void Should_Throw_FileNotFoundException_When_Path_Is_Incorrect()
     {
         //Arrange
         var importer = new ScryfallImporter(_reader, _mapper);

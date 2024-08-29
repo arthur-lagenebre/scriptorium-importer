@@ -4,11 +4,12 @@ namespace MTG.Scryfall.Importer.Tests.Helpers;
 
 public class DateHelperTests
 {
-    [Fact]
-    public void ShouldHaveDateMinWhenDateIsEmpty()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Should_Have_Date_Min_When_Date_Is_Incorrect(string? date)
     {
         //Arrange
-        var date = string.Empty;
         var expected = DateTime.MinValue;
 
         // Act
@@ -19,20 +20,7 @@ public class DateHelperTests
     }
 
     [Fact]
-    public void ShouldHaveDateMinWhenDateIsNull()
-    {
-        //Arrange
-        var expected = DateTime.MinValue;
-
-        // Act
-        var result = DateHelper.GetDate(null);
-
-        //Assert
-        Assert.Equal(expected, result);
-    }
-
-    [Fact]
-    public void ShouldHaveDateWhenDateIsCorrect()
+    public void Should_Have_Date_When_Date_Is_Correct()
     {
         //Arrange
         var date = "2024-01-01";

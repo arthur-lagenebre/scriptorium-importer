@@ -4,11 +4,12 @@ namespace MTG.Scryfall.Importer.Tests.Helpers;
 
 public class StringHelperTests
 {
-    [Fact]
-    public void ShouldHaveEmptyStringWhenInputIsEmpty()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Should_Have_Empty_String(string? input)
     {
         //Arrange
-        var input = string.Empty;
         var expected = string.Empty;
 
         // Act
@@ -18,26 +19,10 @@ public class StringHelperTests
         Assert.Equal(expected, result);
     }
 
-    [Fact]
-    public void ShouldHaveEmptyStringWhenInputIsNull()
+    [Theory]
+    [InlineData("value", "value")]
+    public void Should_Have_Same_Input_And_Output(string? input, string? expected)
     {
-        //Arrange
-        var expected = string.Empty;
-
-        // Act
-        var result = StringHelper.GetDefaultValue(null);
-
-        //Assert
-        Assert.Equal(expected, result);
-    }
-
-    [Fact]
-    public void ShouldHaveStringWhenInputIsCorrect()
-    {
-        //Arrange
-        var input = "2024-01-01";
-        var expected = "2024-01-01";
-
         // Act
         var result = StringHelper.GetDefaultValue(input);
 
