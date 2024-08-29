@@ -9,13 +9,13 @@ public class StringHelperTests
     [InlineData("")]
     public void Should_Have_Empty_String(string? input)
     {
-        //Arrange
+        // Arrange
         var expected = string.Empty;
 
         // Act
         var result = StringHelper.GetDefaultValue(input);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 
@@ -26,7 +26,7 @@ public class StringHelperTests
         // Act
         var result = StringHelper.GetDefaultValue(input);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 }

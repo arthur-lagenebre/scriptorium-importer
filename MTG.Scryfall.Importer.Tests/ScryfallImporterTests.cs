@@ -11,7 +11,7 @@ public class ScryfallImporterTests
     [Fact]
     public void Should_Throw_FileNotFoundException_When_Path_Is_Empty()
     {
-        //Arrange
+        // Arrange
         var importer = new ScryfallImporter(_reader, _mapper);
 
         // Act & Assert
@@ -21,7 +21,7 @@ public class ScryfallImporterTests
     [Fact]
     public void Should_Throw_FileNotFoundException_When_Path_Is_Incorrect()
     {
-        //Arrange
+        // Arrange
         var importer = new ScryfallImporter(_reader, _mapper);
 
         // Act & Assert

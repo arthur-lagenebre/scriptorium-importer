@@ -12,49 +12,49 @@ public class ColorHelperTests
         // Act
         var result = ColorHelper.GetCardColor(colors);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 
     [Fact]
     public void Should_Have_None_When_List_Is_Empty()
     {
-        //Arrange
+        // Arrange
         var colors = new List<string>();
         var expected = Color.None;
 
         // Act
         var result = ColorHelper.GetCardColor(colors);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 
     [Fact]
     public void Should_Have_B_When_List_Have_B()
     {
-        //Arrange
+        // Arrange
         var colors = new List<string> { "B" };
         var expected = Color.B;
 
         // Act
         var result = ColorHelper.GetCardColor(colors);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 
     [Fact]
     public void Should_Have_WB_When_List_Have_W_And_B()
     {
-        //Arrange
+        // Arrange
         var colors = new List<string> { "W", "B" };
         var expected = Color.W | Color.B;
 
         // Act
         var result = ColorHelper.GetCardColor(colors);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 }

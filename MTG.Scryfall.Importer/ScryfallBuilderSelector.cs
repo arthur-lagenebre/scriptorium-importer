@@ -10,7 +10,7 @@ public class ScryfallBuilderSelector : IScryfallBuilderSelector
 
     public IScryfallBuilder Create(string? layout)
     {
-        ArgumentNullException.ThrowIfNull(nameof(layout));
+        ArgumentNullException.ThrowIfNull(layout, nameof(layout));
 
         return _scryfallBuilders.SingleOrDefault(x => x.Layout.Name == layout) ?? throw new NotSupportedException();
     }

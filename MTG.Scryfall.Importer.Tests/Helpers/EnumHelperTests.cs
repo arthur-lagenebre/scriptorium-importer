@@ -11,13 +11,13 @@ public class EnumHelperTests
     [InlineData("Invalid")]
     public void Should_Have_Unknown(string? relatedCardComponent)
     {
-        //Arrange
+        // Arrange
         var expected = RelatedCardComponent.Unknown;
 
         // Act
         var result = EnumHelper.GetRelatedCardComponent(relatedCardComponent);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 
@@ -31,7 +31,7 @@ public class EnumHelperTests
         // Act
         var result = EnumHelper.GetRelatedCardComponent(relatedCardComponent);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 }

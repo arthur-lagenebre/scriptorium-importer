@@ -17,13 +17,13 @@ public class LanguageHelperTests
     [InlineData("fr", "value", "")]
     public void Should_Have_Empty_String(string language, string? defaultValue, string? printedValue)
     {
-        //Arrange
+        // Arrange
         var expected = string.Empty;
 
         // Act
         var result = LanguageHelper.GetLanguageValue(language, defaultValue, printedValue);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 
@@ -34,13 +34,13 @@ public class LanguageHelperTests
     [InlineData("fr", "Wrong Value", "Value")]
     public void Should_Have_Value(string language, string? defaultValue, string? printedValue)
     {
-        //Arrange
+        // Arrange
         var expected = "Value";
 
         // Act
         var result = LanguageHelper.GetLanguageValue(language, defaultValue, printedValue);
 
-        //Assert
+        // Assert
         Assert.Equal(expected, result);
     }
 }
