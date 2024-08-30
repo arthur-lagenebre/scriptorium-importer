@@ -52,7 +52,7 @@ public class SagaBuilder : IScryfallBuilder
 
     public Card Build()
     {
-        var card = new Card(_oracleId, _cost, _language, _name, _text, _typeline, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _creature, _planeswalker, _vanguard);
+        var card = new Card(_oracleId, _cost, _name, _text, _typeline, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _creature, _planeswalker, _vanguard);
 
         Reset();
 
