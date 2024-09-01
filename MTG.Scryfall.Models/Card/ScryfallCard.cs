@@ -39,7 +39,7 @@ public class ScryfallCard
 
     // A language code for this printing.
     [JsonProperty("lang")]
-    public string? Lang { get; set; }
+    public ScryfallLanguage Lang { get; set; }
 
     // The date this card was first released.
     [JsonProperty("released_at")]

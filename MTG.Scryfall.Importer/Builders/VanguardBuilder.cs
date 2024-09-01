@@ -67,11 +67,9 @@ public class VanguardBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddLanguage(string? language)
+    public IScryfallBuilder AddLanguage(ScryfallLanguage language)
     {
-        ArgumentNullException.ThrowIfNull(language, nameof(language));
-
-        _language = language;
+        _language = language.ToString();
         return this;
     }
 

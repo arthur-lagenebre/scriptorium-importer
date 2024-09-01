@@ -21,13 +21,17 @@ public class ScryfallImporter : IScryfallImporter
 
         using var streamReader = new StreamReader(path);
 
-        var srcyfallCards = _reader.Read(streamReader);
+        var scryfallCards = _reader.Read(streamReader);
 
-        if (srcyfallCards == null)
+        if (scryfallCards == null)
             return [];
 
-        var cards = _mapper.Map(srcyfallCards);
-        
+        Console.WriteLine($"{scryfallCards.Count} scryfall cards");
+
+        var cards = _mapper.Map(scryfallCards);
+
+        Console.WriteLine($"{cards.Count} mapped");
+
         return cards;
     }
 }

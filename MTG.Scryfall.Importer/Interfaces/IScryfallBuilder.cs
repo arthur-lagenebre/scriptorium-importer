@@ -13,7 +13,7 @@ public interface IScryfallBuilder
     IScryfallBuilder AddCost(string? manacost, double manaValue);
     IScryfallBuilder AddCreature(string? power, string? toughness);
     IScryfallBuilder AddKeywords(List<string>? keywords);
-    IScryfallBuilder AddLanguage(string? language);
+    IScryfallBuilder AddLanguage(ScryfallLanguage language);
     IScryfallBuilder AddName(string? name, string? printedName);
     IScryfallBuilder AddOracleId(Guid? oracleId);
     IScryfallBuilder AddPlaneswalker(string? loyalty);

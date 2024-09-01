@@ -26,10 +26,7 @@ static void LaunchImport(IServiceProvider services)
     IServiceProvider provider = serviceScope.ServiceProvider;
     IScryfallImporter importer = provider.GetRequiredService<IScryfallImporter>();
     provider.GetServices<IScryfallBuilder>();
-    var cards = importer.Import(@"D:\MTG\_scryfall\Scryfall_layout_saga.json");
-
-    foreach (var card in cards)
-        Console.WriteLine($"{card.OracleId} & {card.Name}");
+    var cards = importer.Import(@"D:\MTG\_scryfall\_all_cards.json");
 }
 
 await host.RunAsync();
