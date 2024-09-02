@@ -1,3 +1,3 @@
 ﻿namespace MTG.Importer.Models.Card;
 
-public record Typeline(string Language, string Value);
+public record Typeline(List<string> Types, List<string> Supertype, List<string> Subtypes);

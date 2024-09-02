@@ -28,7 +28,13 @@ public class TransformBuilder : IScryfallBuilder
 
     public Layout Layout => new("transform");
 
-    public TransformBuilder() => Reset();
+    private ITypelineManager _typelineManager;
+
+    public TransformBuilder(ITypelineManager typelineManager)
+    {
+        _typelineManager = typelineManager;
+        Reset();
+    }
 
     public void Reset()
     {
@@ -36,7 +42,7 @@ public class TransformBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline(string.Empty, string.Empty);
+        _typeline = new Typeline([], [], []);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -75,7 +81,7 @@ public class TransformBuilder : IScryfallBuilder
     {
         var cost = new Cost(StringHelper.GetDefaultValue(face.ManaCost), face.Cmc);
         var name = new Name(_language, LanguageHelper.GetLanguageValue(_language, face.Name, face.PrintedName));
-        var typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, face.TypeLine, face.PrintedTypeLine));
+        var typeline = _typelineManager.ExtractTypeline(face.TypeLine);
         var text = new Text(_language, LanguageHelper.GetLanguageValue(_language, face.OracleText, face.PrintedText));
         var creature = !string.IsNullOrWhiteSpace(face.Power) && !string.IsNullOrWhiteSpace(face.Toughness) ? new Creature(face.Power, face.Toughness) : null;
         var planeswalker = !string.IsNullOrWhiteSpace(face.Loyalty) ? new Planeswalker(face.Loyalty) : null;
@@ -170,7 +176,7 @@ public class TransformBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddTypeLine(string? typeLine, string? printedTypeLine)
     {
-        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeLine, printedTypeLine));
+        _typeline = _typelineManager.ExtractTypeline(typeLine);
         return this;
     }
 

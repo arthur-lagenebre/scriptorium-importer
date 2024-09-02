@@ -28,7 +28,13 @@ public class SagaBuilder : IScryfallBuilder
 
     public Layout Layout => new("saga");
 
-    public SagaBuilder() => Reset();
+    private ITypelineManager _typelineManager;
+
+    public SagaBuilder(ITypelineManager typelineManager)
+    {
+        _typelineManager = typelineManager;
+        Reset();
+    }
 
     public void Reset()
     {
@@ -36,7 +42,7 @@ public class SagaBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline(string.Empty, string.Empty);
+        _typeline = new Typeline([], [], []);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -146,7 +152,7 @@ public class SagaBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddTypeLine(string? typeLine, string? printedTypeLine)
     {
-        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeLine, printedTypeLine));
+        _typeline = _typelineManager.ExtractTypeline(typeLine);
         return this;
     }
 
