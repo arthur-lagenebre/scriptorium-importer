@@ -11,7 +11,7 @@ builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
 builder.Services.AddSingleton<IScryfallBuilderSelector, ScryfallBuilderSelector>();
-builder.Services.AddSingleton<ITypelineManager, TypelineManager>();
+builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>();
 
 builder.Services.AddSingleton<IWriter, JsonWriter>();
 

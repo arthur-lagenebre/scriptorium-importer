@@ -28,9 +28,9 @@ public class TransformBuilder : IScryfallBuilder
 
     public Layout Layout => new("transform");
 
-    private ITypelineManager _typelineManager;
+    private IScryfallTypelineManager _typelineManager;
 
-    public TransformBuilder(ITypelineManager typelineManager)
+    public TransformBuilder(IScryfallTypelineManager typelineManager)
     {
         _typelineManager = typelineManager;
         Reset();

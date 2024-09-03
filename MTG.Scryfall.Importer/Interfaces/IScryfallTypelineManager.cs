@@ -2,7 +2,7 @@
 
 namespace MTG.Scryfall.Importer.Interfaces
 {
-    public interface ITypelineManager
+    public interface IScryfallTypelineManager
     {
         Typeline ExtractTypeline(string? typeline);
     }

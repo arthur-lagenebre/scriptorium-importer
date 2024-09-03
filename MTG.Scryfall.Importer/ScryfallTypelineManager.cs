@@ -4,7 +4,7 @@ using MTG.Scryfall.Importer.Interfaces;
 
 namespace MTG.Scryfall.Importer;
 
-public class TypelineManager : ITypelineManager
+public class ScryfallTypelineManager : IScryfallTypelineManager
 {
     public const string _typelineSeparator = "—";
     public const string _subtypeSeparator = " ";

@@ -28,9 +28,9 @@ public class NormalBuilder : IScryfallBuilder
 
     public Layout Layout => new("normal");
 
-    private ITypelineManager _typelineManager;
+    private IScryfallTypelineManager _typelineManager;
 
-    public NormalBuilder(ITypelineManager typelineManager)
+    public NormalBuilder(IScryfallTypelineManager typelineManager)
     {
         _typelineManager = typelineManager;
         Reset();
