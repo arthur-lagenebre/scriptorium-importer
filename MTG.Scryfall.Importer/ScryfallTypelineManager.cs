@@ -24,7 +24,7 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
         return new Typeline(types, supertypes, subtypes);
     }
 
-    public static List<string> GetTypes(string typeline)
+    private static List<string> GetTypes(string typeline)
     {
         if (!string.IsNullOrEmpty(typeline))
         {
@@ -36,7 +36,7 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
         return [];
     }
 
-    public static List<string> GetSupertypes(string typeline)
+    private static List<string> GetSupertypes(string typeline)
     {
         if (!string.IsNullOrEmpty(typeline))
         {
@@ -48,7 +48,7 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
         return [];
     }
 
-    public static List<string> GetSubtypes(string typeline)
+    private static List<string> GetSubtypes(string typeline)
     {
         if (!string.IsNullOrEmpty(typeline) && typeline.Contains(_typelineSeparator))
         {
