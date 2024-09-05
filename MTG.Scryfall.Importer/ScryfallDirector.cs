@@ -23,6 +23,7 @@ public class ScryfallDirector : IScryfallDirector
             "leveler" => BuildLeveler(builder, scryfallCard),
             "mutate" => BuildMutate(builder, scryfallCard),
             "normal" => BuildNormal(builder, scryfallCard),
+            "prototype" => BuildPrototype(builder, scryfallCard),
             "saga" => BuildSaga(builder, scryfallCard),
             "transform" => BuildTransform(builder, scryfallCard),
             "vanguard" => BuildVanguard(builder, scryfallCard),
@@ -80,7 +81,6 @@ public class ScryfallDirector : IScryfallDirector
         return builder.Build();
     }
 
-
     private static Card BuildLeveler(IScryfallBuilder builder, ScryfallCard scryfallCard)
     {
         builder.AddOracleId(scryfallCard.OracleId)
@@ -131,6 +131,23 @@ public class ScryfallDirector : IScryfallDirector
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
+
+        return builder.Build();
+    }
+
+    private static Card BuildPrototype(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
+               .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
         return builder.Build();
     }
