@@ -16,6 +16,7 @@ builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>
 
 builder.Services.AddSingleton<IWriter, JsonWriter>();
 
+builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, NormalBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, SagaBuilder>();

@@ -6,7 +6,7 @@ using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Builders;
 
-public class NormalBuilder : IScryfallBuilder
+public class AdventureBuilder : IScryfallBuilder
 {
     private Guid _oracleId;
     private Cost _cost;
@@ -26,11 +26,11 @@ public class NormalBuilder : IScryfallBuilder
     private Planeswalker? _planeswalker;
     private Vanguard? _vanguard;
 
-    public Layout Layout => new("normal");
+    public Layout Layout => new("adventure");
 
     private readonly IScryfallTypelineManager _typelineManager;
 
-    public NormalBuilder(IScryfallTypelineManager typelineManager)
+    public AdventureBuilder(IScryfallTypelineManager typelineManager)
     {
         _typelineManager = typelineManager;
         Reset();
@@ -67,7 +67,14 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces)
     {
-        throw new NotSupportedException();
+        if (scryfallCardFaces != null)
+        {
+            foreach (var face in scryfallCardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
+                _cardFaces.Add(CardFaceHelper.CreateCardFace(face.Index, face.ScryfallCardFace, _language, _typelineManager));
+
+            _name = new Name(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Value)));
+        }
+        return this;
     }
 
     public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)
@@ -86,9 +93,7 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCreature(string? power, string? toughness)
     {
-        if (!string.IsNullOrWhiteSpace(power) && !string.IsNullOrWhiteSpace(toughness))
-            _creature = new Creature(power, toughness);
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddKeywords(List<string>? keywords)
@@ -120,9 +125,7 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddPlaneswalker(string? loyalty)
     {
-        if (!string.IsNullOrWhiteSpace(loyalty))
-            _planeswalker = new Planeswalker(loyalty);
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddProducedMana(List<string>? producedMana)

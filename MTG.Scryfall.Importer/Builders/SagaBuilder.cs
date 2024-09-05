@@ -28,7 +28,7 @@ public class SagaBuilder : IScryfallBuilder
 
     public Layout Layout => new("saga");
 
-    private IScryfallTypelineManager _typelineManager;
+    private readonly IScryfallTypelineManager _typelineManager;
 
     public SagaBuilder(IScryfallTypelineManager typelineManager)
     {

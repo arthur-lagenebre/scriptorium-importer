@@ -28,7 +28,7 @@ public class TransformBuilder : IScryfallBuilder
 
     public Layout Layout => new("transform");
 
-    private IScryfallTypelineManager _typelineManager;
+    private readonly IScryfallTypelineManager _typelineManager;
 
     public TransformBuilder(IScryfallTypelineManager typelineManager)
     {
@@ -70,24 +70,11 @@ public class TransformBuilder : IScryfallBuilder
         if (scryfallCardFaces != null)
         {
             foreach (var face in scryfallCardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
-                _cardFaces.Add(CreateCardFace(face.Index, face.ScryfallCardFace));
+                _cardFaces.Add(CardFaceHelper.CreateCardFace(face.Index, face.ScryfallCardFace, _language, _typelineManager));
 
             _name = new Name(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Value)));
         }
         return this;
-    }
-
-    private Face CreateCardFace(int index, ScryfallCardFace face)
-    {
-        var cost = new Cost(StringHelper.GetDefaultValue(face.ManaCost), face.Cmc);
-        var name = new Name(_language, LanguageHelper.GetLanguageValue(_language, face.Name, face.PrintedName));
-        var typeline = _typelineManager.ExtractTypeline(face.TypeLine);
-        var text = new Text(_language, LanguageHelper.GetLanguageValue(_language, face.OracleText, face.PrintedText));
-        var creature = !string.IsNullOrWhiteSpace(face.Power) && !string.IsNullOrWhiteSpace(face.Toughness) ? new Creature(face.Power, face.Toughness) : null;
-        var planeswalker = !string.IsNullOrWhiteSpace(face.Loyalty) ? new Planeswalker(face.Loyalty) : null;
-        var battle = !string.IsNullOrWhiteSpace(face.Defense) ? new Battle(int.Parse(face.Defense)) : null;
-
-        return new Face(index, cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), creature, planeswalker, battle);
     }
 
     public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)

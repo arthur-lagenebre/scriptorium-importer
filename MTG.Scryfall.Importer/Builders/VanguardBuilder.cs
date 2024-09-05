@@ -28,7 +28,7 @@ public class VanguardBuilder : IScryfallBuilder
 
     public Layout Layout => new("vanguard");
 
-    private IScryfallTypelineManager _typelineManager;
+    private readonly IScryfallTypelineManager _typelineManager;
 
     public VanguardBuilder(IScryfallTypelineManager typelineManager)
     {

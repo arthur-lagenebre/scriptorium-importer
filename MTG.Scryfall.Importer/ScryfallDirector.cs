@@ -17,12 +17,31 @@ public class ScryfallDirector : IScryfallDirector
 
         return layout switch
         {
-            "vanguard" => BuildVanguard(builder, scryfallCard),
+            "adventure" => BuildAdventure(builder, scryfallCard),
+            "normal" => BuildNormal(builder, scryfallCard),
             "saga" => BuildSaga(builder, scryfallCard),
             "transform" => BuildTransform(builder, scryfallCard),
-            "normal" => BuildNormal(builder, scryfallCard),
+            "vanguard" => BuildVanguard(builder, scryfallCard),
             _ => throw new NotSupportedException(),
         };
+    }
+
+    private static Card BuildAdventure(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddProducedMana(scryfallCard.ProducedMana)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddCardFaces(scryfallCard.CardFaces)
+               .AddRelatedCards(scryfallCard.AllParts);
+
+        return builder.Build();
     }
 
     private static Card BuildNormal(IScryfallBuilder builder, ScryfallCard scryfallCard)
