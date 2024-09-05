@@ -21,6 +21,7 @@ public class ScryfallDirector : IScryfallDirector
             "case" => BuildCase(builder, scryfallCard),
             "class" => BuildClass(builder, scryfallCard),
             "leveler" => BuildLeveler(builder, scryfallCard),
+            "mutate" => BuildMutate(builder, scryfallCard),
             "normal" => BuildNormal(builder, scryfallCard),
             "saga" => BuildSaga(builder, scryfallCard),
             "transform" => BuildTransform(builder, scryfallCard),
@@ -91,6 +92,23 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddRelatedCards(scryfallCard.AllParts)
+               .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
+
+        return builder.Build();
+    }
+
+    private static Card BuildMutate(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
+               .AddKeywords(scryfallCard.Keywords)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
                .AddRelatedCards(scryfallCard.AllParts)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
