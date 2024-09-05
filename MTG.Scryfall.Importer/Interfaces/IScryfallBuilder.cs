@@ -18,7 +18,7 @@ public interface IScryfallBuilder
     IScryfallBuilder AddOracleId(Guid? oracleId);
     IScryfallBuilder AddPlaneswalker(string? loyalty);
     IScryfallBuilder AddProducedMana(List<string>? producedMana);
-    IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts);
+    IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId);
     IScryfallBuilder AddSet(string? set, string? artist, string? collectorNumber, string? rarity, string? flavorText, string? flavorName, string? releasedAt);
     IScryfallBuilder AddText(string? oracleText, string? printedText);
     IScryfallBuilder AddTypeLine(string? typeLine, string? printedTypeLine);

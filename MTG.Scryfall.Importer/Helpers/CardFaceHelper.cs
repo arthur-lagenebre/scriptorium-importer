@@ -6,7 +6,17 @@ namespace MTG.Scryfall.Importer.Helpers;
 
 internal static class CardFaceHelper
 {
-    public static Face CreateCardFace(int index, ScryfallCardFace face, string language, IScryfallTypelineManager typelineManager)
+    public static List<Face> CreateCardFaces(List<ScryfallCardFace> cardFaces, string language, IScryfallTypelineManager typelineManager)
+    {
+        var faces = new List<Face>();
+
+        foreach (var cardFace in cardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
+            faces.Add(CreateCardFace(cardFace.Index, cardFace.ScryfallCardFace, language, typelineManager));
+
+        return faces;
+    }
+
+    private static Face CreateCardFace(int index, ScryfallCardFace face, string language, IScryfallTypelineManager typelineManager)
     {
         var cost = new Cost(StringHelper.GetDefaultValue(face.ManaCost), face.Cmc);
         var name = new Name(language, LanguageHelper.GetLanguageValue(language, face.Name, face.PrintedName));

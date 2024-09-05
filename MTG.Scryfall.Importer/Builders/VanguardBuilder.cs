@@ -135,7 +135,7 @@ public class VanguardBuilder : IScryfallBuilder
         throw new NotSupportedException();
     }
 
-    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts)
+    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId)
     {
         throw new NotSupportedException();
     }

@@ -43,7 +43,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
                .AddCardFaces(scryfallCard.CardFaces)
-               .AddRelatedCards(scryfallCard.AllParts);
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
     }
@@ -59,7 +59,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
                .AddKeywords(scryfallCard.Keywords)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-               .AddRelatedCards(scryfallCard.AllParts);
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
     }
@@ -75,7 +75,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
                .AddKeywords(scryfallCard.Keywords)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-               .AddRelatedCards(scryfallCard.AllParts);
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
     }
@@ -93,7 +93,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-               .AddRelatedCards(scryfallCard.AllParts)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
         return builder.Build();
@@ -110,7 +110,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
                .AddKeywords(scryfallCard.Keywords)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-               .AddRelatedCards(scryfallCard.AllParts)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
         return builder.Build();
@@ -128,7 +128,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-               .AddRelatedCards(scryfallCard.AllParts)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
 
@@ -148,7 +148,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
                .AddCardFaces(scryfallCard.CardFaces)
-               .AddRelatedCards(scryfallCard.AllParts)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
 
@@ -167,7 +167,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-               .AddRelatedCards(scryfallCard.AllParts);
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
     }

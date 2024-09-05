@@ -1,4 +1,5 @@
-﻿using MTG.Importer.Models.Card;
+﻿using System.Collections.Generic;
+using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models;
@@ -69,9 +70,7 @@ public class AdventureBuilder : IScryfallBuilder
     {
         if (scryfallCardFaces != null)
         {
-            foreach (var face in scryfallCardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
-                _cardFaces.Add(CardFaceHelper.CreateCardFace(face.Index, face.ScryfallCardFace, _language, _typelineManager));
-
+            _cardFaces.AddRange(CardFaceHelper.CreateCardFaces(scryfallCardFaces, _language, _typelineManager));
             _name = new Name(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Value)));
         }
         return this;
@@ -135,11 +134,10 @@ public class AdventureBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts)
+    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId)
     {
         if (scryfallAllParts != null)
-            foreach (var part in scryfallAllParts)
-                _relatedCards.Add(new RelatedCard(EnumHelper.GetRelatedCardComponent(part.Component), StringHelper.GetDefaultValue(part.Name), StringHelper.GetDefaultValue(part.TypeLine)));
+            _relatedCards.AddRange(RelatedCardHelper.CreateRelatedCards(scryfallAllParts, scryfallId));
         return this;
     }
 

@@ -127,11 +127,10 @@ public class MutateBuilder : IScryfallBuilder
         throw new NotSupportedException();
     }
 
-    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts)
+    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId)
     {
         if (scryfallAllParts != null)
-            foreach (var part in scryfallAllParts)
-                _relatedCards.Add(new RelatedCard(EnumHelper.GetRelatedCardComponent(part.Component), StringHelper.GetDefaultValue(part.Name), StringHelper.GetDefaultValue(part.TypeLine)));
+            _relatedCards.AddRange(RelatedCardHelper.CreateRelatedCards(scryfallAllParts, scryfallId));
         return this;
     }
 
