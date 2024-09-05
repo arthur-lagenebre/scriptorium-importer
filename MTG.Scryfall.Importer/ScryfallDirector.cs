@@ -18,6 +18,9 @@ public class ScryfallDirector : IScryfallDirector
         return layout switch
         {
             "adventure" => BuildAdventure(builder, scryfallCard),
+            "case" => BuildCase(builder, scryfallCard),
+            "class" => BuildClass(builder, scryfallCard),
+            "leveler" => BuildLeveler(builder, scryfallCard),
             "normal" => BuildNormal(builder, scryfallCard),
             "saga" => BuildSaga(builder, scryfallCard),
             "transform" => BuildTransform(builder, scryfallCard),
@@ -40,6 +43,57 @@ public class ScryfallDirector : IScryfallDirector
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts);
+
+        return builder.Build();
+    }
+
+    private static Card BuildCase(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddRelatedCards(scryfallCard.AllParts);
+
+        return builder.Build();
+    }
+
+    private static Card BuildClass(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddRelatedCards(scryfallCard.AllParts);
+
+        return builder.Build();
+    }
+
+
+    private static Card BuildLeveler(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddProducedMana(scryfallCard.ProducedMana)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddRelatedCards(scryfallCard.AllParts)
+               .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
         return builder.Build();
     }

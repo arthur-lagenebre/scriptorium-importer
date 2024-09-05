@@ -17,7 +17,10 @@ public class ScryfallMapper : IScryfallMapper
         foreach (var scryfallCard in scryfallCards)
         {
             if (scryfallCard.Digital)
+            {
+                Console.WriteLine($"{scryfallCard.Name} is only digital");
                 continue;
+            }
 
             try
             {
@@ -25,7 +28,7 @@ public class ScryfallMapper : IScryfallMapper
             }
             catch (NotSupportedException)
             {
-                Console.WriteLine($"Card : {scryfallCard.Name} with layout {scryfallCard.Layout} is not implemented");
+                Console.WriteLine($"{scryfallCard.Name} / {scryfallCard.Layout} is not implemented");
             }
         }
 
