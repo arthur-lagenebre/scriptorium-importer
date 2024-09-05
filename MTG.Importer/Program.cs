@@ -25,6 +25,7 @@ builder.Services.AddSingleton<IScryfallBuilder, NormalBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, PrototypeBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, SagaBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, SchemeBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 
 using IHost host = builder.Build();

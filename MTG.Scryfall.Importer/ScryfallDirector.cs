@@ -25,6 +25,7 @@ public class ScryfallDirector : IScryfallDirector
             "normal" => BuildNormal(builder, scryfallCard),
             "prototype" => BuildPrototype(builder, scryfallCard),
             "saga" => BuildSaga(builder, scryfallCard),
+            "scheme" => BuildScheme(builder, scryfallCard),
             "transform" => BuildTransform(builder, scryfallCard),
             "vanguard" => BuildVanguard(builder, scryfallCard),
             _ => throw new NotSupportedException(),
@@ -182,6 +183,21 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
                .AddKeywords(scryfallCard.Keywords)
+               .AddProducedMana(scryfallCard.ProducedMana)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
+
+        return builder.Build();
+    }
+
+    private static Card BuildScheme(IScryfallBuilder builder, ScryfallCard scryfallCard)
+    {
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
