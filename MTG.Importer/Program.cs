@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MTG.Saver;
+using MTG.Saver.Interfaces;
 using MTG.Scryfall.Importer;
 using MTG.Scryfall.Importer.Builders;
 using MTG.Scryfall.Importer.Interfaces;
@@ -10,7 +11,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
-builder.Services.AddSingleton<IScryfallBuilderSelector, ScryfallBuilderSelector>();
+builder.Services.AddSingleton<IScryfallDirector, ScryfallDirector>();
 builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>();
 
 builder.Services.AddSingleton<IWriter, JsonWriter>();
