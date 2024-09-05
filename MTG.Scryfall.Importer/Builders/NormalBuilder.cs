@@ -1,7 +1,7 @@
-﻿using MTG.Importer.Models;
-using MTG.Importer.Models.Card;
+﻿using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
+using MTG.Scryfall.Models;
 using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Builders;
@@ -67,7 +67,7 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces)
     {
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)
@@ -162,6 +162,6 @@ public class NormalBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddVanguard(string? handModifier, string? lifeModifier)
     {
-        return this;
+        throw new NotSupportedException();
     }
 }

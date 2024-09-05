@@ -6,12 +6,9 @@ namespace MTG.Scryfall.Importer;
 
 public class ScryfallMapper : IScryfallMapper
 {
-    private IScryfallBuilderSelector _scryfallSelectorBuilder;
+    private IScryfallDirector _director;
 
-    public ScryfallMapper(IScryfallBuilderSelector scryfallSelectorBuilder)
-    {
-        _scryfallSelectorBuilder = scryfallSelectorBuilder;
-    }
+    public ScryfallMapper(IScryfallDirector director) => _director = director;
 
     public IList<Card> Map(IList<ScryfallCard> scryfallCards)
     {
@@ -24,25 +21,7 @@ public class ScryfallMapper : IScryfallMapper
 
             try
             {
-                IScryfallBuilder builder = _scryfallSelectorBuilder.Create(scryfallCard.Layout);
-
-                builder.AddOracleId(scryfallCard.OracleId)
-                       .AddLanguage(scryfallCard.Lang)
-                       .AddName(scryfallCard.Name, scryfallCard.PrintedName)
-                       .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
-                       .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
-                       .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
-                       .AddCost(scryfallCard.ManaCost, scryfallCard.Cmc)
-                       .AddKeywords(scryfallCard.Keywords)
-                       .AddProducedMana(scryfallCard.ProducedMana)
-                       .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
-                       .AddCardFaces(scryfallCard.CardFaces)
-                       .AddRelatedCards(scryfallCard.AllParts)
-                       .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
-                       .AddPlaneswalker(scryfallCard.Loyalty)
-                       .AddVanguard(scryfallCard.HandModifier, scryfallCard.LifeModifier);
-
-                cards.Add(builder.Build());
+                cards.Add(_director.BuildCard(scryfallCard));
             }
             catch (NotSupportedException)
             {

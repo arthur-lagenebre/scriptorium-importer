@@ -1,7 +1,7 @@
-﻿using MTG.Importer.Models;
-using MTG.Importer.Models.Card;
+﻿using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
+using MTG.Scryfall.Models;
 using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Builders;
@@ -99,7 +99,7 @@ public class VanguardBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)
     {
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddCost(string? manacost, double manaValue)
@@ -132,22 +132,22 @@ public class VanguardBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces)
     {
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts)
     {
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddCreature(string? power, string? toughness)
     {
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddPlaneswalker(string? loyalty)
     {
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddVanguard(string? handModifier, string? lifeModifier)
