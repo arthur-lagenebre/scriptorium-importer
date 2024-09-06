@@ -72,7 +72,9 @@ public class SchemeBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)
     {
+        _color = ColorHelper.GetCardColor(colors);
         _colorIdentity = ColorHelper.GetCardColor(colorIdentity);
+        _colorIndicator = ColorHelper.GetCardColor(colorIndicator);
         return this;
     }
 

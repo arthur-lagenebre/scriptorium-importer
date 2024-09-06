@@ -6,7 +6,7 @@ using MTG.Scryfall.Models;
 
 namespace MTG.Scryfall.Importer.Builders;
 
-public class MutateBuilder : IScryfallBuilder
+public class FlipBuilder : IScryfallBuilder
 {
     private Guid _oracleId;
     private Cost _cost;
@@ -26,11 +26,11 @@ public class MutateBuilder : IScryfallBuilder
     private Planeswalker? _planeswalker;
     private Vanguard? _vanguard;
 
-    public Layout Layout => new("mutate");
+    public Layout Layout => new("flip");
 
     private readonly IScryfallTypelineManager _typelineManager;
 
-    public MutateBuilder(IScryfallTypelineManager typelineManager)
+    public FlipBuilder(IScryfallTypelineManager typelineManager)
     {
         _typelineManager = typelineManager;
         Reset();
@@ -67,7 +67,12 @@ public class MutateBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces)
     {
-        throw new NotSupportedException();
+        if (scryfallCardFaces != null)
+        {
+            _cardFaces.AddRange(CardFaceHelper.CreateCardFaces(scryfallCardFaces, _language, _typelineManager));
+            _name = new Name(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Value)));
+        }
+        return this;
     }
 
     public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)
@@ -125,7 +130,9 @@ public class MutateBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddProducedMana(List<string>? producedMana)
     {
-        throw new NotSupportedException();
+        if (producedMana != null)
+            _producedMana.AddRange(producedMana);
+        return this;
     }
 
     public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId)

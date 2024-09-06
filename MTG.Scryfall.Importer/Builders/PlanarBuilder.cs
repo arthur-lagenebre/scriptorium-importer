@@ -6,7 +6,7 @@ using MTG.Scryfall.Models;
 
 namespace MTG.Scryfall.Importer.Builders;
 
-public class MutateBuilder : IScryfallBuilder
+public class PlanarBuilder : IScryfallBuilder
 {
     private Guid _oracleId;
     private Cost _cost;
@@ -26,11 +26,11 @@ public class MutateBuilder : IScryfallBuilder
     private Planeswalker? _planeswalker;
     private Vanguard? _vanguard;
 
-    public Layout Layout => new("mutate");
+    public Layout Layout => new("planar");
 
     private readonly IScryfallTypelineManager _typelineManager;
 
-    public MutateBuilder(IScryfallTypelineManager typelineManager)
+    public PlanarBuilder(IScryfallTypelineManager typelineManager)
     {
         _typelineManager = typelineManager;
         Reset();
@@ -80,15 +80,12 @@ public class MutateBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCost(string? manacost, double manaValue)
     {
-        _cost = new Cost(StringHelper.GetDefaultValue(manacost), manaValue);
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddCreature(string? power, string? toughness)
     {
-        if (!string.IsNullOrWhiteSpace(power) && !string.IsNullOrWhiteSpace(toughness))
-            _creature = new Creature(power, toughness);
-        return this;
+        throw new NotSupportedException();
     }
 
     public IScryfallBuilder AddKeywords(List<string>? keywords)
@@ -125,7 +122,9 @@ public class MutateBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddProducedMana(List<string>? producedMana)
     {
-        throw new NotSupportedException();
+        if (producedMana != null)
+            _producedMana.AddRange(producedMana);
+        return this;
     }
 
     public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId)

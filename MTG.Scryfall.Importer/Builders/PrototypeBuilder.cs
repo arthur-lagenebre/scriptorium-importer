@@ -74,6 +74,7 @@ public class PrototypeBuilder : IScryfallBuilder
     {
         _color = ColorHelper.GetCardColor(colors);
         _colorIdentity = ColorHelper.GetCardColor(colorIdentity);
+        _colorIndicator = ColorHelper.GetCardColor(colorIndicator);
         return this;
     }
 
