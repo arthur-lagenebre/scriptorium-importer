@@ -10,7 +10,7 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
     public const string _subtypeSeparator = " ";
     public static readonly char[] _typeSeparators = [' '];
     public static readonly List<string> _subtypes = ["New Phyrexia", "The Abyss", "Serra's Realm", "Bolas's Meditation Realm"];
-    public static readonly List<string> _supertypes = ["Basic", "Elite", "Legendary", "Ongoing", "Snow", "Token", "World"];
+    public static readonly List<string> _supertypes = ["Basic", "Host", "Elite", "Legendary", "Ongoing", "Snow", "Token", "World"];
     public static readonly List<string> _types = ["Artifact", "Battle", "Conspiracy", "Creature", "Emblem", "Enchantment", "Hero", "Instant", "Land", "Phenomenon", "Plane", "Planeswalker", "Scheme", "Sorcery", "Tribal", "Vanguard"];
 
     public Typeline ExtractTypeline(string? typeline)

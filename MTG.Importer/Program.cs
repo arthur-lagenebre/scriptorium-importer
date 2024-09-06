@@ -17,9 +17,13 @@ builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>
 builder.Services.AddSingleton<IWriter, JsonWriter>();
 
 builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, AugmentBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, CaseBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, ClassBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, DoubleFacedTokenBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, EmblemBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, FlipBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, HostCreatureBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, LevelerBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, MeldBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, ModalDoublefaceBuilder>();
@@ -27,9 +31,12 @@ builder.Services.AddSingleton<IScryfallBuilder, MutateBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, NormalBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, PlanarBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, PrototypeBuilder>();
-builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, ReversibleCardBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, SagaBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, SchemeBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, SplitBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, TokenBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 
 using IHost host = builder.Build();
