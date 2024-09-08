@@ -18,7 +18,7 @@ internal static class CardFaceHelper
 
     private static Face CreateCardFace(int index, ScryfallCardFace face, string language, IScryfallTypelineManager typelineManager)
     {
-        var cost = new Cost(StringHelper.GetDefaultValue(face.ManaCost), face.Cmc);
+        var cost = new Cost(StringHelper.GetDefaultValue(face.ManaCost), face.ManaValue);
         var name = new Name(language, LanguageHelper.GetLanguageValue(language, face.Name, face.PrintedName));
         var typeline = typelineManager.ExtractTypeline(face.TypeLine);
         var text = new Text(language, LanguageHelper.GetLanguageValue(language, face.OracleText, face.PrintedText));

@@ -23,15 +23,11 @@ public class ScryfallCardFace
 
     // The mana value of this particular face, if the card is reversible.
     [JsonProperty("cmc")]
-    public double Cmc { get; set; }
+    public double ManaValue { get; set; }
 
     // The type line of this particular face, if the card is reversible.
     [JsonProperty("type_line")]
     public string? TypeLine { get; set; }
-
-    // The localized type line printed on this face, if any.
-    [JsonProperty("printed_type_line")]
-    public string? PrintedTypeLine { get; set; }
 
     // The Oracle text for this face, if any.
     [JsonProperty("oracle_text")]

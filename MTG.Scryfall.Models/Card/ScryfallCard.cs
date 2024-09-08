@@ -49,10 +49,6 @@ public class ScryfallCard
     [JsonProperty("layout")]
     public string? Layout { get; set; }
 
-    // An object listing available imagery for this card. See the Card Imagery article for more information.
-    [JsonProperty("image_uris")]
-    public ScryfallImageUris? ImageUris { get; set; }
-
     // The mana cost for this card. This value will be any empty string "" if the cost is absent.
     // Remember that per the game rules, a missing mana cost and a mana cost of {0} are different values. Multi-faced cards will report this value in card faces.
     [JsonProperty("mana_cost")]
@@ -60,7 +56,7 @@ public class ScryfallCard
 
     // The card’s mana value. Note that some funny cards have fractional mana costs.
     [JsonProperty("cmc")]
-    public double Cmc { get; set; }
+    public double ManaValue { get; set; }
 
     // This card’s power, if any. Note that some cards have powers that are not numeric, such as *.
     [JsonProperty("power")]
