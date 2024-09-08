@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MTG.Importer.Models.Card;
+﻿using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models;

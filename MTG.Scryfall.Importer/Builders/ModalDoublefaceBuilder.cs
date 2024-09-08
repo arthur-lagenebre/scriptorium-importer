@@ -1,8 +1,8 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
-using MTG.Scryfall.Models.Card;
 using MTG.Scryfall.Models;
+using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Builders;
 
