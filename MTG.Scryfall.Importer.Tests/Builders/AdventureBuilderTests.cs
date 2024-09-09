@@ -210,7 +210,7 @@ public class AdventureBuilderTests
     [Theory]
     [InlineData(null, 0.0, "", 0.0)]
     [InlineData("{10}{W}", 11.0, "{10}{W}", 11.0)]
-    public void Should_Have_None_When_Colors_Are_Empty_(string? manacost, double manaValue, string manacostExpected, double manaValueExpected)
+    public void Should_Have_Corresponding_Values_When_Manacost_Is_Set(string? manacost, double manaValue, string manacostExpected, double manaValueExpected)
     {
         // Act
         _builder.AddCost(manacost, manaValue);
@@ -220,5 +220,42 @@ public class AdventureBuilderTests
         Assert.NotNull(card.Cost);
         Assert.Equal(manacostExpected, card.Cost.Manacost);
         Assert.Equal(manaValueExpected, card.Cost.ManaValue);
+    }
+
+    [Fact]
+    public void Should_Have_Keyword_Empty_If_List_Is_Null()
+    {
+        // Act
+        _builder.AddKeywords(null);
+        var card = _builder.Build();
+
+        // Assert
+        Assert.Empty(card.Keyword);
+    }
+
+    [Fact]
+    public void Should_Have_Keyword_Empty_If_List_Is_Empty()
+    {
+        // Act
+        _builder.AddKeywords(new List<string>());
+        var card = _builder.Build();
+
+        // Assert
+        Assert.Empty(card.Keyword);
+    }
+
+    [Fact]
+    public void Should_Have_Keyword_With_One_Element_If_()
+    {
+        // Arrange
+        var keywords = new List<string> { "Flying" };
+        var expectedKeywords = "Flying";
+
+        // Act
+        _builder.AddKeywords(keywords);
+        var card = _builder.Build();
+
+        // Assert
+        Assert.Collection(card.Keyword, e => { Assert.Equal(expectedKeywords, e); });
     }
 }
