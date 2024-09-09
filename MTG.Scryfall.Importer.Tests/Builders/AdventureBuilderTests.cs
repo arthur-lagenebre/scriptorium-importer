@@ -8,7 +8,7 @@ namespace MTG.Scryfall.Importer.Tests.Builders;
 
 public class AdventureBuilderTests
 {
-    private readonly AdventureBuilder _builder = new AdventureBuilder(Substitute.For<IScryfallTypelineManager>());
+    private readonly AdventureBuilder _builder = new(Substitute.For<IScryfallTypelineManager>());
     private readonly ScryfallCard _scryfallCard;
 
     public AdventureBuilderTests()
@@ -41,13 +41,13 @@ public class AdventureBuilderTests
                     Id = "0001e77a-7fff-49d2-a55c-42f6fdf6db08",
                     Component = "combo_piece",
                     Name = "Obyra's Attendants // Desperate Parry",
-                    TypeLine = "Creature — Faerie Wizard // Instant — Adventure",
+                    TypeLine = "Creature — Faerie Wizard // Instant — Adventure"
                 },
                 new ScryfallAllPart {
                     Id = "fcf4c7fb-7859-4c11-8552-6817f5119d2e",
                     Component = "combo_piece",
                     Name = "On an Adventure",
-                    TypeLine = "Card",
+                    TypeLine = "Card"
                 }
                 ],
             CardFaces = [
