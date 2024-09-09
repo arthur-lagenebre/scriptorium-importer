@@ -45,7 +45,7 @@ LaunchImport(host.Services);
 
 static void LaunchImport(IServiceProvider services)
 {
-    var basePath = @"D:\MTG\_scryfall";
+    var basePath = @"C:\MTG\_scryfall";
 
     using IServiceScope serviceScope = services.CreateScope();
     IServiceProvider provider = serviceScope.ServiceProvider;

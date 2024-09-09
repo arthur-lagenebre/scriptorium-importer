@@ -117,9 +117,7 @@ public class TransformBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddOracleId(Guid? oracleId)
     {
-        ArgumentNullException.ThrowIfNull(oracleId, nameof(oracleId));
-
-        _oracleId = oracleId.Value;
+        _oracleId = GuidHelper.GetGuid(oracleId);
         return this;
     }
 

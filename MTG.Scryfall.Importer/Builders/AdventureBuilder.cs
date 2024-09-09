@@ -115,11 +115,7 @@ public class AdventureBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddOracleId(Guid? oracleId)
     {
-        ArgumentNullException.ThrowIfNull(oracleId, nameof(oracleId));
-        if (oracleId == Guid.Empty)
-            throw new ArgumentNullException(nameof(oracleId));
-
-        _oracleId = oracleId.Value;
+        _oracleId = GuidHelper.GetGuid(oracleId);
         return this;
     }
 
