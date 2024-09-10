@@ -9,22 +9,11 @@ public class ScryfallDirectorTests
     private readonly IEnumerable<IScryfallBuilder> _scryfallBuilders = Substitute.For<IEnumerable<IScryfallBuilder>>();
 
     [Fact]
-    public void Should_Throw_NotSupportedException_When_Layout_Is_Null()
-    {
-        // Arrange
-        var director = new ScryfallDirector(_scryfallBuilders);
-        var scryfallCard = new ScryfallCard();
-
-        // Act & Assert
-        Assert.Throws<NotSupportedException>(() => director.BuildCard(scryfallCard));
-    }
-
-    [Fact]
     public void Should_Throw_NotSupportedException_When_Layout_Is_Invalid()
     {
         // Arrange
         var director = new ScryfallDirector(_scryfallBuilders);
-        var scryfallCard = new ScryfallCard() { Layout = "invalid" };
+        var scryfallCard = new ScryfallCard() { Layout = "invalid", Name = "Name", TypeLine = "TypeLine", Id = string.Empty, ColorIdentity = [], Keywords = [] };
 
         // Act & Assert
         Assert.Throws<NotSupportedException>(() => director.BuildCard(scryfallCard));

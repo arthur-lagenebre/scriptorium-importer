@@ -77,13 +77,13 @@ public class VanguardBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddName(string? name, string? printedName)
+    public IScryfallBuilder AddName(string name, string? printedName)
     {
         _name = new Name(_language, LanguageHelper.GetLanguageValue(_language, name, printedName));
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string? typeLine, string? printedTypeLine)
+    public IScryfallBuilder AddTypeLine(string typeLine)
     {
         _typeline = _typelineManager.ExtractTypeline(typeLine);
         return this;
@@ -109,10 +109,9 @@ public class VanguardBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddKeywords(List<string>? keywords)
+    public IScryfallBuilder AddKeywords(List<string> keywords)
     {
-        if (keywords != null)
-            _keywords.AddRange(keywords);
+        _keywords.AddRange(keywords);
         return this;
     }
 

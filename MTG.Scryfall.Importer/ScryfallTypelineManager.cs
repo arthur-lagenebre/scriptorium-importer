@@ -17,7 +17,7 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
         _properties = new TypelineProperties("-", " ", [' '], subtypes, supertypes, types);
     }
 
-    public Typeline ExtractTypeline(string? typeline)
+    public Typeline ExtractTypeline(string typeline)
     {
         typeline = StringHelper.GetCleanedValue(typeline);
 

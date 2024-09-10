@@ -22,7 +22,6 @@ public class AdventureBuilderTests
             OracleText = null,
             PrintedText = null,
             TypeLine = "Creature — Faerie Wizard // Instant — Adventure",
-            PrintedTypeLine = null,
             Lang = ScryfallLanguage.en,
             ReleasedAt = "2023-09-08",
             Layout = "adventure",
@@ -223,21 +222,10 @@ public class AdventureBuilderTests
     }
 
     [Fact]
-    public void Should_Have_Keyword_Empty_If_List_Is_Null()
-    {
-        // Act
-        _builder.AddKeywords(null);
-        var card = _builder.Build();
-
-        // Assert
-        Assert.Empty(card.Keyword);
-    }
-
-    [Fact]
     public void Should_Have_Keyword_Empty_If_List_Is_Empty()
     {
         // Act
-        _builder.AddKeywords(new List<string>());
+        _builder.AddKeywords([]);
         var card = _builder.Build();
 
         // Assert

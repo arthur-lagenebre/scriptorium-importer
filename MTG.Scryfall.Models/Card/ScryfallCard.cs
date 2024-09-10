@@ -15,7 +15,7 @@ public class ScryfallCard
 
     // The name of this card. If this card has multiple faces, this field will contain both names separated by ␣//␣.
     [JsonProperty("name")]
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     // The localized name printed on this card, if any.
     [JsonProperty("printed_name")]
@@ -31,11 +31,7 @@ public class ScryfallCard
 
     // The type line of this card.
     [JsonProperty("type_line")]
-    public string? TypeLine { get; set; }
-
-    // The localized type line printed on this card, if any.
-    [JsonProperty("printed_type_line")]
-    public string? PrintedTypeLine { get; set; }
+    public required string TypeLine { get; set; }
 
     // A language code for this printing.
     [JsonProperty("lang")]
@@ -47,7 +43,7 @@ public class ScryfallCard
 
     // A code for this card’s layout.
     [JsonProperty("layout")]
-    public string? Layout { get; set; }
+    public required string Layout { get; set; }
 
     // The mana cost for this card. This value will be any empty string "" if the cost is absent.
     // Remember that per the game rules, a missing mana cost and a mana cost of {0} are different values. Multi-faced cards will report this value in card faces.
@@ -76,7 +72,7 @@ public class ScryfallCard
 
     // This card’s color identity.
     [JsonProperty("color_identity")]
-    public List<string>? ColorIdentity { get; set; }
+    public required List<string> ColorIdentity { get; set; }
 
     // The colors in this card’s color indicator, if any. A null value for this field indicates the card does not have one.
     [JsonProperty("color_indicator")]
@@ -88,7 +84,7 @@ public class ScryfallCard
 
     // An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
     [JsonProperty("keywords")]
-    public List<string>? Keywords { get; set; }
+    public required List<string> Keywords { get; set; }
 
     // If this card is closely related to other cards, this property will be an array with Related Card Objects.
     [JsonProperty("all_parts")]

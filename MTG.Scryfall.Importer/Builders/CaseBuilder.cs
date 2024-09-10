@@ -70,7 +70,7 @@ public class CaseBuilder : IScryfallBuilder
         throw new NotSupportedException();
     }
 
-    public IScryfallBuilder AddColors(List<string>? colors, List<string>? colorIdentity, List<string>? colorIndicator)
+    public IScryfallBuilder AddColors(List<string>? colors, List<string> colorIdentity, List<string>? colorIndicator)
     {
         _color = ColorHelper.GetCardColor(colors);
         _colorIdentity = ColorHelper.GetCardColor(colorIdentity);
@@ -89,10 +89,9 @@ public class CaseBuilder : IScryfallBuilder
         throw new NotSupportedException();
     }
 
-    public IScryfallBuilder AddKeywords(List<string>? keywords)
+    public IScryfallBuilder AddKeywords(List<string> keywords)
     {
-        if (keywords != null)
-            _keywords.AddRange(keywords);
+        _keywords.AddRange(keywords);
         return this;
     }
 
@@ -102,7 +101,7 @@ public class CaseBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddName(string? name, string? printedName)
+    public IScryfallBuilder AddName(string name, string? printedName)
     {
         _name = new Name(_language, LanguageHelper.GetLanguageValue(_language, name, printedName));
         return this;
@@ -124,7 +123,7 @@ public class CaseBuilder : IScryfallBuilder
         throw new NotSupportedException();
     }
 
-    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string? scryfallId)
+    public IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string scryfallId)
     {
         if (scryfallAllParts != null)
             _relatedCards.AddRange(RelatedCardHelper.CreateRelatedCards(scryfallAllParts, scryfallId));
@@ -145,9 +144,9 @@ public class CaseBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string? typeLine, string? printedTypeLine)
+    public IScryfallBuilder AddTypeLine(string typeline)
     {
-        _typeline = _typelineManager.ExtractTypeline(typeLine);
+        _typeline = _typelineManager.ExtractTypeline(typeline);
         return this;
     }
 
