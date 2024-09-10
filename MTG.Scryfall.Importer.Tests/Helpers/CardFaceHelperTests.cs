@@ -1,9 +1,14 @@
-﻿using MTG.Scryfall.Models.Card;
+﻿using MTG.Importer.Models.Card;
+using MTG.Scryfall.Importer.Helpers;
+using MTG.Scryfall.Importer.Interfaces;
+using MTG.Scryfall.Models.Card;
+using NSubstitute;
 
 namespace MTG.Scryfall.Importer.Tests.Helpers;
 
 public class CardFaceHelperTests
 {
+    private readonly IScryfallTypelineManager _scryfallTypelineManager = Substitute.For<IScryfallTypelineManager>();
     private readonly List<ScryfallCardFace> _scryfallCardFaces;
 
     public CardFaceHelperTests() => _scryfallCardFaces =
@@ -49,4 +54,31 @@ public class CardFaceHelperTests
                     FlavorText = null
             }
         ];
+
+    [Fact]
+    public void Should_Have_Two_Element_When_List_Have_Two_Elements()
+    {
+        // Act
+        var result = CardFaceHelper.CreateCardFaces(_scryfallCardFaces, "en", _scryfallTypelineManager);
+
+        // Assert
+        Assert.Collection(result,
+            e =>
+            {
+                Assert.Equal("en", e.Name.Language);
+                Assert.Equal("Obyra's Attendants", e.Name.Value);
+                Assert.Equal(e.Text.Language, e.Name.Language);
+                Assert.Equal("Flying", e.Text.Value);
+                Assert.NotNull(e.Creature);
+                Assert.Equal("3", e.Creature.Power);
+                Assert.Equal("4", e.Creature.Toughness);
+                Assert.Null(e.Planeswalker);
+            },
+            e =>
+            {
+                Assert.Equal("Desperate Parry", e.Name.Value);
+                Assert.Null(e.Creature);
+                Assert.Null(e.Planeswalker);
+            });
+    }
 }

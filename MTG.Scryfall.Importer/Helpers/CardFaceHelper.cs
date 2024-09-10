@@ -4,7 +4,7 @@ using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Helpers;
 
-internal static class CardFaceHelper
+public static class CardFaceHelper
 {
     public static List<Face> CreateCardFaces(List<ScryfallCardFace> cardFaces, string language, IScryfallTypelineManager typelineManager)
     {
