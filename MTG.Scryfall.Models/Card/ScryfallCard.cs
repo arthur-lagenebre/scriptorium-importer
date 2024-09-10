@@ -6,7 +6,7 @@ public class ScryfallCard
 {
     // An unique ID for this card in Scryfall’s database.
     [JsonProperty("id")]
-    public string? Id { get; set; }
+    public required string Id { get; set; }
 
     // A unique ID for this card’s oracle identity.
     // This value is consistent across reprinted card editions, and unique among different cards with the same name (tokens, Unstable variants, etc).

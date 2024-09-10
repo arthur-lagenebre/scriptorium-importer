@@ -4,7 +4,7 @@ namespace MTG.Scryfall.Importer.Helpers;
 
 public static class EnumHelper
 {
-    public static RelatedCardComponent GetRelatedCardComponent(string? relatedCardComponent)
+    public static RelatedCardComponent GetRelatedCardComponent(string relatedCardComponent)
     {
         return relatedCardComponent switch
         {

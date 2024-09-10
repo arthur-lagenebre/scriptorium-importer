@@ -10,7 +10,7 @@ public class ScryfallCardFace
 
     // The name of this particular face.
     [JsonProperty("name")]
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     // The localized name printed on this face, if any.
     [JsonProperty("printed_name")]
@@ -19,7 +19,7 @@ public class ScryfallCardFace
     // The mana cost for this face. This value will be any empty string "" if the cost is absent.
     // Remember that per the game rules, a missing mana cost and a mana cost of {0} are different values.
     [JsonProperty("mana_cost")]
-    public string? ManaCost { get; set; }
+    public required string ManaCost { get; set; }
 
     // The mana value of this particular face, if the card is reversible.
     [JsonProperty("cmc")]
