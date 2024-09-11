@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MTG.Saver;
-using MTG.Saver.Interfaces;
 using MTG.Scryfall.Importer;
 using MTG.Scryfall.Importer.Builders;
 using MTG.Scryfall.Importer.Interfaces;
@@ -13,8 +11,6 @@ builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
 builder.Services.AddSingleton<IScryfallDirector, ScryfallDirector>();
 builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>();
-
-builder.Services.AddSingleton<IWriter, JsonWriter>();
 
 builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, AugmentBuilder>();
@@ -52,10 +48,6 @@ static void LaunchImport(IServiceProvider services)
     IScryfallImporter importer = provider.GetRequiredService<IScryfallImporter>();
     provider.GetServices<IScryfallBuilder>();
     var cards = importer.Import(Path.Combine(basePath, "42_cards.json"));
-
-    IWriter writer = provider.GetRequiredService<IWriter>();
-
-    writer.WriteCards(cards, Path.Combine(basePath, "_output.json"));
 }
 
 await host.RunAsync();
