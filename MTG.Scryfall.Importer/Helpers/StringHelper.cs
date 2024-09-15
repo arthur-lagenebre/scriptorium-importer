@@ -9,6 +9,6 @@ public static class StringHelper
 
     public static string GetCleanedValue(string input)
     {
-        return input.Replace("’", "'");
+        return string.IsNullOrWhiteSpace(input) ? string.Empty : input.Replace("’", "'");
     }
 }
