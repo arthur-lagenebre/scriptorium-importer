@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MTG.Database.Models.Entity;
+using MTG.Database.Models.Entities;
 
 namespace MTG.Database.Models.DatabaseContext
 {
