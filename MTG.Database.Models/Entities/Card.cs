@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MTG.Database.Models.Entity;
+namespace MTG.Database.Models.Entities;
 
 [PrimaryKey("OracleId")]
 public class Card

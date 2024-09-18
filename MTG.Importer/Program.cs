@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MTG.Database.Models.DatabaseContext;
+using MTG.Database.Models.Interfaces;
+using MTG.Database.Models.Services;
 using MTG.Scryfall.Importer;
 using MTG.Scryfall.Importer.Builders;
 using MTG.Scryfall.Importer.Interfaces;
@@ -34,6 +37,10 @@ builder.Services.AddSingleton<IScryfallBuilder, SplitBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TokenBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
+
+builder.Services.AddDbContext<MTGDbContext>();
+
+builder.Services.AddTransient<IColorService, ColorService>();
 
 using IHost host = builder.Build();
 

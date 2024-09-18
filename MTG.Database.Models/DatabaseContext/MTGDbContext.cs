@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MTG.Database.Models.Entity;
+using MTG.Database.Models.Entities;
 
 namespace MTG.Database.Models.DatabaseContext
 {
     public class MTGDbContext : DbContext
     {
         public DbSet<Color> Colors { get; set; }
+        public DbSet<Card> Cards { get; set; }
 
-        public MTGDbContext(DbContextOptions options) : base(options)
+        public MTGDbContext(DbContextOptions<MTGDbContext> options) : base(options)
         {
         }
 
@@ -23,7 +24,6 @@ namespace MTG.Database.Models.DatabaseContext
             modelBuilder.Entity<Color>().Property(p => p.Description).IsRequired().HasMaxLength(50);
 
             modelBuilder.Entity<Color>().HasData(
-                new Color { Id = 0, Name = "Unknown", Description = "Color not defined" },
                 new Color { Id = 1, Name = "None", Description = "No color" },
                 new Color { Id = 2, Name = "W", Description = "White" },
                 new Color { Id = 4, Name = "U", Description = "Blue" },
