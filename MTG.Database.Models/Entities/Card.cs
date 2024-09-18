@@ -9,7 +9,8 @@ public class Card
     //public Name Name { get; set; }
     //public Typeline Typeline { get; set; }
     //public Text Text { get; set; }
-    //public Cost Cost { get; set; }
+    public string ManaCost { get; set; }
+    public double ManaValue { get; set; }
     public Color Colors { get; set; }
     public Color ColorsIdentity { get; set; }
     public Color ColorsIndicator { get; set; }
