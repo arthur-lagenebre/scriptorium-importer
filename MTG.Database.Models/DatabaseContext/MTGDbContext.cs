@@ -7,6 +7,13 @@ namespace MTG.Database.Models.DatabaseContext
     {
         public DbSet<Color> Colors { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<CardName> CardNames { get; set; }
+        public DbSet<CardSet> CardSets { get; set; }
+        public DbSet<CardSubtype> CardSubtypes { get; set; }
+        public DbSet<CardSupertype> CardSupertypes { get; set; }
+        public DbSet<CardType> CardTypes { get; set; }
+        public DbSet<CardText> CardTexts { get; set; }
+        public DbSet<Set> Sets { get; set; }
 
         public MTGDbContext(DbContextOptions<MTGDbContext> options) : base(options)
         {
@@ -19,10 +26,6 @@ namespace MTG.Database.Models.DatabaseContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Color>().HasKey(x => x.Id);
-            modelBuilder.Entity<Color>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-            modelBuilder.Entity<Color>().Property(p => p.Description).IsRequired().HasMaxLength(50);
-
             modelBuilder.Entity<Color>().HasData(
                 new Color { Id = 1, Name = "None", Description = "No color" },
                 new Color { Id = 2, Name = "W", Description = "White" },

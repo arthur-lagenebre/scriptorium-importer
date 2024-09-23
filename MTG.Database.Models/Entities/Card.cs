@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.Design;
+using Microsoft.EntityFrameworkCore;
 
 namespace MTG.Database.Models.Entities;
 
@@ -6,9 +7,6 @@ namespace MTG.Database.Models.Entities;
 public class Card
 {
     public Guid OracleId { get; set; }
-    //public Name Name { get; set; }
-    //public Typeline Typeline { get; set; }
-    //public Text Text { get; set; }
     public string ManaCost { get; set; }
     public double ManaValue { get; set; }
     public Color Colors { get; set; }
@@ -23,4 +21,10 @@ public class Card
     //public Creature? Creature { get; set; }
     //public Planeswalker? Planeswalker { get; set; }
     //public Vanguard? Vanguard { get; set; }
+
+    public virtual List<CardText> Texts { get; set; }
+    public virtual List<CardName> Names { get; set; }
+    public virtual List<CardSupertype> Supertypes { get; set; }
+    public virtual List<CardType> Types { get; set; }
+    public virtual List<CardSubtype> Subtypes { get; set; }
 }
