@@ -9,6 +9,7 @@ namespace MTG.Database.Models.DatabaseContext
         public DbSet<Card> Cards { get; set; }
         public DbSet<CardName> CardNames { get; set; }
         public DbSet<CardSet> CardSets { get; set; }
+        public DbSet<CardSetFace> CardSetFaces { get; set; }
         public DbSet<CardSubtype> CardSubtypes { get; set; }
         public DbSet<CardSupertype> CardSupertypes { get; set; }
         public DbSet<CardType> CardTypes { get; set; }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MTG.Database.Models.Entities;
 
@@ -15,7 +14,6 @@ public class Card
     public string Layout { get; set; }
     public List<string> Keyword { get; set; }
     public List<string> ProducedMana { get; set; }
-    //public Set Set { get; set; }
     //public List<Face> CardFaces { get; set; }
     //public List<RelatedCard> RelatedCards { get; set; }
     //public Creature? Creature { get; set; }
@@ -27,4 +25,5 @@ public class Card
     public virtual List<CardSupertype> Supertypes { get; set; }
     public virtual List<CardType> Types { get; set; }
     public virtual List<CardSubtype> Subtypes { get; set; }
+    public virtual List<CardSet> Sets { get; set; }
 }

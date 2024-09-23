@@ -3,10 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MTG.Database.Models.Entities;
 
-[PrimaryKey("Id")]
+[Index(nameof(OracleId), nameof(Language))]
 public class CardText
 {
-    public int Id { get; set; }
     [ForeignKey("Card")]
     public Guid OracleId { get; set; }
     public string Language { get; set; }
