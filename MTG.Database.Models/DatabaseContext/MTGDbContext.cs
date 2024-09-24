@@ -14,6 +14,8 @@ namespace MTG.Database.Models.DatabaseContext
         public DbSet<CardSupertype> CardSupertypes { get; set; }
         public DbSet<CardType> CardTypes { get; set; }
         public DbSet<CardText> CardTexts { get; set; }
+        public DbSet<CardFace> CardFaces { get; set; }
+        public DbSet<RelatedCard> RelatedCards { get; set; }
         public DbSet<Set> Sets { get; set; }
 
         public MTGDbContext(DbContextOptions<MTGDbContext> options) : base(options)
