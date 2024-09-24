@@ -9,9 +9,6 @@ public class CardFace
     public int FaceId { get; set; }
     public string ManaCost { get; set; }
     public double ManaValue { get; set; }
-    //public Name Name { get; set; }
-    //public Typeline TypeLine { get; set; }
-    //public Text Text { get; set; }
     public Color Colors { get; set; }
     public Color ColorsIndicator { get; set; }
     public string Power { get; set; }
