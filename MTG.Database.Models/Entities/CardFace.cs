@@ -14,5 +14,11 @@ public class CardFace
     public string Power { get; set; }
     public string Toughness { get; set; }
     public string Loyalty { get; set; }
-    public int Defense { get; set; }
+    public int? Defense { get; set; }
+
+    public virtual List<CardText> Texts { get; set; }
+    public virtual List<CardName> Names { get; set; }
+    public virtual List<CardSupertype> Supertypes { get; set; }
+    public virtual List<CardType> Types { get; set; }
+    public virtual List<CardSubtype> Subtypes { get; set; }
 }
