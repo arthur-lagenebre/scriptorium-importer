@@ -22,9 +22,11 @@ public class AugmentBuilder : IScryfallBuilder
     private Set _set;
     private List<Face> _cardFaces;
     private List<RelatedCard> _relatedCards;
-    private Creature? _creature;
-    private Planeswalker? _planeswalker;
-    private Vanguard? _vanguard;
+    private string? _power;
+    private string? _toughness;
+    private string? _loyalty;
+    private string? _handModifier;
+    private string? _lifeModifier;
 
     public Layout Layout => new("augment");
 
@@ -51,14 +53,16 @@ public class AugmentBuilder : IScryfallBuilder
         _producedMana = [];
         _cardFaces = [];
         _relatedCards = [];
-        _creature = null;
-        _planeswalker = null;
-        _vanguard = null;
+        _power = null;
+        _toughness = null;
+        _loyalty = null;
+        _handModifier = null;
+        _lifeModifier = null;
     }
 
     public Card Build()
     {
-        var card = new Card(_oracleId, _name, _typeline, _text, _cost, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _creature, _planeswalker, _vanguard);
+        var card = new Card(_oracleId, _name, _typeline, _text, _cost, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _power, _toughness, _loyalty, _handModifier, _lifeModifier);
 
         Reset();
 
@@ -86,8 +90,8 @@ public class AugmentBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCreature(string? power, string? toughness)
     {
-        if (!string.IsNullOrWhiteSpace(power) && !string.IsNullOrWhiteSpace(toughness))
-            _creature = new Creature(power, toughness);
+        _power = power;
+        _toughness = toughness;
         return this;
     }
 

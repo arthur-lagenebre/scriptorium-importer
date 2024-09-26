@@ -22,10 +22,11 @@ public static class CardFaceHelper
         var name = new Name(language, LanguageHelper.GetLanguageValue(language, face.Name, face.PrintedName));
         var typeline = typelineManager.ExtractTypeline(face.TypeLine);
         var text = new Text(language, LanguageHelper.GetLanguageValue(language, StringHelper.GetDefaultValue(face.OracleText), face.PrintedText));
-        var creature = !string.IsNullOrWhiteSpace(face.Power) && !string.IsNullOrWhiteSpace(face.Toughness) ? new Creature(face.Power, face.Toughness) : null;
-        var planeswalker = !string.IsNullOrWhiteSpace(face.Loyalty) ? new Planeswalker(face.Loyalty) : null;
-        var battle = !string.IsNullOrWhiteSpace(face.Defense) ? new Battle(int.Parse(face.Defense)) : null;
+        var power = !string.IsNullOrWhiteSpace(face.Power) ? face.Power : null;
+        var toughness = !string.IsNullOrWhiteSpace(face.Toughness) ? face.Toughness : null;
+        var loyalty = !string.IsNullOrWhiteSpace(face.Loyalty) ? face.Loyalty : null;
+        int? defense = !string.IsNullOrWhiteSpace(face.Defense) ? int.Parse(face.Defense) : null;
 
-        return new Face(index, cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), creature, planeswalker, battle);
+        return new Face(index, cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), power, toughness, loyalty, defense);
     }
 }

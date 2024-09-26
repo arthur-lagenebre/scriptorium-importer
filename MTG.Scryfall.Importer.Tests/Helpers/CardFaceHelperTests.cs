@@ -69,16 +69,16 @@ public class CardFaceHelperTests
                 Assert.Equal("Obyra's Attendants", e.Name.Value);
                 Assert.Equal(e.Text.Language, e.Name.Language);
                 Assert.Equal("Flying", e.Text.Value);
-                Assert.NotNull(e.Creature);
-                Assert.Equal("3", e.Creature.Power);
-                Assert.Equal("4", e.Creature.Toughness);
-                Assert.Null(e.Planeswalker);
+                Assert.Equal("3", e.Power);
+                Assert.Equal("4", e.Toughness);
+                Assert.Null(e.Loyalty);
             },
             e =>
             {
                 Assert.Equal("Desperate Parry", e.Name.Value);
-                Assert.Null(e.Creature);
-                Assert.Null(e.Planeswalker);
+                Assert.Null(e.Power);
+                Assert.Null(e.Toughness);
+                Assert.Null(e.Loyalty);
             });
     }
 }
