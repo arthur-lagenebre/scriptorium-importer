@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MTG.Database.Models.DatabaseContext;
 using MTG.Database.Models.Entities;
+using MTG.Database.Models.Interfaces;
 
 namespace MTG.Database.Models.Services;
 
-public class SetService
+public class SetService : ISetService
 {
     private readonly MTGDbContext _db;
 

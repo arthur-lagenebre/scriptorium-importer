@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MTG.Database.Models\MTG.Database.Models.csproj" />
+    <ProjectReference Include="..\MTG.Importer.Save\MTG.Importer.Save.csproj" />
     <ProjectReference Include="..\MTG.Scryfall.Importer\MTG.Scryfall.Importer.csproj" />
   </ItemGroup>
 

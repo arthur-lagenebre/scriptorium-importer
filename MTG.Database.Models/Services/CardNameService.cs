@@ -5,7 +5,7 @@ using MTG.Database.Models.Interfaces;
 
 namespace MTG.Database.Models.Services;
 
-internal class CardNameService : ICardNameService
+public class CardNameService : ICardNameService
 {
     private readonly MTGDbContext _db;
 

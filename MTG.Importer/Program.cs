@@ -3,6 +3,8 @@ using Microsoft.Extensions.Hosting;
 using MTG.Database.Models.DatabaseContext;
 using MTG.Database.Models.Interfaces;
 using MTG.Database.Models.Services;
+using MTG.Importer.Save;
+using MTG.Importer.Save.Interfaces;
 using MTG.Scryfall.Importer;
 using MTG.Scryfall.Importer.Builders;
 using MTG.Scryfall.Importer.Interfaces;
@@ -40,7 +42,14 @@ builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 
 builder.Services.AddDbContext<MTGDbContext>();
 
+builder.Services.AddTransient<ICardNameService, CardNameService>();
+builder.Services.AddTransient<ICardService, CardService>();
+builder.Services.AddTransient<ICardTextService, CardTextService>();
 builder.Services.AddTransient<IColorService, ColorService>();
+builder.Services.AddTransient<ISetService, SetService>();
+
+builder.Services.AddSingleton<ICardDatabaseSave, CardDatabaseSave>();
+builder.Services.AddSingleton<ICardMapper, CardMapper>();
 
 using IHost host = builder.Build();
 
@@ -53,8 +62,10 @@ static void LaunchImport(IServiceProvider services)
     using IServiceScope serviceScope = services.CreateScope();
     IServiceProvider provider = serviceScope.ServiceProvider;
     IScryfallImporter importer = provider.GetRequiredService<IScryfallImporter>();
+    ICardDatabaseSave cardDatabaseSave = provider.GetRequiredService<ICardDatabaseSave>();
     provider.GetServices<IScryfallBuilder>();
     var cards = importer.Import(Path.Combine(basePath, "42_cards.json"));
+    cardDatabaseSave.Save([.. cards]);
 }
 
 await host.RunAsync();

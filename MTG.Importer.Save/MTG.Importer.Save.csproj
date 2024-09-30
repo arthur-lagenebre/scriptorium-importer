@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MTG.Database.Models\MTG.Database.Models.csproj" />
+    <ProjectReference Include="..\MTG.Importer.Models\MTG.Importer.Models.csproj" />
+  </ItemGroup>
+
+</Project>
