@@ -8,9 +8,9 @@ public class Card
     public Guid OracleId { get; set; }
     public string ManaCost { get; set; }
     public double ManaValue { get; set; }
-    public Color Colors { get; set; }
-    public Color ColorsIdentity { get; set; }
-    public Color ColorsIndicator { get; set; }
+    public int Colors { get; set; }
+    public int ColorsIdentity { get; set; }
+    public int ColorsIndicator { get; set; }
     public string Layout { get; set; }
     public List<string> Keyword { get; set; }
     public List<string> ProducedMana { get; set; }
@@ -20,8 +20,8 @@ public class Card
     public string HandModifier { get; set; }
     public string LifeModifier { get; set; }
 
-    public virtual List<CardText> Texts { get; set; }
     public virtual List<CardName> Names { get; set; }
+    public virtual List<CardText> Texts { get; set; }
     public virtual List<CardSupertype> Supertypes { get; set; }
     public virtual List<CardType> Types { get; set; }
     public virtual List<CardSubtype> Subtypes { get; set; }

@@ -217,7 +217,7 @@ public class AdventureBuilderTests
 
         // Assert
         Assert.NotNull(card.Cost);
-        Assert.Equal(manacostExpected, card.Cost.Manacost);
+        Assert.Equal(manacostExpected, card.Cost.ManaCost);
         Assert.Equal(manaValueExpected, card.Cost.ManaValue);
     }
 
