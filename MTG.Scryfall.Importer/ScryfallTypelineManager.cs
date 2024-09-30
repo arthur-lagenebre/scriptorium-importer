@@ -14,7 +14,7 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
         var subtypes = new List<string> { "New Phyrexia", "The Abyss", "Serra's Realm", "Bolas's Meditation Realm" };
         var supertypes = new List<string> { "Basic", "Host", "Elite", "Legendary", "Ongoing", "Snow", "Token", "World" };
         var types =  new List<string> { "Artifact", "Battle", "Conspiracy", "Creature", "Emblem", "Enchantment", "Hero", "Instant", "Land", "Phenomenon", "Plane", "Planeswalker", "Scheme", "Sorcery", "Tribal", "Vanguard"};
-        _properties = new TypelineProperties("-", " ", [' '], subtypes, supertypes, types);
+        _properties = new TypelineProperties("—", " ", ' ', subtypes, supertypes, types);
     }
 
     public Typeline ExtractTypeline(string typeline)

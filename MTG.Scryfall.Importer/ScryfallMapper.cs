@@ -6,7 +6,7 @@ namespace MTG.Scryfall.Importer;
 
 public class ScryfallMapper : IScryfallMapper
 {
-    private IScryfallDirector _director;
+    private readonly IScryfallDirector _director;
 
     public ScryfallMapper(IScryfallDirector director) => _director = director;
 
