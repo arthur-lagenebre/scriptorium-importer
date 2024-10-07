@@ -11,10 +11,11 @@ using MTG.Scryfall.Importer.Interfaces;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
+builder.Services.AddSingleton<IScryfallDirector, ScryfallDirector>();
+builder.Services.AddSingleton<IScryfallGetter, ScryfallGetter>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
-builder.Services.AddSingleton<IScryfallDirector, ScryfallDirector>();
+builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
 builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>();
 
 builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
@@ -57,14 +58,12 @@ LaunchImport(host.Services);
 
 static void LaunchImport(IServiceProvider services)
 {
-    var basePath = @"D:\Cards Import\_MTG_";
-
     using IServiceScope serviceScope = services.CreateScope();
     IServiceProvider provider = serviceScope.ServiceProvider;
     IScryfallImporter importer = provider.GetRequiredService<IScryfallImporter>();
     ICardDatabaseSave cardDatabaseSave = provider.GetRequiredService<ICardDatabaseSave>();
     provider.GetServices<IScryfallBuilder>();
-    var cards = importer.Import(Path.Combine(basePath, "42_cards.json"));
+    var cards = importer.Import();
     cardDatabaseSave.Save([.. cards]);
 }
 

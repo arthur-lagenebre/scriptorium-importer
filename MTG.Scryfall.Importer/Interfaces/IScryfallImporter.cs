@@ -4,5 +4,5 @@ namespace MTG.Scryfall.Importer.Interfaces;
 
 public interface IScryfallImporter
 {
-    IList<Card> Import(string path);
+    IList<Card> Import();
 }

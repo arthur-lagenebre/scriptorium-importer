@@ -5,21 +5,20 @@ namespace MTG.Scryfall.Importer;
 
 public class ScryfallImporter : IScryfallImporter
 {
+    private readonly IScryfallGetter _getter;
     private readonly IScryfallReader _reader;
     private readonly IScryfallMapper _mapper;
 
-    public ScryfallImporter(IScryfallReader reader, IScryfallMapper mapper)
+    public ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IScryfallMapper mapper)
     {
+        _getter = getter;
         _reader = reader;
         _mapper = mapper;
     }
 
-    public IList<Card> Import(string path)
+    public IList<Card> Import()
     {
-        if (string.IsNullOrEmpty(path) || !File.Exists(path))
-            throw new FileNotFoundException(path);
-
-        using var streamReader = new StreamReader(path);
+        using var streamReader = _getter.GetScryfallStreamReader();
 
         var scryfallCards = _reader.Read(streamReader);
 
