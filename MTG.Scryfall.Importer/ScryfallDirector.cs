@@ -54,7 +54,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
@@ -71,7 +71,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt);
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName);
 
         return builder.Build();
     }
@@ -86,7 +86,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -102,7 +102,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -119,7 +119,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
@@ -139,7 +139,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -156,7 +156,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -173,7 +173,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -190,7 +190,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -208,7 +208,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
@@ -228,7 +228,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
@@ -245,7 +245,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -263,7 +263,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -281,7 +281,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -297,7 +297,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -315,7 +315,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
@@ -335,7 +335,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
@@ -355,7 +355,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -370,7 +370,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
                .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build();
@@ -387,7 +387,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -405,7 +405,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
@@ -425,7 +425,7 @@ public class ScryfallDirector : IScryfallDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
-               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName, scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.Set, scryfallCard.Artist, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddVanguard(scryfallCard.HandModifier, scryfallCard.LifeModifier);
 
         return builder.Build();
