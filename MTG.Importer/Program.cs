@@ -41,14 +41,6 @@ builder.Services.AddSingleton<IScryfallBuilder, TokenBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 
-builder.Services.AddDbContext<MTGDbContext>();
-
-builder.Services.AddTransient<ICardNameService, CardNameService>();
-builder.Services.AddTransient<ICardService, CardService>();
-builder.Services.AddTransient<ICardTextService, CardTextService>();
-builder.Services.AddTransient<IColorService, ColorService>();
-builder.Services.AddTransient<ISetService, SetService>();
-
 builder.Services.AddSingleton<ICardDatabaseSave, CardDatabaseSave>();
 builder.Services.AddSingleton<ICardMapper, CardMapper>();
 
