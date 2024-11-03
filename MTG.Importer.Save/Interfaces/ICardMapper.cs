@@ -1,7 +1,10 @@
-﻿namespace MTG.Importer.Save.Interfaces
+﻿using MTG.Importer.Models.Card;
+using MTG.Importer.Save.Entities;
+
+namespace MTG.Importer.Save.Interfaces
 {
     public interface ICardMapper
     {
-        Database.Models.Entities.Card Convert(Models.Card.Card card);
+        CardDto Convert(Card card);
     }
 }

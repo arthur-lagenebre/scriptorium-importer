@@ -3,7 +3,7 @@ using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Interfaces;
 
-public interface IScryfallDirector
+public interface IScryfallCardDirector
 {
     Card BuildCard(ScryfallCard scryfallCard);
 }

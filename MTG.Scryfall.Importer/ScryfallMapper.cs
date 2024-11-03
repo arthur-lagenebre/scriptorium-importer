@@ -1,16 +1,19 @@
 ﻿using MTG.Importer.Models.Card;
+using MTG.Importer.Models.Set;
+using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models.Card;
+using MTG.Scryfall.Models.Set;
 
 namespace MTG.Scryfall.Importer;
 
 public class ScryfallMapper : IScryfallMapper
 {
-    private readonly IScryfallDirector _director;
+    private readonly IScryfallCardDirector _director;
 
-    public ScryfallMapper(IScryfallDirector director) => _director = director;
+    public ScryfallMapper(IScryfallCardDirector director) => _director = director;
 
-    public IList<Card> Map(IList<ScryfallCard> scryfallCards)
+    public IList<Card> MapCards(IList<ScryfallCard> scryfallCards)
     {
         var cards = new List<Card>();
 
@@ -34,4 +37,24 @@ public class ScryfallMapper : IScryfallMapper
 
         return cards;
     }
+
+    public IList<Set> MapSets(IList<ScryfallSet> scryfallSets)
+    {
+        var sets = new List<Set>();
+
+        foreach (var scryfallSet in scryfallSets)
+        {
+            if (scryfallSet.Digital)
+            {
+                Console.WriteLine($"{scryfallSet.Name} is only digital");
+                continue;
+            }
+
+            sets.Add(MapSet(scryfallSet));
+        }
+
+        return sets;
+    }
+
+    private Set MapSet(ScryfallSet scryfallSet) => new Set(Guid.NewGuid(), scryfallSet.Name, scryfallSet.Code, scryfallSet.Type, DateHelper.GetDate(scryfallSet.ReleasedAt), StringHelper.GetDefaultValue(scryfallSet.Block), StringHelper.GetDefaultValue(scryfallSet.BlockCode), StringHelper.GetDefaultValue(scryfallSet.ParentSetCode));
 }

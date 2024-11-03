@@ -9,7 +9,7 @@ public class ScryfallReaderTests
         var reader = new ScryfallReader();
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => reader.Read(null));
+        Assert.Throws<ArgumentNullException>(() => reader.ReadCards(null));
     }
 
     [Fact]
@@ -19,7 +19,7 @@ public class ScryfallReaderTests
         var reader = new ScryfallReader();
 
         // Act
-        var result = reader.Read(StreamReader.Null);
+        var result = reader.ReadCards(StreamReader.Null);
 
         // Assert
         Assert.Empty(result);

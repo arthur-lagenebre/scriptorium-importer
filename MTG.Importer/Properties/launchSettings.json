@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "MTG.Importer": {
+      "commandName": "Project",
+      "commandLineArgs": "--environment Development"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Staging": {
+      "commandName": "Project",
+      "commandLineArgs": "--environment Staging"
+    },
+    "Production": {
+      "commandName": "Project",
+      "commandLineArgs": "--environment Production"
+    }
+  }
+}

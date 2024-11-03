@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MTG.Database.Models.DatabaseContext;
-using MTG.Database.Models.Interfaces;
-using MTG.Database.Models.Services;
 using MTG.Importer.Save;
 using MTG.Importer.Save.Interfaces;
 using MTG.Scryfall.Importer;
@@ -11,7 +9,7 @@ using MTG.Scryfall.Importer.Interfaces;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddSingleton<IScryfallDirector, ScryfallDirector>();
+builder.Services.AddSingleton<IScryfallCardDirector, ScryfallCardDirector>();
 builder.Services.AddSingleton<IScryfallGetter, ScryfallGetter>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
@@ -44,6 +42,11 @@ builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 builder.Services.AddSingleton<ICardDatabaseSave, CardDatabaseSave>();
 builder.Services.AddSingleton<ICardMapper, CardMapper>();
 
+IHostEnvironment env = builder.Environment;
+
+builder.Configuration
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+
 using IHost host = builder.Build();
 
 LaunchImport(host.Services);
@@ -55,8 +58,10 @@ static void LaunchImport(IServiceProvider services)
     IScryfallImporter importer = provider.GetRequiredService<IScryfallImporter>();
     ICardDatabaseSave cardDatabaseSave = provider.GetRequiredService<ICardDatabaseSave>();
     provider.GetServices<IScryfallBuilder>();
-    var cards = importer.Import();
-    cardDatabaseSave.Save([.. cards]);
+    //var sets = importer.SetImport();
+    //cardDatabaseSave.SaveSets(sets);
+    var cards = importer.CardImport();
+    cardDatabaseSave.SaveCards(cards);
 }
 
 await host.RunAsync();

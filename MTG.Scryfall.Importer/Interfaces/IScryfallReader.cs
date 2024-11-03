@@ -1,8 +1,10 @@
 ﻿using MTG.Scryfall.Models.Card;
+using MTG.Scryfall.Models.Set;
 
 namespace MTG.Scryfall.Importer.Interfaces;
 
 public interface IScryfallReader
 {
-    IList<ScryfallCard> Read(StreamReader? streamReader);
+    IList<ScryfallCard> ReadCards(StreamReader? streamReader);
+    IList<ScryfallSet> ReadSets(string? result);
 }

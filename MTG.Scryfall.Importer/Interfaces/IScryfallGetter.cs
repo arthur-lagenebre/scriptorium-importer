@@ -2,5 +2,6 @@
 
 public interface IScryfallGetter
 {
-    StreamReader GetScryfallStreamReader();
+    StreamReader GetScryfallCardStreamReader();
+    Task<string> GetScryfallSetStreamReader();
 }

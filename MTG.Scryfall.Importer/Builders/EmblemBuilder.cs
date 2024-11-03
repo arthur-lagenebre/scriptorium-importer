@@ -19,7 +19,7 @@ public class EmblemBuilder : IScryfallBuilder
     private Color _colorIndicator;
     private List<string> _keywords;
     private List<string> _producedMana;
-    private Set _set;
+    private CardSet _set;
     private List<Face> _cardFaces;
     private List<RelatedCard> _relatedCards;
     private string? _power;
@@ -140,7 +140,7 @@ public class EmblemBuilder : IScryfallBuilder
     {
         var flavors = new List<Flavor> { new(0, StringHelper.GetDefaultValue(artist), StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
 
-        _set = new Set(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors);
+        _set = new CardSet(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors);
         return this;
     }
 

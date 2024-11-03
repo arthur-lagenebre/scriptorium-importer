@@ -4,11 +4,11 @@ using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer;
 
-public class ScryfallDirector : IScryfallDirector
+public class ScryfallCardDirector : IScryfallCardDirector
 {
     private readonly IEnumerable<IScryfallBuilder> _scryfallBuilders;
 
-    public ScryfallDirector(IEnumerable<IScryfallBuilder> scryfallBuilders) => _scryfallBuilders = scryfallBuilders;
+    public ScryfallCardDirector(IEnumerable<IScryfallBuilder> scryfallBuilders) => _scryfallBuilders = scryfallBuilders;
 
     public Card BuildCard(ScryfallCard scryfallCard)
     {

@@ -12,7 +12,7 @@ public class ScryfallDirectorTests
     public void Should_Throw_NotSupportedException_When_Layout_Is_Invalid()
     {
         // Arrange
-        var director = new ScryfallDirector(_scryfallBuilders);
+        var director = new ScryfallCardDirector(_scryfallBuilders);
         var scryfallCard = new ScryfallCard() { Layout = "invalid", Name = "Name", TypeLine = "TypeLine", Id = string.Empty, ColorIdentity = [], Keywords = [] };
 
         // Act & Assert
