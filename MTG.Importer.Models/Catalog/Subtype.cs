@@ -1,3 +1,3 @@
 ﻿namespace MTG.Importer.Models.Catalog;
 
-public record Subtype(Guid Id, string TypeCard, string Name);
+public record Subtype(Guid Id, string language, string TypeCard, string Name);

@@ -4,9 +4,6 @@ namespace MTG.Scryfall.Models.Catalog;
 
 public class ScryfallCatalog
 {
-    public class ScryfallSetApiResult
-    {
-        [JsonProperty("data")]
-        public List<string>? Data { get; set; }
-    }
+    [JsonProperty("data")]
+    public List<string>? Data { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using MTG.Scryfall.Importer.Interfaces;
 
 namespace MTG.Scryfall.Importer;
@@ -16,7 +15,7 @@ public class ScryfallGetter : IScryfallGetter
         return new StreamReader(path);
     }
 
-    public async Task<string> GetScryfallSetStreamReader()
+    public string GetScryfallUrl(string path)
     {
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -25,11 +24,11 @@ public class ScryfallGetter : IScryfallGetter
         client.DefaultRequestHeaders.UserAgent.Clear();
         client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MTG.Importer", ""));
 
-        HttpResponseMessage response = await client.GetAsync("https://api.scryfall.com/sets");
+        var response = client.GetAsync("https://api.scryfall.com/" + path).Result;
 
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.Content.ToString());
 
-        return await response.Content.ReadAsStringAsync();
+        return response.Content.ReadAsStringAsync().Result;
     }
 }
