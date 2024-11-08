@@ -1,6 +1,9 @@
-﻿using MTG.Importer.Models.Card;
+﻿using System.Text.RegularExpressions;
+using MTG.Importer.Models.Card;
 using MTG.Importer.Models.Catalog;
 using MTG.Importer.Models.Set;
+using MTG.Importer.Save;
+using MTG.Importer.Save.Interfaces;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models.Card;
@@ -11,23 +14,45 @@ namespace MTG.Scryfall.Importer;
 public class ScryfallMapper : IScryfallMapper
 {
     private readonly IScryfallCardDirector _director;
+    private readonly IDatabaseReader _databaseReader;
     private const string _language = "en";
 
-    public ScryfallMapper(IScryfallCardDirector director) => _director = director;
+    public ScryfallMapper(IScryfallCardDirector director, IDatabaseReader databaseReader)
+    {
+        _director = director;
+        _databaseReader = databaseReader;
+    }
 
     public IList<Card> MapCards(IList<ScryfallCard> scryfallCards)
     {
         var cards = new List<Card>();
+        var sets = _databaseReader.GetSets();
+        var artists = _databaseReader.GetArtists();
 
         foreach (var scryfallCard in scryfallCards)
         {
             if (scryfallCard.Digital)
-            {
                 continue;
-            }
 
             try
             {
+                var setId = sets?.FirstOrDefault(x => x.Code == scryfallCard.Set)?.Id;
+
+                if (scryfallCard.ArtistIds != null && !string.IsNullOrEmpty(scryfallCard.Artist) && artists != null)
+                    scryfallCard.ArtistIds = GetArtistsId(artists, scryfallCard.ArtistIds, scryfallCard.Artist);
+
+                if (scryfallCard.CardFaces != null && artists != null)
+                {
+                    foreach (var cardFace in scryfallCard.CardFaces)
+                    {
+                        if (cardFace.ArtistIds != null && !string.IsNullOrEmpty(cardFace.Artist))
+                            cardFace.ArtistIds = GetArtistsId(artists, cardFace.ArtistIds, cardFace.Artist);
+                        else if (scryfallCard.ArtistIds != null)
+                            cardFace.ArtistIds = scryfallCard.ArtistIds;
+                    }
+                }
+
+                scryfallCard.SetId = setId ?? Guid.NewGuid();
                 cards.Add(_director.BuildCard(scryfallCard));
             }
             catch (NotSupportedException)
@@ -37,6 +62,48 @@ public class ScryfallMapper : IScryfallMapper
         }
 
         return cards;
+    }
+
+    private static List<Guid> GetArtistsId(IList<Artist> artists, IList<Guid> artistIds, string artistName)
+    {
+        var name = CleanArtistName(artistName);
+
+        if (artistIds.Count == 1)
+        {
+            var artistId = artists.First(x => x.Name == name).Id;
+
+            return [artistId];
+        }
+
+        var ids = new List<Guid>();
+
+        foreach (var artist in name.Split(" & "))
+            ids.Add(artists.First(x => x.Name == artist).Id);
+
+        return ids;
+    }
+
+    private static string CleanArtistName(string artistName)
+    {
+        var young = new List<string> { "Aliya, age 5½", "Eli, age 8", "Hyan Tran, age 6", "Kira, age 5½", "Mohamed, age 4", "Said, age 6" };
+
+        if (young.Contains(artistName))
+            return artistName;
+
+        artistName = Regex.Replace(artistName, @"(“.+” )|(, (a|A)ge \d+(½|¾)?)", "");
+
+        return artistName switch
+        {
+            "Chengo McFlingers" => "Robert Bliss",
+            "Miho Irie" => "Tatamepi",
+            "Erica Gassalasca-Jape" => "Heather Hudson",
+            "Evkay Alkerway" => "Kev Walker",
+            "Claymore J. Flapdoodle" => "Phil Foglio",
+            "宋其金/Song Qijin" => "Song Qijin",
+            "PuffyGator" => "Nana Qi",
+            "Lars Grant-“Wild Wild”-West" => "Lars Grant-West",
+            _ => artistName,
+        };
     }
 
     public IList<Artist> MapArtist(IList<string> artistsNames)

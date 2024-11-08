@@ -39,9 +39,11 @@ builder.Services.AddSingleton<IScryfallBuilder, TokenBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 
-builder.Services.AddSingleton<ICardDatabaseSaver, CardDatabaseSaver>();
-builder.Services.AddSingleton<ICardDatabaseReader, CardDatabaseReader>();
+builder.Services.AddSingleton<IDatabaseSaver, DatabaseSaver>();
+builder.Services.AddSingleton<IDatabaseReader, DatabaseReader>();
 builder.Services.AddSingleton<IDatabaseMapper, DatabaseMapper>();
+
+builder.Services.AddSingleton<ITypelineMemoryCache, TypelineMemoryCache>();
 
 IHostEnvironment env = builder.Environment;
 
@@ -60,41 +62,47 @@ static void LaunchImport(IServiceProvider services)
     provider.GetServices<IScryfallBuilder>();
 
     var importer = provider.GetRequiredService<IScryfallImporter>();
-    var cardDatabaseSaver = provider.GetRequiredService<ICardDatabaseSaver>();
-    var cardDatabaseReader = provider.GetRequiredService<ICardDatabaseReader>();
+    var cardDatabaseSaver = provider.GetRequiredService<IDatabaseSaver>();
+    var cardDatabaseReader = provider.GetRequiredService<IDatabaseReader>();
 
-    var artistsDb = cardDatabaseReader.GetArtists();
-    var artists = importer.ArtistsImport(artistsDb);
+    Console.WriteLine("Import artists");
+    var artists = importer.ArtistsImport();
+    Console.WriteLine($"{artists?.Count} artists found");
     if (artists != null && artists.Count > 0)
         cardDatabaseSaver.SaveArtists(artists);
 
-    var supertypesDb = cardDatabaseReader.GetSupertypes();
-    var supertypes = importer.SupertypesImport(supertypesDb);
+    Console.WriteLine("Import supertypes");
+    var supertypes = importer.SupertypesImport();
+    Console.WriteLine($"{supertypes?.Count} supertypes found");
     if (supertypes != null && supertypes.Count > 0)
         cardDatabaseSaver.SaveSupertypes(supertypes);
 
-    var typesDb = cardDatabaseReader.GetTypes();
-    var types = importer.TypesImport(typesDb);
+    Console.WriteLine("Import types");
+    var types = importer.TypesImport();
+    Console.WriteLine($"{types?.Count} types found");
     if (types != null && types.Count > 0)
         cardDatabaseSaver.SaveTypes(types);
 
-    var subtypesDb = cardDatabaseReader.GetSubtypes();
-
+    Console.WriteLine("Import cardTypes");
     var cardTypes = new List<string> { "Artifact", "Battle", "Creature", "Enchantment", "Land", "Planeswalker", "Spell" };
 
     foreach (var cardType in cardTypes)
     {
-        var subtypes = importer.SubtypesImport(subtypesDb, cardType);
+        var subtypes = importer.SubtypesImport(cardType);
+        Console.WriteLine($"{subtypes?.Count} subtypes[{cardType}] found");
         if (subtypes != null && subtypes.Count > 0)
             cardDatabaseSaver.SaveSubtypes(subtypes);
     }
 
-    var setsDb = cardDatabaseReader.GetSets();
-    var sets = importer.SetsImport(setsDb);
+    Console.WriteLine("Import sets");
+    var sets = importer.SetsImport();
+    Console.WriteLine($"{sets?.Count} sets found");
     if (sets != null && sets.Count > 0)
         cardDatabaseSaver.SaveSets(sets);
 
+    Console.WriteLine("Import cards");
     var cards = importer.CardsImport();
+    Console.WriteLine($"{cards?.Count} cards found");
     if (cards != null && cards.Count > 0)
         cardDatabaseSaver.SaveCards(cards);
 }

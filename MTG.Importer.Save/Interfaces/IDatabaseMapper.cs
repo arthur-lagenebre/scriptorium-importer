@@ -6,6 +6,13 @@ namespace MTG.Importer.Save.Interfaces;
 public interface IDatabaseMapper
 {
     CardDto ConvertCard(Card card);
-    IList<CardNameDto> ConvertCardNames(Card card);
-    IList<CardTextDto> ConvertCardTexts(Card card);
+    List<CardFaceDto> ConvertCardFaces(Card card);
+    List<CardNameDto> ConvertCardNames(Card card);
+    CardSetDto ConvertCardSet(Card card);
+    List<CardSetFaceDto> ConvertCardSetFaces(Card card, Guid cardSetId);
+    List<CardTextDto> ConvertCardTexts(Card card);
+    List<RelatedCardDto> ConvertRelatedCards(Card card);
+    List<CardSubtypeDTO> ConvertSubtypes(Card card);
+    List<CardSupertypeDto> ConvertSupertypes(Card card);
+    List<CardTypeDto> ConvertTypes(Card card);
 }

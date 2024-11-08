@@ -1,20 +1,16 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
-using MTG.Scryfall.Models;
 
 namespace MTG.Scryfall.Importer;
 
 public class ScryfallTypelineManager : IScryfallTypelineManager
 {
-    private readonly TypelineProperties _properties; 
+    private readonly ITypelineMemoryCache _typelineMemoryCache;
 
-    public ScryfallTypelineManager()
+    public ScryfallTypelineManager(ITypelineMemoryCache typelineMemoryCache)
     {
-        var subtypes = new List<string> { "New Phyrexia", "The Abyss", "Serra's Realm", "Bolas's Meditation Realm" };
-        var supertypes = new List<string> { "Basic", "Host", "Elite", "Legendary", "Ongoing", "Snow", "Token", "World" };
-        var types =  new List<string> { "Artifact", "Battle", "Conspiracy", "Creature", "Emblem", "Enchantment", "Hero", "Instant", "Land", "Phenomenon", "Plane", "Planeswalker", "Scheme", "Sorcery", "Tribal", "Vanguard"};
-        _properties = new TypelineProperties("—", " ", ' ', subtypes, supertypes, types);
+        _typelineMemoryCache = typelineMemoryCache;
     }
 
     public Typeline ExtractTypeline(string typeline)
@@ -28,42 +24,55 @@ public class ScryfallTypelineManager : IScryfallTypelineManager
         return new Typeline(types, supertypes, subtypes);
     }
 
-    private List<string> GetTypes(string typeline)
+    private List<Guid> GetTypes(string typeline)
     {
         if (!string.IsNullOrEmpty(typeline))
         {
-            typeline = typeline.Split(_properties.TypelineSeparator)[0].Trim();
+            var cardTypes = new List<Guid>();
+            var types = _typelineMemoryCache.GetTypes();
 
-            return _properties.Types.Intersect(typeline.Split(_properties.TypeSeparators), StringComparer.OrdinalIgnoreCase).ToList();
+            if (types != null)
+                foreach (var type in types)
+                    if (typeline.Contains(type.Name))
+                        cardTypes.Add(type.Id);
+
+            return cardTypes;
         }
 
         return [];
     }
 
-    private List<string> GetSupertypes(string typeline)
+    private List<Guid> GetSupertypes(string typeline)
     {
         if (!string.IsNullOrEmpty(typeline))
         {
-            typeline = typeline.Split(_properties.TypelineSeparator)[0].Trim();
+            var cardSupertypes = new List<Guid>();
+            var supertypes = _typelineMemoryCache.GetSupertypes();
 
-            return _properties.Supertypes.Intersect(typeline.Split(_properties.TypeSeparators), StringComparer.OrdinalIgnoreCase).ToList();
+            if (supertypes != null)
+                foreach (var supertype in supertypes)
+                    if (typeline.Contains(supertype.Name))
+                        cardSupertypes.Add(supertype.Id);
+
+            return cardSupertypes;
         }
 
         return [];
     }
 
-    private List<string> GetSubtypes(string typeline)
+    private List<Guid> GetSubtypes(string typeline)
     {
-        if (!string.IsNullOrEmpty(typeline) && typeline.Contains(_properties.TypelineSeparator))
+        if (!string.IsNullOrEmpty(typeline))
         {
-            var subtype = typeline.Split(_properties.TypelineSeparator)[1].Trim();
+            var cardSubtypes = new List<Guid>();
+            var subtypes = _typelineMemoryCache.GetSubtypes();
 
-            if (_properties.Subtypes.Contains(subtype))
-            {
-                return [subtype];
-            }
+            if (subtypes != null)
+                foreach (var subtype in subtypes)
+                    if (typeline.Contains(subtype.Name))
+                        cardSubtypes.Add(subtype.Id);
 
-            return [.. subtype.Split(_properties.SubtypeSeparator)];
+            return cardSubtypes;
         }
 
         return [];

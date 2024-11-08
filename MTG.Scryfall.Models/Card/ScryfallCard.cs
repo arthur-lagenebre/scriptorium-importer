@@ -98,6 +98,9 @@ public class ScryfallCard
     [JsonProperty("flavor_name")]
     public string? FlavorName { get; set; }
 
+    // This card’s set id.
+    public Guid SetId { get; set; }
+
     // This card’s set code.
     [JsonProperty("set")]
     public string? Set { get; set; }
@@ -121,6 +124,10 @@ public class ScryfallCard
     // The name of the illustrator(s) of this card. Newly spoiled cards may not have this field yet.
     [JsonProperty("artist")]
     public string? Artist { get; set; }
+
+    // The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
+    [JsonProperty("artist_ids")]
+    public List<Guid>? ArtistIds { get; set; }
 
     // This card’s hand modifier, if it is Vanguard card. This value will contain a delta, such as -1.
     [JsonProperty("hand_modifier")]

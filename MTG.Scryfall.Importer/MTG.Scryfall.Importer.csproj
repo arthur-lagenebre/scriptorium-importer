@@ -13,10 +13,12 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Runtime.Caching" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MTG.Importer.Models\MTG.Importer.Models.csproj" />
+    <ProjectReference Include="..\MTG.Importer.Save\MTG.Importer.Save.csproj" />
     <ProjectReference Include="..\MTG.Scryfall.Models\MTG.Scryfall.Models.csproj" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ using MTG.Importer.Models.Set;
 
 namespace MTG.Importer.Save.Interfaces;
 
-public interface ICardDatabaseSaver
+public interface IDatabaseSaver
 {
     void SaveArtists(IList<Artist> artists);
     void SaveCards(IList<Card> cards);

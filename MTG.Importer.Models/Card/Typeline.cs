@@ -1,3 +1,3 @@
 ﻿namespace MTG.Importer.Models.Card;
 
-public record Typeline(List<string> Types, List<string> Supertype, List<string> Subtypes);
+public record Typeline(List<Guid> Types, List<Guid> Supertypes, List<Guid> Subtypes);

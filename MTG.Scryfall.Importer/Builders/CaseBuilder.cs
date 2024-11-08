@@ -27,6 +27,8 @@ public class CaseBuilder : IScryfallBuilder
     private string? _loyalty;
     private string? _handModifier;
     private string? _lifeModifier;
+    private List<Flavor> _flavors;
+    private DateTime _releasedDate;
 
     public Layout Layout => new("case");
 
@@ -58,11 +60,13 @@ public class CaseBuilder : IScryfallBuilder
         _loyalty = null;
         _handModifier = null;
         _lifeModifier = null;
+        _flavors = [];
+        _releasedDate = DateTime.MinValue;
     }
 
     public Card Build()
     {
-        var card = new Card(_oracleId, _name, _typeline, _text, _cost, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _power, _toughness, _loyalty, _handModifier, _lifeModifier);
+        var card = new Card(_oracleId, _name, _typeline, _text, _cost, _releasedDate, _language, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _power, _toughness, _loyalty, _handModifier, _lifeModifier);
 
         Reset();
 
@@ -84,7 +88,7 @@ public class CaseBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddCost(string? manacost, double manaValue)
     {
-        _cost = new Cost(StringHelper.GetDefaultValue(manacost), manaValue);
+        _cost = new Cost(StringHelper.GetDefaultValue(manacost), DoubleHelper.GetDefaultValue(manaValue));
         return this;
     }
 
@@ -96,6 +100,12 @@ public class CaseBuilder : IScryfallBuilder
     public IScryfallBuilder AddKeywords(List<string> keywords)
     {
         _keywords.AddRange(keywords);
+        return this;
+    }
+
+    public IScryfallBuilder AddReleasedDate(string? releasedDate)
+    {
+        _releasedDate = DateHelper.GetDate(releasedDate);
         return this;
     }
 
@@ -134,11 +144,11 @@ public class CaseBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddSet(string? set, string? artist, string? collectorNumber, string? rarity, string? flavorText, string? flavorName)
+    public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName)
     {
-        var flavors = new List<Flavor> { new(0, StringHelper.GetDefaultValue(artist), StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
+        var flavors = new List<Flavor> { new(0, artistsId, StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
 
-        _set = new CardSet(StringHelper.GetDefaultValue(set), StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors);
+        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors);
         return this;
     }
 

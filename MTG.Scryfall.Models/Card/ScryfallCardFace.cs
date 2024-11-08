@@ -41,6 +41,10 @@ public class ScryfallCardFace
     [JsonProperty("artist")]
     public string? Artist { get; set; }
 
+    // The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
+    [JsonProperty("artist_ids")]
+    public List<Guid>? ArtistIds { get; set; }
+
     // The just-for-fun name printed on this face, if any (such as for Godzilla series cards).
     [JsonProperty("flavor_name")]
     public string? FlavorName { get; set; }
