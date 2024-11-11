@@ -1,14 +1,12 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Scryfall.Importer.Builders;
-using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models.Card;
-using NSubstitute;
 
 namespace MTG.Scryfall.Importer.Tests.Builders;
 
 public class AdventureBuilderTests
 {
-    private readonly AdventureBuilder _builder = new(Substitute.For<IScryfallTypelineManager>());
+    private readonly AdventureBuilder _builder = new();
     private readonly ScryfallCard _scryfallCard;
 
     public AdventureBuilderTests()

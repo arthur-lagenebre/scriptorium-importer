@@ -29,6 +29,10 @@ public class ScryfallCardFace
     [JsonProperty("type_line")]
     public string? TypeLine { get; set; }
 
+    // The localized type line printed on this face, if any.
+    [JsonProperty("printed_type_line")]
+    public string? PrintedTypeline { get; set; }
+
     // The Oracle text for this face, if any.
     [JsonProperty("oracle_text")]
     public string? OracleText { get; set; }

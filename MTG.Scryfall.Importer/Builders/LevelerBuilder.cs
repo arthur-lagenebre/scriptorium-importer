@@ -32,11 +32,8 @@ public class LevelerBuilder : IScryfallBuilder
 
     public Layout Layout => new("leveler");
 
-    private readonly IScryfallTypelineManager _typelineManager;
-
-    public LevelerBuilder(IScryfallTypelineManager typelineManager)
+    public LevelerBuilder()
     {
-        _typelineManager = typelineManager;
         Reset();
     }
 
@@ -46,7 +43,7 @@ public class LevelerBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline([], [], []);
+        _typeline = new Typeline(string.Empty, string.Empty);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -162,9 +159,9 @@ public class LevelerBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string typeline)
+    public IScryfallBuilder AddTypeLine(string typeline, string printedTypeline)
     {
-        _typeline = _typelineManager.ExtractTypeline(typeline);
+        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeline, printedTypeline));
         return this;
     }
 

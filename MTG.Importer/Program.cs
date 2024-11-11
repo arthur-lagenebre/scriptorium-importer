@@ -14,7 +14,6 @@ builder.Services.AddSingleton<IScryfallGetter, ScryfallGetter>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
 builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
-builder.Services.AddSingleton<IScryfallTypelineManager, ScryfallTypelineManager>();
 
 builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, AugmentBuilder>();
@@ -42,8 +41,6 @@ builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 builder.Services.AddSingleton<IDatabaseSaver, DatabaseSaver>();
 builder.Services.AddSingleton<IDatabaseReader, DatabaseReader>();
 builder.Services.AddSingleton<IDatabaseMapper, DatabaseMapper>();
-
-builder.Services.AddSingleton<ITypelineMemoryCache, TypelineMemoryCache>();
 
 IHostEnvironment env = builder.Environment;
 
@@ -89,7 +86,7 @@ static void LaunchImport(IServiceProvider services)
     foreach (var cardType in cardTypes)
     {
         var subtypes = importer.SubtypesImport(cardType);
-        Console.WriteLine($"{subtypes?.Count} subtypes[{cardType}] found");
+        Console.WriteLine($"{subtypes?.Count} subtypes [{cardType}] found");
         if (subtypes != null && subtypes.Count > 0)
             cardDatabaseSaver.SaveSubtypes(subtypes);
     }

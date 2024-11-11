@@ -2,7 +2,6 @@
 using MTG.Importer.Models.Card;
 using MTG.Importer.Models.Catalog;
 using MTG.Importer.Models.Set;
-using MTG.Importer.Save;
 using MTG.Importer.Save.Interfaces;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
@@ -15,7 +14,6 @@ public class ScryfallMapper : IScryfallMapper
 {
     private readonly IScryfallCardDirector _director;
     private readonly IDatabaseReader _databaseReader;
-    private const string _language = "en";
 
     public ScryfallMapper(IScryfallCardDirector director, IDatabaseReader databaseReader)
     {
@@ -31,7 +29,7 @@ public class ScryfallMapper : IScryfallMapper
 
         foreach (var scryfallCard in scryfallCards)
         {
-            if (scryfallCard.Digital)
+            if (scryfallCard.Digital || DateHelper.GetDate(scryfallCard.ReleasedAt) > DateTime.Today)
                 continue;
 
             try
@@ -121,7 +119,7 @@ public class ScryfallMapper : IScryfallMapper
         var supertypes = new List<Supertype>();
 
         foreach (var supertypesName in supertypesNames)
-            supertypes.Add(new Supertype(Guid.NewGuid(), _language, supertypesName));
+            supertypes.Add(new Supertype(Guid.NewGuid(), supertypesName));
 
         return supertypes;
     }
@@ -131,7 +129,7 @@ public class ScryfallMapper : IScryfallMapper
         var types = new List<CardType>();
 
         foreach (var supertypesName in cardtypesNames)
-            types.Add(new CardType(Guid.NewGuid(), _language, supertypesName));
+            types.Add(new CardType(Guid.NewGuid(), supertypesName));
 
         return types;
     }
@@ -141,7 +139,7 @@ public class ScryfallMapper : IScryfallMapper
         var subtypes = new List<Subtype>();
 
         foreach (var supertypesName in subtypesNames)
-            subtypes.Add(new Subtype(Guid.NewGuid(), _language, cardtype, supertypesName));
+            subtypes.Add(new Subtype(Guid.NewGuid(), cardtype, supertypesName));
 
         return subtypes;
     }
@@ -152,7 +150,7 @@ public class ScryfallMapper : IScryfallMapper
 
         foreach (var scryfallSet in scryfallSets)
         {
-            if (scryfallSet.Digital)
+            if (scryfallSet.Digital || DateHelper.GetDate(scryfallSet.ReleasedAt) > DateTime.Today)
             {
                 continue;
             }

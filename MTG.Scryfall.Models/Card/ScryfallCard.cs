@@ -33,6 +33,10 @@ public class ScryfallCard
     [JsonProperty("type_line")]
     public required string TypeLine { get; set; }
 
+    // The localized type line printed on this card, if any.
+    [JsonProperty("printed_type_line")]
+    public string? PrintedTypeLine { get; set; }
+
     // A language code for this printing.
     [JsonProperty("lang")]
     public ScryfallLanguage Lang { get; set; }

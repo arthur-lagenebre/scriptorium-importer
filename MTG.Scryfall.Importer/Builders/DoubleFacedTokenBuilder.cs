@@ -32,11 +32,8 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
 
     public Layout Layout => new("double_faced_token");
 
-    private readonly IScryfallTypelineManager _typelineManager;
-
-    public DoubleFacedTokenBuilder(IScryfallTypelineManager typelineManager)
+    public DoubleFacedTokenBuilder()
     {
-        _typelineManager = typelineManager;
         Reset();
     }
 
@@ -46,7 +43,7 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline([], [], []);
+        _typeline = new Typeline(string.Empty, string.Empty);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -77,7 +74,7 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
     {
         if (scryfallCardFaces != null)
         {
-            var (Faces, Flavors) = CardFaceHelper.CreateCardFacesInformations(scryfallCardFaces, _language, _typelineManager);
+            var (Faces, Flavors) = CardFaceHelper.CreateCardFacesInformations(scryfallCardFaces, _language);
             _cardFaces.AddRange(Faces);
             _flavors.AddRange(Flavors);
             _name = new Name(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Value)));
@@ -168,9 +165,9 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string typeline)
+    public IScryfallBuilder AddTypeLine(string typeline, string printedTypeline)
     {
-        _typeline = _typelineManager.ExtractTypeline(typeline);
+        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeline, printedTypeline));
         return this;
     }
 

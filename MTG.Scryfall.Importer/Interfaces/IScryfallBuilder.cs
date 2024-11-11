@@ -22,6 +22,6 @@ public interface IScryfallBuilder
     IScryfallBuilder AddRelatedCards(List<ScryfallAllPart>? scryfallAllParts, string scryfallId);
     IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName);
     IScryfallBuilder AddText(string? oracleText, string? printedText);
-    IScryfallBuilder AddTypeLine(string typeline);
+    IScryfallBuilder AddTypeLine(string typeline, string? printedTypeline);
     IScryfallBuilder AddVanguard(string? handModifier, string? lifeModifier);
 }

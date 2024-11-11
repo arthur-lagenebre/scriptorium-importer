@@ -1,5 +1,4 @@
 ﻿using MTG.Importer.Models.Card;
-using MTG.Importer.Models.Set;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models;
@@ -33,11 +32,8 @@ public class ClassBuilder : IScryfallBuilder
 
     public Layout Layout => new("class");
 
-    private readonly IScryfallTypelineManager _typelineManager;
-
-    public ClassBuilder(IScryfallTypelineManager typelineManager)
+    public ClassBuilder()
     {
-        _typelineManager = typelineManager;
         Reset();
     }
 
@@ -47,7 +43,7 @@ public class ClassBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline([], [], []);
+        _typeline = new Typeline(string.Empty, string.Empty);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -161,9 +157,9 @@ public class ClassBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string typeline)
+    public IScryfallBuilder AddTypeLine(string typeline, string printedTypeline)
     {
-        _typeline = _typelineManager.ExtractTypeline(typeline);
+        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeline, printedTypeline));
         return this;
     }
 

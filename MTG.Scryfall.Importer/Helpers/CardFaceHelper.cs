@@ -6,25 +6,25 @@ namespace MTG.Scryfall.Importer.Helpers;
 
 public static class CardFaceHelper
 {
-    public static (List<Face> Faces, List<Flavor> Flavors) CreateCardFacesInformations(List<ScryfallCardFace> cardFaces, string language, IScryfallTypelineManager typelineManager)
+    public static (List<Face> Faces, List<Flavor> Flavors) CreateCardFacesInformations(List<ScryfallCardFace> cardFaces, string language)
     {
         var faces = new List<Face>();
         var flavors = new List<Flavor>();
 
         foreach (var cardFace in cardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
         {
-            faces.Add(CreateCardFace(cardFace.Index, cardFace.ScryfallCardFace, language, typelineManager));
+            faces.Add(CreateCardFace(cardFace.Index, cardFace.ScryfallCardFace, language));
             flavors.Add(CreateFlavor(cardFace.Index, cardFace.ScryfallCardFace));
         }
 
         return (faces, flavors);
     }
 
-    private static Face CreateCardFace(int index, ScryfallCardFace face, string language, IScryfallTypelineManager typelineManager)
+    private static Face CreateCardFace(int index, ScryfallCardFace face, string language)
     {
         var cost = new Cost(face.ManaCost, face.ManaValue);
         var name = new Name(language, LanguageHelper.GetLanguageValue(language, face.Name, face.PrintedName));
-        var typeline = typelineManager.ExtractTypeline(face.TypeLine);
+        var typeline = new Typeline(language, LanguageHelper.GetLanguageValue(language, face.TypeLine, face.PrintedTypeline));
         var text = new Text(language, LanguageHelper.GetLanguageValue(language, StringHelper.GetDefaultValue(face.OracleText), face.PrintedText));
         var power = !string.IsNullOrWhiteSpace(face.Power) ? face.Power : null;
         var toughness = !string.IsNullOrWhiteSpace(face.Toughness) ? face.Toughness : null;

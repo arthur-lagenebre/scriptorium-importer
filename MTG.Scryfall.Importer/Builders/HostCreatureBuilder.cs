@@ -32,11 +32,8 @@ public class HostCreatureBuilder : IScryfallBuilder
 
     public Layout Layout => new("host");
 
-    private readonly IScryfallTypelineManager _typelineManager;
-
-    public HostCreatureBuilder(IScryfallTypelineManager typelineManager)
+    public HostCreatureBuilder()
     {
-        _typelineManager = typelineManager;
         Reset();
     }
 
@@ -46,7 +43,7 @@ public class HostCreatureBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline([], [], []);
+        _typeline = new Typeline(string.Empty, string.Empty);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -160,9 +157,9 @@ public class HostCreatureBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string typeline)
+    public IScryfallBuilder AddTypeLine(string typeline, string printedTypeline)
     {
-        _typeline = _typelineManager.ExtractTypeline(typeline);
+        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeline, printedTypeline));
         return this;
     }
 

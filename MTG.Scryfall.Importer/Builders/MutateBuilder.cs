@@ -33,11 +33,8 @@ public class MutateBuilder : IScryfallBuilder
 
     public Layout Layout => new("mutate");
 
-    private readonly IScryfallTypelineManager _typelineManager;
-
-    public MutateBuilder(IScryfallTypelineManager typelineManager)
+    public MutateBuilder()
     {
-        _typelineManager = typelineManager;
         Reset();
     }
 
@@ -47,7 +44,7 @@ public class MutateBuilder : IScryfallBuilder
         _cost = new Cost(string.Empty, double.NaN);
         _language = string.Empty;
         _name = new Name(string.Empty, string.Empty);
-        _typeline = new Typeline([], [], []);
+        _typeline = new Typeline(string.Empty, string.Empty);
         _text = new Text(string.Empty, string.Empty);
         _color = Color.Unknown;
         _colorIdentity = Color.Unknown;
@@ -161,9 +158,9 @@ public class MutateBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string typeline)
+    public IScryfallBuilder AddTypeLine(string typeline, string printedTypeline)
     {
-        _typeline = _typelineManager.ExtractTypeline(typeline);
+        _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeline, printedTypeline));
         return this;
     }
 

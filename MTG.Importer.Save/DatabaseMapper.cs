@@ -12,12 +12,10 @@ public class DatabaseMapper : IDatabaseMapper
         var cardTexts = ConvertCardTexts(card);
         var cardFaces = ConvertCardFaces(card);
         var cardSets = new List<CardSetDto> { ConvertCardSet(card) };
-        var cardTypes = ConvertTypes(card);
-        var cardSubtypes = ConvertSubtypes(card);
-        var cardSupertypes = ConvertSupertypes(card);
+        var cardTypelines = ConvertTypelines(card);
         var relatedCards = ConvertRelatedCards(card);
 
-        return new CardDto(card.OracleId, card.Cost.ManaCost, card.Cost.ManaValue, (int)card.Colors, (int)card.ColorsIdentity, (int)card.ColorsIndicator, card.Layout ?? string.Empty, card.Keyword, card.ProducedMana, card.Power ?? string.Empty, card.Toughness ?? string.Empty, card.Loyalty ?? string.Empty, card.HandModifier ?? string.Empty, card.LifeModifier ?? string.Empty, cardNames, cardTexts, cardFaces, cardSets, cardTypes, cardSubtypes, cardSupertypes, relatedCards);
+        return new CardDto(card.OracleId, card.Cost.ManaCost, card.Cost.ManaValue, (int)card.Colors, (int)card.ColorsIdentity, (int)card.ColorsIndicator, card.Layout ?? string.Empty, card.Keyword, card.ProducedMana, card.Power ?? string.Empty, card.Toughness ?? string.Empty, card.Loyalty ?? string.Empty, card.HandModifier ?? string.Empty, card.LifeModifier ?? string.Empty, cardNames, cardTexts, cardTypelines, cardFaces, cardSets, relatedCards);
     }
 
     public List<CardFaceDto> ConvertCardSetFaces(Card card)
@@ -43,65 +41,30 @@ public class DatabaseMapper : IDatabaseMapper
         return cardNamesDto;
     }
 
+    public List<CardTypelineDto> ConvertTypelines(Card card)
+    {
+        var cardTypelinesDto = new List<CardTypelineDto>();
+
+        if (card.CardFaces != null && card.CardFaces.Count > 0)
+            foreach (var cardFace in card.CardFaces)
+                cardTypelinesDto.Add(new CardTypelineDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Typeline.Language, cardFace.Typeline.Value));
+        else
+            cardTypelinesDto.Add(new CardTypelineDto(Guid.NewGuid(), card.OracleId, 0, card.Typeline.Language, card.Typeline.Value));
+
+        return cardTypelinesDto;
+    }
+
     public List<CardTextDto> ConvertCardTexts(Card card)
     {
-        var cardTextDto = new List<CardTextDto>();
+        var cardTextsDto = new List<CardTextDto>();
 
         if (card.CardFaces != null && card.CardFaces.Count > 0)
             foreach (var cardFace in card.CardFaces)
-                cardTextDto.Add(new CardTextDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Text.Language, cardFace.Text.Value));
+                cardTextsDto.Add(new CardTextDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Text.Language, cardFace.Text.Value));
         else
-            cardTextDto.Add(new CardTextDto(Guid.NewGuid(), card.OracleId, 0, card.Text.Language, card.Text.Value));
+            cardTextsDto.Add(new CardTextDto(Guid.NewGuid(), card.OracleId, 0, card.Text.Language, card.Text.Value));
 
-        return cardTextDto;
-    }
-
-    public List<CardSupertypeDto> ConvertSupertypes(Card card)
-    {
-        var cardSupertypesDto = new List<CardSupertypeDto>();
-
-        if (card.CardFaces != null && card.CardFaces.Count > 0)
-            foreach (var cardFace in card.CardFaces)
-                foreach (var supertype in cardFace.Typeline.Supertypes)
-                    cardSupertypesDto.Add(new CardSupertypeDto(Guid.NewGuid(), card.OracleId, 0, supertype));
-        else
-            foreach (var supertype in card.Typeline.Supertypes)
-                cardSupertypesDto.Add(new CardSupertypeDto(Guid.NewGuid(), card.OracleId, 0, supertype));
-
-
-        return cardSupertypesDto;
-    }
-
-    public List<CardSubtypeDTO> ConvertSubtypes(Card card)
-    {
-        var cardSubtypesDTO = new List<CardSubtypeDTO>();
-
-        if (card.CardFaces != null && card.CardFaces.Count > 0)
-            foreach (var cardFace in card.CardFaces)
-                foreach (var supertype in cardFace.Typeline.Subtypes)
-                    cardSubtypesDTO.Add(new CardSubtypeDTO(Guid.NewGuid(), card.OracleId, 0, supertype));
-        else
-            foreach (var supertype in card.Typeline.Subtypes)
-                cardSubtypesDTO.Add(new CardSubtypeDTO(Guid.NewGuid(), card.OracleId, 0, supertype));
-
-
-        return cardSubtypesDTO;
-    }
-
-    public List<CardTypeDto> ConvertTypes(Card card)
-    {
-        var cardTypesDto = new List<CardTypeDto>();
-
-        if (card.CardFaces != null && card.CardFaces.Count > 0)
-            foreach (var cardFace in card.CardFaces)
-                foreach (var supertype in cardFace.Typeline.Types)
-                    cardTypesDto.Add(new CardTypeDto(Guid.NewGuid(), card.OracleId, 0, supertype));
-        else
-            foreach (var supertype in card.Typeline.Types)
-                cardTypesDto.Add(new CardTypeDto(Guid.NewGuid(), card.OracleId, 0, supertype));
-
-
-        return cardTypesDto;
+        return cardTextsDto;
     }
 
     public CardSetDto ConvertCardSet(Card card)
