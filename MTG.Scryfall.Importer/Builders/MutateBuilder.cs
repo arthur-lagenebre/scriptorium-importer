@@ -158,7 +158,7 @@ public class MutateBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddTypeLine(string typeline, string printedTypeline)
+    public IScryfallBuilder AddTypeLine(string typeline, string? printedTypeline)
     {
         _typeline = new Typeline(_language, LanguageHelper.GetLanguageValue(_language, typeline, printedTypeline));
         return this;

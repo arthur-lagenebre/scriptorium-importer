@@ -98,6 +98,10 @@ public class ScryfallCard
     [JsonProperty("card_faces")]
     public List<ScryfallCardFace>? CardFaces { get; set; }
 
+    // An object listing available imagery for this card. See the Card Imagery article for more information.
+    [JsonProperty("image_uris")]
+    public ScryfallImageUris? ImageUris { get; set; }
+
     // The just-for-fun name printed on the card (such as for Godzilla series cards).
     [JsonProperty("flavor_name")]
     public string? FlavorName { get; set; }

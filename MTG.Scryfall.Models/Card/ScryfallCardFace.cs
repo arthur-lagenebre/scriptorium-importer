@@ -57,6 +57,10 @@ public class ScryfallCardFace
     [JsonProperty("layout")]
     public string? Layout { get; set; }
 
+    // An object providing URIs to imagery for this face, if this is a double-sided card. If this card is not double-sided, then the image_uris property will be part of the parent object instead.
+    [JsonProperty("image_uris")]
+    public ScryfallImageUris? ImageUris { get; set; }
+
     // This face’s colors, if the game defines colors for the individual face of this card.
     [JsonProperty("colors")]
     public List<string>? Colors { get; set; }
