@@ -6,7 +6,7 @@ public class ScryfallRuling
 {
     // The Oracle ID of the card this ruling is associated with.
     [JsonProperty("oracle_id")]
-    public required string OracleId { get; set; }
+    public Guid OracleId { get; set; }
 
     // The text of the ruling.
     [JsonProperty("comment")]

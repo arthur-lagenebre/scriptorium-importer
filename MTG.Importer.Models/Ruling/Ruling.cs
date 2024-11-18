@@ -1,3 +1,3 @@
 ﻿namespace MTG.Importer.Models.Ruling;
 
-public record Ruling(string OracleId, string Rule, DateTime PublishedAt);
+public record Ruling(Guid OracleId, string Language, string Rule, DateTime PublishedAt);

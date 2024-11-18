@@ -137,6 +137,7 @@ public class DatabaseSaver : IDatabaseSaver
     {
         foreach (var ruling in rulings)
         {
+            var rulingDTO = new RulingDto(Guid.NewGuid(), ruling.OracleId, ruling.Language, ruling.Rule, ruling.PublishedAt);
             var response = _httpClient.PostAsJsonAsync("Rulings", ruling).Result;
             response.EnsureSuccessStatusCode();
         }

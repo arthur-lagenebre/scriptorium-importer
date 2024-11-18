@@ -31,32 +31,28 @@ public class ScryfallMapper : IScryfallMapper
 
         foreach (var scryfallCard in scryfallCards)
         {
-            if (scryfallCard.Digital || DateHelper.GetDate(scryfallCard.ReleasedAt) > DateTime.Today)
+            if (scryfallCard.Digital || scryfallCard.Layout.Equals("art_series") || DateHelper.GetDate(scryfallCard.ReleasedAt) > DateTime.Today)
                 continue;
 
             try
             {
                 var setId = sets?.FirstOrDefault(x => x.Code == scryfallCard.Set)?.Id;
 
-                if (setId.HasValue)
-                {
-                    if (scryfallCard.ArtistIds != null && !string.IsNullOrEmpty(scryfallCard.Artist) && artists != null)
-                        scryfallCard.ArtistIds = GetArtistsId(artists, scryfallCard.ArtistIds, scryfallCard.Artist);
+                if (setId == null || !setId.HasValue)
+                    continue;
 
-                    if (scryfallCard.CardFaces != null && artists != null)
-                    {
-                        foreach (var cardFace in scryfallCard.CardFaces)
-                        {
-                            if (cardFace.ArtistIds != null && !string.IsNullOrEmpty(cardFace.Artist))
-                                cardFace.ArtistIds = GetArtistsId(artists, cardFace.ArtistIds, cardFace.Artist);
-                            else if (scryfallCard.ArtistIds != null)
-                                cardFace.ArtistIds = scryfallCard.ArtistIds;
-                        }
-                    }
+                if (scryfallCard.ArtistIds != null && !string.IsNullOrEmpty(scryfallCard.Artist) && artists != null)
+                    scryfallCard.ArtistIds = GetArtistsId(artists, scryfallCard.ArtistIds, scryfallCard.Artist);
 
-                    scryfallCard.SetId = setId.Value;
-                    cards.Add(_director.BuildCard(scryfallCard));
-                }
+                if (scryfallCard.CardFaces != null && artists != null)
+                    foreach (var cardFace in scryfallCard.CardFaces)
+                        if (cardFace.ArtistIds != null && !string.IsNullOrEmpty(cardFace.Artist))
+                            cardFace.ArtistIds = GetArtistsId(artists, cardFace.ArtistIds, cardFace.Artist);
+                        else if (scryfallCard.ArtistIds != null)
+                            cardFace.ArtistIds = scryfallCard.ArtistIds;
+
+                scryfallCard.SetId = setId.Value;
+                cards.Add(_director.BuildCard(scryfallCard));
             }
             catch (NotSupportedException)
             {
@@ -72,11 +68,7 @@ public class ScryfallMapper : IScryfallMapper
         var name = CleanArtistName(artistName);
 
         if (artistIds.Count == 1)
-        {
-            var artistId = artists.First(x => x.Name == name).Id;
-
-            return [artistId];
-        }
+            return [artists.First(x => x.Name == name).Id];
 
         var ids = new List<Guid>();
 
@@ -178,7 +170,7 @@ public class ScryfallMapper : IScryfallMapper
             if (scryfallRuling.Source != "wotc")
                 continue;
 
-            rulings.Add(new Ruling(scryfallRuling.OracleId, scryfallRuling.Comment, DateHelper.GetDate(scryfallRuling.PublishedAt)));
+            rulings.Add(new Ruling(scryfallRuling.OracleId, "en", scryfallRuling.Comment, DateHelper.GetDate(scryfallRuling.PublishedAt)));
         }
 
         return rulings;
