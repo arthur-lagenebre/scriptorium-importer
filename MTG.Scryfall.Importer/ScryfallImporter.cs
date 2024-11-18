@@ -1,5 +1,6 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Importer.Models.Catalog;
+using MTG.Importer.Models.Ruling;
 using MTG.Importer.Models.Set;
 using MTG.Scryfall.Importer.Interfaces;
 
@@ -100,5 +101,19 @@ public class ScryfallImporter : IScryfallImporter
         var subtypes = _mapper.MapSubtype(scryfallSubtypes, cardtype);
 
         return subtypes;
+    }
+
+    public IList<Ruling>? RulingsImport()
+    {
+        using var streamReader = _getter.GetScryfallRulingStreamReader();
+
+        var scryfallRulings = _reader.ReadRulings(streamReader);
+
+        if (scryfallRulings == null)
+            return [];
+
+        var rulings = _mapper.MapRulings(scryfallRulings);
+
+        return rulings;
     }
 }

@@ -102,6 +102,12 @@ static void LaunchImport(IServiceProvider services)
     Console.WriteLine($"{cards?.Count} cards found");
     if (cards != null && cards.Count > 0)
         cardDatabaseSaver.SaveCards(cards);
+
+    Console.WriteLine("Import rulings");
+    var rulings = importer.RulingsImport();
+    Console.WriteLine($"{rulings?.Count} ruling found");
+    if (rulings != null && rulings.Count > 0)
+        cardDatabaseSaver.SaveRulings(rulings);
 }
 
 await host.RunAsync();

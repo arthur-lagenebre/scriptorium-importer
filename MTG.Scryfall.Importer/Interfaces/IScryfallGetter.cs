@@ -3,5 +3,6 @@
 public interface IScryfallGetter
 {
     StreamReader GetScryfallCardStreamReader();
+    StreamReader GetScryfallRulingStreamReader();
     string GetScryfallUrl(string path);
 }

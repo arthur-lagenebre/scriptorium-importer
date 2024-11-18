@@ -1,6 +1,7 @@
 ﻿using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models.Card;
 using MTG.Scryfall.Models.Catalog;
+using MTG.Scryfall.Models.Ruling;
 using MTG.Scryfall.Models.Set;
 using Newtonsoft.Json;
 
@@ -51,5 +52,18 @@ public class ScryfallReader : IScryfallReader
             return [];
 
         return scryfallApiResult.Data;
+    }
+
+    public IList<ScryfallRuling> ReadRulings(StreamReader streamReader)
+    {
+        ArgumentNullException.ThrowIfNull(streamReader);
+
+        using var reader = new JsonTextReader(streamReader);
+
+        var serializer = new JsonSerializer();
+
+        var rulings = serializer.Deserialize<List<ScryfallRuling>>(reader);
+
+        return rulings ?? [];
     }
 }

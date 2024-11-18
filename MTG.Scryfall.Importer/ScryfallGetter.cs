@@ -15,6 +15,16 @@ public class ScryfallGetter : IScryfallGetter
         return new StreamReader(path);
     }
 
+    public StreamReader GetScryfallRulingStreamReader()
+    {
+        var path = @"D:\Cards Import\_MTG_\_rulings.json";
+
+        if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            throw new FileNotFoundException(path);
+
+        return new StreamReader(path);
+    }
+
     public string GetScryfallUrl(string path)
     {
         var client = new HttpClient();

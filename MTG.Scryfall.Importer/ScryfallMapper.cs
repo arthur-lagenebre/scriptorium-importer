@@ -1,11 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 using MTG.Importer.Models.Card;
 using MTG.Importer.Models.Catalog;
+using MTG.Importer.Models.Ruling;
 using MTG.Importer.Models.Set;
 using MTG.Importer.Save.Interfaces;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models.Card;
+using MTG.Scryfall.Models.Ruling;
 using MTG.Scryfall.Models.Set;
 
 namespace MTG.Scryfall.Importer;
@@ -165,5 +167,20 @@ public class ScryfallMapper : IScryfallMapper
     private Set MapSet(ScryfallSet scryfallSet)
     {
         return new(Guid.NewGuid(), scryfallSet.Name, scryfallSet.Code, scryfallSet.Type, DateHelper.GetDate(scryfallSet.ReleasedAt), StringHelper.GetDefaultValue(scryfallSet.Block), StringHelper.GetDefaultValue(scryfallSet.BlockCode), StringHelper.GetDefaultValue(scryfallSet.ParentSetCode));
+    }
+
+    public IList<Ruling> MapRulings(IList<ScryfallRuling> scryfallRulings)
+    {
+        var rulings = new List<Ruling>();
+
+        foreach (var scryfallRuling in scryfallRulings)
+        {
+            if (scryfallRuling.Source != "wotc")
+                continue;
+
+            rulings.Add(new Ruling(scryfallRuling.OracleId, scryfallRuling.Comment, DateHelper.GetDate(scryfallRuling.PublishedAt)));
+        }
+
+        return rulings;
     }
 }
