@@ -1,4 +1,5 @@
 ﻿using MTG.Importer.Models.Card;
+using MTG.Importer.Models.Ruling;
 using MTG.Scryfall.Models;
 using MTG.Scryfall.Models.Card;
 
@@ -7,7 +8,7 @@ namespace MTG.Scryfall.Importer.Interfaces;
 public interface IScryfallBuilder
 {
     Layout Layout { get; }
-    Card Build();
+    Card Build(List<Ruling> rulings);
     IScryfallBuilder AddCardFaces(List<ScryfallCardFace>? scryfallCardFaces);
     IScryfallBuilder AddColors(List<string>? colors, List<string> colorIdentity, List<string>? colorIndicator);
     IScryfallBuilder AddCost(string? manacost, double manaValue);

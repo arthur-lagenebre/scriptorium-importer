@@ -14,27 +14,27 @@ public class DatabaseMapper : IDatabaseMapper
         var cardSets = new List<CardSetDto> { ConvertCardSet(card) };
         var cardTypelines = ConvertTypelines(card);
         var relatedCards = ConvertRelatedCards(card);
+        var rulings = ConvertRulings(card);
 
-        return new CardDto(card.OracleId, card.Cost.ManaCost, card.Cost.ManaValue, (int)card.Colors, (int)card.ColorsIdentity, (int)card.ColorsIndicator, card.Layout ?? string.Empty, card.Keyword, card.ProducedMana, card.Power ?? string.Empty, card.Toughness ?? string.Empty, card.Loyalty ?? string.Empty, card.HandModifier ?? string.Empty, card.LifeModifier ?? string.Empty, cardNames, cardTexts, cardTypelines, cardFaces, cardSets, relatedCards);
+        return new CardDto(card.OracleId, card.Cost.ManaCost, card.Cost.ManaValue, (int)card.Colors, (int)card.ColorsIdentity, (int)card.ColorsIndicator, card.Layout ?? string.Empty, card.Keyword, card.ProducedMana, card.Power ?? string.Empty, card.Toughness ?? string.Empty, card.Loyalty ?? string.Empty, card.HandModifier ?? string.Empty, card.LifeModifier ?? string.Empty, cardNames, cardTexts, cardFaces, cardSets, cardTypelines, relatedCards, rulings);
+    }
+
+    private List<RulingDto> ConvertRulings(Card card)
+    {
+        return card.Rulings.Select(ruling => new RulingDto(Guid.NewGuid(), card.OracleId, ruling.Language, ruling.Rule, ruling.PublishedAt)).ToList();
     }
 
     public List<CardFaceDto> ConvertCardSetFaces(Card card)
     {
-        var cardFacesDto = new List<CardFaceDto>();
-
-        foreach (var cardFace in card.CardFaces)
-            cardFacesDto.Add(new CardFaceDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Cost.ManaCost, cardFace.Cost.ManaValue, (int)cardFace.Colors, (int)cardFace.ColorsIndicator, cardFace.Power ?? string.Empty, cardFace.Toughness ?? string.Empty, cardFace.Loyalty ?? string.Empty, cardFace.Defense));
-
-        return cardFacesDto;
+        return card.CardFaces.Select(cardFace => new CardFaceDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Cost.ManaCost, cardFace.Cost.ManaValue, (int)cardFace.Colors, (int)cardFace.ColorsIndicator, cardFace.Power ?? string.Empty, cardFace.Toughness ?? string.Empty, cardFace.Loyalty ?? string.Empty, cardFace.Defense)).ToList();
     }
 
     public List<CardNameDto> ConvertCardNames(Card card)
     {
         var cardNamesDto = new List<CardNameDto>();
 
-        if (card.CardFaces != null && card.CardFaces.Count > 0)
-            foreach (var cardFace in card.CardFaces)
-                cardNamesDto.Add(new CardNameDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Name.Language, cardFace.Name.Value));
+        if (card.CardFaces.Count > 0)
+            cardNamesDto.AddRange(card.CardFaces.Select(cardFace => new CardNameDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Name.Language, cardFace.Name.Value)));
         else
             cardNamesDto.Add(new CardNameDto(Guid.NewGuid(), card.OracleId, 0, card.Name.Language, card.Name.Value));
 
@@ -45,9 +45,8 @@ public class DatabaseMapper : IDatabaseMapper
     {
         var cardTypelinesDto = new List<CardTypelineDto>();
 
-        if (card.CardFaces != null && card.CardFaces.Count > 0)
-            foreach (var cardFace in card.CardFaces)
-                cardTypelinesDto.Add(new CardTypelineDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Typeline.Language, cardFace.Typeline.Value));
+        if (card.CardFaces.Count > 0)
+            cardTypelinesDto.AddRange(card.CardFaces.Select(cardFace => new CardTypelineDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Typeline.Language, cardFace.Typeline.Value)));
         else
             cardTypelinesDto.Add(new CardTypelineDto(Guid.NewGuid(), card.OracleId, 0, card.Typeline.Language, card.Typeline.Value));
 
@@ -58,9 +57,8 @@ public class DatabaseMapper : IDatabaseMapper
     {
         var cardTextsDto = new List<CardTextDto>();
 
-        if (card.CardFaces != null && card.CardFaces.Count > 0)
-            foreach (var cardFace in card.CardFaces)
-                cardTextsDto.Add(new CardTextDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Text.Language, cardFace.Text.Value));
+        if (card.CardFaces.Count > 0)
+            cardTextsDto.AddRange(card.CardFaces.Select(cardFace => new CardTextDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Text.Language, cardFace.Text.Value)));
         else
             cardTextsDto.Add(new CardTextDto(Guid.NewGuid(), card.OracleId, 0, card.Text.Language, card.Text.Value));
 
@@ -77,31 +75,21 @@ public class DatabaseMapper : IDatabaseMapper
 
     public List<CardSetFaceDto> ConvertCardSetFaces(Card card, Guid cardSetId)
     {
-        var cardSetFacesDto = new List<CardSetFaceDto>();
-
-        foreach (var flavor in card.Set.Flavors)
-            cardSetFacesDto.Add(new CardSetFaceDto(Guid.NewGuid(), cardSetId, flavor.FaceId, flavor.ArtistsId, flavor.FlavorText, flavor.FlavorName));
-
-        return cardSetFacesDto;
+        return card.Set.Flavors.Select(flavor => new CardSetFaceDto(Guid.NewGuid(), cardSetId, flavor.FaceId, flavor.ArtistsId, flavor.FlavorText, flavor.FlavorName)).ToList();
     }
 
     public List<CardFaceDto> ConvertCardFaces(Card card)
     {
-        var cardFacesDto = new List<CardFaceDto>();
-
-        foreach (var cardFace in card.CardFaces)
-            cardFacesDto.Add(new CardFaceDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Cost.ManaCost, cardFace.Cost.ManaValue, (int)cardFace.Colors, (int)cardFace.ColorsIndicator, cardFace.Power ?? string.Empty, cardFace.Toughness ?? string.Empty, cardFace.Loyalty ?? string.Empty, cardFace.Defense));
-
-        return cardFacesDto;
+        return card.CardFaces.Select(cardFace => new CardFaceDto(Guid.NewGuid(), card.OracleId, cardFace.FaceId, cardFace.Cost.ManaCost, cardFace.Cost.ManaValue, (int)cardFace.Colors, (int)cardFace.ColorsIndicator, cardFace.Power ?? string.Empty, cardFace.Toughness ?? string.Empty, cardFace.Loyalty ?? string.Empty, cardFace.Defense)).ToList();
     }
 
     public List<RelatedCardDto> ConvertRelatedCards(Card card)
     {
         var relatedsDto = new List<RelatedCardDto>();
 
-        foreach (var RelatedCard in card.RelatedCards)
-            if (RelatedCard.OracleId.HasValue)
-                relatedsDto.Add(new RelatedCardDto(Guid.NewGuid(), card.OracleId, RelatedCard.Name, RelatedCard.Component.ToString()));
+        foreach (var relatedCard in card.RelatedCards)
+            if (relatedCard.OracleId.HasValue)
+                relatedsDto.Add(new RelatedCardDto(Guid.NewGuid(), card.OracleId, relatedCard.Name, relatedCard.Component.ToString()));
 
         return relatedsDto;
     }

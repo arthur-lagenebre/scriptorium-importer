@@ -6,20 +6,13 @@ using MTG.Scryfall.Importer.Interfaces;
 
 namespace MTG.Scryfall.Importer;
 
-public class ScryfallImporter : IScryfallImporter
+public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IScryfallMapper mapper) : IScryfallImporter
 {
-    private readonly IScryfallGetter _getter;
-    private readonly IScryfallReader _reader;
-    private readonly IScryfallMapper _mapper;
+    private readonly IScryfallGetter _getter = getter;
+    private readonly IScryfallReader _reader = reader;
+    private readonly IScryfallMapper _mapper = mapper;
 
-    public ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IScryfallMapper mapper)
-    {
-        _getter = getter;
-        _reader = reader;
-        _mapper = mapper;
-    }
-
-    public IList<Card>? CardsImport()
+    public IList<Card>? CardsImport(List<Ruling> rulings)
     {
         using var streamReader = _getter.GetScryfallCardStreamReader();
 
@@ -33,7 +26,7 @@ public class ScryfallImporter : IScryfallImporter
                 foreach (var part in card.AllParts)
                     part.OracleId = scryfallCards.FirstOrDefault(x => x.Name == part.Name)?.OracleId;
 
-        var cards = _mapper.MapCards(scryfallCards);
+        var cards = _mapper.MapCards(scryfallCards, rulings);
 
         return cards;
     }

@@ -23,7 +23,7 @@ public class ScryfallMapper : IScryfallMapper
         _databaseReader = databaseReader;
     }
 
-    public IList<Card> MapCards(IList<ScryfallCard> scryfallCards)
+    public IList<Card> MapCards(IList<ScryfallCard> scryfallCards, List<Ruling> rulings)
     {
         var cards = new List<Card>();
         var sets = _databaseReader.GetSets();
@@ -52,7 +52,7 @@ public class ScryfallMapper : IScryfallMapper
                             cardFace.ArtistIds = scryfallCard.ArtistIds;
 
                 scryfallCard.SetId = setId.Value;
-                cards.Add(_director.BuildCard(scryfallCard));
+                cards.Add(_director.BuildCard(scryfallCard, rulings.Where(x => x.OracleId == scryfallCard.OracleId).ToList()));
             }
             catch (NotSupportedException)
             {

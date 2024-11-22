@@ -126,7 +126,7 @@ public class AdventureBuilderTests
 
         // Act
         _builder.AddOracleId(oracleId);
-        var card = _builder.Build();
+        var card = _builder.Build([]);
 
         // Assert
         Assert.Equal(card.OracleId, oracleId);
@@ -177,7 +177,7 @@ public class AdventureBuilderTests
 
         // Act
         _builder.AddColors(colors, colorIdentity, colorIndicator);
-        var card = _builder.Build();
+        var card = _builder.Build([]);
 
         // Assert
         Assert.Equal(colorsExpected, card.Colors);
@@ -196,7 +196,7 @@ public class AdventureBuilderTests
 
         // Act
         _builder.AddColors(colors, colorIdentity, colorIndicator);
-        var card = _builder.Build();
+        var card = _builder.Build([]);
 
         // Assert
         Assert.Equal(colorsExpected, card.Colors);
@@ -211,7 +211,7 @@ public class AdventureBuilderTests
     {
         // Act
         _builder.AddCost(manacost, manaValue);
-        var card = _builder.Build();
+        var card = _builder.Build([]);
 
         // Assert
         Assert.NotNull(card.Cost);
@@ -224,7 +224,7 @@ public class AdventureBuilderTests
     {
         // Act
         _builder.AddKeywords([]);
-        var card = _builder.Build();
+        var card = _builder.Build([]);
 
         // Assert
         Assert.Empty(card.Keyword);
@@ -235,11 +235,11 @@ public class AdventureBuilderTests
     {
         // Arrange
         var keywords = new List<string> { "Flying" };
-        var expectedKeywords = "Flying";
+        const string expectedKeywords = "Flying";
 
         // Act
         _builder.AddKeywords(keywords);
-        var card = _builder.Build();
+        var card = _builder.Build([]);
 
         // Assert
         Assert.Collection(card.Keyword, e => { Assert.Equal(expectedKeywords, e); });

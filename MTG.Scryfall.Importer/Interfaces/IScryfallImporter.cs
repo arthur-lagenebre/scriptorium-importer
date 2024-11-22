@@ -8,7 +8,7 @@ namespace MTG.Scryfall.Importer.Interfaces;
 public interface IScryfallImporter
 {
     IList<Artist>? ArtistsImport();
-    IList<Card>? CardsImport();
+    IList<Card>? CardsImport(List<Ruling> rulings);
     IList<Ruling>? RulingsImport();
     IList<Set>? SetsImport();
     IList<Subtype>? SubtypesImport(string cardtype);

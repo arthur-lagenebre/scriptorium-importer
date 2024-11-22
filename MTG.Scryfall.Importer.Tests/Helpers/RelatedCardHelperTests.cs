@@ -6,29 +6,27 @@ namespace MTG.Scryfall.Importer.Tests.Helpers;
 
 public class RelatedCardHelperTests
 {
-    private readonly List<ScryfallAllPart> _scryfallAllPart;
-
-    public RelatedCardHelperTests() => _scryfallAllPart =
-        [
-            new ScryfallAllPart() {
-                    Id = "0001e77a-7fff-49d2-a55c-42f6fdf6db08",
-                    Component = "combo_piece",
-                    Name = "Obyra's Attendants // Desperate Parry",
-                    TypeLine = "Creature — Faerie Wizard // Instant — Adventure",
-            },
-            new ScryfallAllPart() {
-                    Id = "fcf4c7fb-7859-4c11-8552-6817f5119d2e",
-                    Component = "combo_piece",
-                    Name = "On an Adventure",
-                    TypeLine = "Card"
-            }
-        ];
+    private readonly List<ScryfallAllPart> _scryfallAllPart =
+    [
+        new() {
+            Id = "0001e77a-7fff-49d2-a55c-42f6fdf6db08",
+            Component = "combo_piece",
+            Name = "Obyra's Attendants // Desperate Parry",
+            TypeLine = "Creature — Faerie Wizard // Instant — Adventure",
+        },
+        new() {
+            Id = "fcf4c7fb-7859-4c11-8552-6817f5119d2e",
+            Component = "combo_piece",
+            Name = "On an Adventure",
+            TypeLine = "Card"
+        }
+    ];
 
     [Fact]
     public void Should_Have_One_Element_When_List_Have_Two_Elements_And_Same_Id()
     {
         // Arrange
-        var oracleId = "0001e77a-7fff-49d2-a55c-42f6fdf6db08";
+        const string oracleId = "0001e77a-7fff-49d2-a55c-42f6fdf6db08";
 
         // Act
         var result = RelatedCardHelper.CreateRelatedCards(_scryfallAllPart, oracleId);
@@ -46,7 +44,7 @@ public class RelatedCardHelperTests
     public void Should_Have_Two_Elements_When_List_Have_Two_Elements_And_Different_Id()
     {
         // Arrange
-        var oracleId = "0001e77a-7fff-49d2-a55c-42f6fdf6db09";
+        const string oracleId = "0001e77a-7fff-49d2-a55c-42f6fdf6db09";
 
         // Act
         var result = RelatedCardHelper.CreateRelatedCards(_scryfallAllPart, oracleId);

@@ -1,4 +1,5 @@
 ﻿using MTG.Importer.Models.Card;
+using MTG.Importer.Models.Ruling;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models;
@@ -37,7 +38,7 @@ public class MeldBuilder : IScryfallBuilder
         Reset();
     }
 
-    public void Reset()
+    private void Reset()
     {
         _oracleId = Guid.Empty;
         _cost = new Cost(string.Empty, double.NaN);
@@ -61,9 +62,9 @@ public class MeldBuilder : IScryfallBuilder
         _releasedDate = DateTime.MinValue;
     }
 
-    public Card Build()
+    public Card Build(List<Ruling> rulings)
     {
-        var card = new Card(_oracleId, _name, _typeline, _text, _cost, _releasedDate, _language, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, _power, _toughness, _loyalty, _handModifier, _lifeModifier);
+        var card = new Card(_oracleId, _name, _typeline, _text, _cost, _releasedDate, _language, _color, _colorIdentity, _colorIndicator, Layout.Name, _keywords, _producedMana, _set, _cardFaces, _relatedCards, rulings, _power, _toughness, _loyalty, _handModifier, _lifeModifier);
 
         Reset();
 

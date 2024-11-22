@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using MTG.Importer.Models.Card;
 using MTG.Importer.Models.Catalog;
-using MTG.Importer.Models.Ruling;
 using MTG.Importer.Models.Set;
 using MTG.Importer.Save.Entities;
 using MTG.Importer.Save.Interfaces;
@@ -89,6 +88,7 @@ public class DatabaseSaver : IDatabaseSaver
         foreach (var artist in artists)
         {
             var response = _httpClient.PostAsJsonAsync("Artists", artist).Result;
+
             response.EnsureSuccessStatusCode();
         }
     }
@@ -129,16 +129,6 @@ public class DatabaseSaver : IDatabaseSaver
         {
             var response = _httpClient.PostAsJsonAsync("Sets", set).Result;
 
-            response.EnsureSuccessStatusCode();
-        }
-    }
-
-    public void SaveRulings(IList<Ruling> rulings)
-    {
-        foreach (var ruling in rulings)
-        {
-            var rulingDTO = new RulingDto(Guid.NewGuid(), ruling.OracleId, ruling.Language, ruling.Rule, ruling.PublishedAt);
-            var response = _httpClient.PostAsJsonAsync("Rulings", ruling).Result;
             response.EnsureSuccessStatusCode();
         }
     }

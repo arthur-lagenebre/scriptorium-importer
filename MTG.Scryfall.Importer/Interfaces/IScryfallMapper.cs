@@ -11,7 +11,7 @@ namespace MTG.Scryfall.Importer.Interfaces;
 public interface IScryfallMapper
 {
     IList<Artist> MapArtist(IList<string> artistsNames);
-    IList<Card> MapCards(IList<ScryfallCard> scryfallCards);
+    IList<Card> MapCards(IList<ScryfallCard> scryfallCards, List<Ruling> rulings);
     IList<CardType> MapCardType(IList<string> cardtypesNames);
     IList<Ruling> MapRulings(IList<ScryfallRuling> scryfallRulings);
     IList<Set> MapSets(IList<ScryfallSet> scryfallSets);

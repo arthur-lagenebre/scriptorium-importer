@@ -10,6 +10,7 @@ public interface IDatabaseMapper
     List<CardNameDto> ConvertCardNames(Card card);
     CardSetDto ConvertCardSet(Card card);
     List<CardSetFaceDto> ConvertCardSetFaces(Card card, Guid cardSetId);
+    List<CardFaceDto> ConvertCardSetFaces(Card card);
     List<CardTextDto> ConvertCardTexts(Card card);
     List<RelatedCardDto> ConvertRelatedCards(Card card);
     List<CardTypelineDto> ConvertTypelines(Card card);

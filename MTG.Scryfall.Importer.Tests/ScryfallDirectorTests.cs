@@ -16,6 +16,6 @@ public class ScryfallDirectorTests
         var scryfallCard = new ScryfallCard() { Layout = "invalid", Name = "Name", TypeLine = "TypeLine", Id = string.Empty, ColorIdentity = [], Keywords = [] };
 
         // Act & Assert
-        Assert.Throws<NotSupportedException>(() => director.BuildCard(scryfallCard));
+        Assert.Throws<NotSupportedException>(() => director.BuildCard(scryfallCard, []));
     }
 }
