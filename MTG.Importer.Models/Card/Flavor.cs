@@ -1,3 +1,3 @@
 ﻿namespace MTG.Importer.Models.Card;
 
-public record Flavor(int FaceId, List<Guid>? ArtistsId, string FlavorText, string FlavorName);
+public record Flavor(string Language, string FlavorText, string FlavorName);

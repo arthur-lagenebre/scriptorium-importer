@@ -1,5 +1,4 @@
 ﻿using MTG.Importer.Models.Card;
-using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models.Card;
 
 namespace MTG.Scryfall.Importer.Helpers;
@@ -14,7 +13,7 @@ public static class CardFaceHelper
         foreach (var cardFace in cardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
         {
             faces.Add(CreateCardFace(cardFace.Index, cardFace.ScryfallCardFace, language));
-            flavors.Add(CreateFlavor(cardFace.Index, cardFace.ScryfallCardFace));
+            flavors.Add(CreateFlavor(cardFace.ScryfallCardFace, language));
         }
 
         return (faces, flavors);
@@ -34,8 +33,8 @@ public static class CardFaceHelper
         return new Face(index, cost, name, typeline, text, ColorHelper.GetCardColor(face.Colors), ColorHelper.GetCardColor(face.ColorIndicator), power, toughness, loyalty, defense);
     }
 
-    private static Flavor CreateFlavor(int index, ScryfallCardFace face)
+    private static Flavor CreateFlavor(ScryfallCardFace face, string language)
     {
-        return new Flavor(index, face.ArtistIds, StringHelper.GetDefaultValue(face.FlavorText), StringHelper.GetDefaultValue(face.FlavorName));
+        return new Flavor(language, StringHelper.GetDefaultValue(face.FlavorText), StringHelper.GetDefaultValue(face.FlavorName));
     }
 }

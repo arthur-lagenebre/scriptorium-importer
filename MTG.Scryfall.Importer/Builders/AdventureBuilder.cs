@@ -153,7 +153,9 @@ public class AdventureBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName)
     {
-        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), _flavors);
+        var cardSetFaces = new List<CardSetFace> { new(0, artistsId, _flavors) };
+
+        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), cardSetFaces);
         return this;
     }
 

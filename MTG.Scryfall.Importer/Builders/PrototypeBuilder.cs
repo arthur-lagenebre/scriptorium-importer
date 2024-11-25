@@ -146,9 +146,10 @@ public class PrototypeBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName)
     {
-        var flavors = new List<Flavor> { new(0, artistsId, StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
+        var flavors = new List<Flavor> { new(_language, StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
+        var cardSetFaces = new List<CardSetFace> { new(0, artistsId, flavors) };
 
-        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), flavors);
+        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), cardSetFaces);
         return this;
     }
 

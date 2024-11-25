@@ -4,6 +4,7 @@ using MTG.Importer.Models.Catalog;
 using MTG.Importer.Models.Set;
 using MTG.Importer.Save.Entities;
 using MTG.Importer.Save.Interfaces;
+using Newtonsoft.Json;
 
 namespace MTG.Importer.Save;
 
@@ -24,56 +25,53 @@ public class DatabaseSaver(IDatabaseMapper cardConverter) : IDatabaseSaver
             Console.WriteLine($"Converting {group.Key}");
             var languageGroups = group.GroupBy(x => x.Language);
 
+            CardDto? cardDto = null;
+
             foreach (var languageGroup in languageGroups)
             {
-                if (languageGroup.Count() == 1)
+                foreach (var card in languageGroup)
                 {
-                    var card = languageGroup.First();
-                    var cardDto = cardsDto.FirstOrDefault(x => x.Id == card.OracleId);
-
                     if (cardDto == null)
-                        cardsDto.Add(cardConverter.ConvertCard(languageGroup.First()));
+                        cardDto = cardConverter.ConvertCard(card);
                     else
                     {
-                        cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(card));
-                        cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(card));
+                        var cardName = cardDto.CardNames.FirstOrDefault(x => x.Language.Equals(card.Language));
+                        if (cardName == null)
+                            cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(card));
+                        var cardText = cardDto.CardTexts.FirstOrDefault(x => x.Language.Equals(card.Language));
+                        if (cardText == null)
+                            cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(card));
+
                         var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
                         if (cardSet == null)
                             cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
-                    }
-                }
-                else
-                {
-                    foreach (var card in languageGroup)
-                    {
-                        var cardDto = cardsDto.FirstOrDefault(x => x.Id == card.OracleId);
-
-                        if (cardDto == null)
-                            cardsDto.Add(cardConverter.ConvertCard(languageGroup.First()));
                         else
                         {
-                            var cardName = cardDto.CardNames.FirstOrDefault(x => x.Language.Equals(card.Language));
-                            if (cardName == null)
-                                cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(card));
-                            var cardText = cardDto.CardTexts.FirstOrDefault(x => x.Language.Equals(card.Language));
-                            if (cardText == null)
-                                cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(card));
-                            var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
-                            if (cardSet == null)
-                                cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
+                            foreach (var cardSetFace in cardSet.CardSetFaces)
+                            {
+                                cardSetFace.CardSetFaceFlavors.AddRange(cardConverter.ConvertCardSetFaceFlavors(cardSetFace.Id, card.Set.CardSetFaces.First(x => x.FaceId == cardSetFace.FaceId)));
+                            }
                         }
                     }
                 }
             }
+
+            if (cardDto != null)
+            {
+                cardsDto.Add(cardDto);
+            }
         }
 
-        foreach (var cardDto in cardsDto)
-        {
-            Console.WriteLine($"Saving {cardDto.Id}");
-            var response = _httpClient.PostAsJsonAsync("Cards", cardDto).Result;
+        var text = JsonConvert.SerializeObject(cardsDto, Formatting.Indented);
+        File.WriteAllText(@"C:\Users\Arthur\Desktop\Test\Test.json", text);
 
-            response.EnsureSuccessStatusCode();
-        }
+        //foreach (var cardDto in cardsDto)
+        //{
+        //    Console.WriteLine($"Saving {cardDto.Id}");
+        //    var response = _httpClient.PostAsJsonAsync("Cards", cardDto).Result;
+
+        //    response.EnsureSuccessStatusCode();
+        //}
     }
 
     public void SaveArtists(IList<Artist> artists)

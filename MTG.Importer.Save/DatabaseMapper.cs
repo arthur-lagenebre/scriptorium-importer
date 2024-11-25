@@ -1,6 +1,7 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Importer.Save.Entities;
 using MTG.Importer.Save.Interfaces;
+using System.Linq;
 
 namespace MTG.Importer.Save;
 
@@ -75,7 +76,22 @@ public class DatabaseMapper : IDatabaseMapper
 
     public List<CardSetFaceDto> ConvertCardSetFaces(Card card, Guid cardSetId)
     {
-        return card.Set.Flavors.Select(flavor => new CardSetFaceDto(Guid.NewGuid(), cardSetId, flavor.FaceId, flavor.ArtistsId, flavor.FlavorText, flavor.FlavorName)).ToList();
+        var cardSetFaces = new List<CardSetFaceDto>();
+
+        foreach (var cardSetFace in card.Set.CardSetFaces)
+        {
+            var id = Guid.NewGuid();
+            var flavors = ConvertCardSetFaceFlavors(id, cardSetFace);
+
+            cardSetFaces.Add(new CardSetFaceDto(id, cardSetId, cardSetFace.FaceId, cardSetFace.ArtistsId, flavors));
+        }
+
+        return cardSetFaces;
+    }
+
+    public List<CardSetFaceFlavorDto> ConvertCardSetFaceFlavors(Guid cardSetFaceId, CardSetFace cardSetFace)
+    {
+        return cardSetFace.Flavors.Select(flavor => new CardSetFaceFlavorDto(Guid.NewGuid(), cardSetFaceId, flavor.Language, flavor.FlavorText, flavor.FlavorName)).ToList();
     }
 
     public List<CardFaceDto> ConvertCardFaces(Card card)

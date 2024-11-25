@@ -7,7 +7,7 @@ public class ScryfallGetter : IScryfallGetter
 {
     public StreamReader GetScryfallCardStreamReader()
     {
-        var path = @"D:\Cards Import\_MTG_\_cards.json";
+        var path = @"D:\Cards Import\_MTG_\Scryfall_layout_adventure.json";
 
         if (string.IsNullOrEmpty(path) || !File.Exists(path))
             throw new FileNotFoundException(path);
