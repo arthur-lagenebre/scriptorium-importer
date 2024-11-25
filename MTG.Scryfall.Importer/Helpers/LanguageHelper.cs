@@ -6,8 +6,6 @@ public static class LanguageHelper
 
     public static string GetLanguageValue(string language, string? defaultValue, string? printedValue)
     {
-        if (language.Equals(_defaultLanguage))
-            return StringHelper.GetDefaultValue(defaultValue);
-        return StringHelper.GetDefaultValue(printedValue);
+        return language.Equals(_defaultLanguage) ? StringHelper.GetDefaultValue(defaultValue) : StringHelper.GetDefaultValue(printedValue);
     }
 }

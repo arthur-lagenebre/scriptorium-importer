@@ -19,8 +19,4 @@ public class ScryfallAllPart
     // The name of this particular related card.
     [JsonProperty("name")]
     public required string Name { get; set; }
-
-    // The type line of this card.
-    [JsonProperty("type_line")]
-    public required string TypeLine { get; set; }
 }

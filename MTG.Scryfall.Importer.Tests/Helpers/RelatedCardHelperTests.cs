@@ -12,13 +12,11 @@ public class RelatedCardHelperTests
             Id = "0001e77a-7fff-49d2-a55c-42f6fdf6db08",
             Component = "combo_piece",
             Name = "Obyra's Attendants // Desperate Parry",
-            TypeLine = "Creature — Faerie Wizard // Instant — Adventure",
         },
         new() {
             Id = "fcf4c7fb-7859-4c11-8552-6817f5119d2e",
             Component = "combo_piece",
             Name = "On an Adventure",
-            TypeLine = "Card"
         }
     ];
 
@@ -35,7 +33,6 @@ public class RelatedCardHelperTests
         Assert.Collection(result,
             e => {
                 Assert.Equal("On an Adventure", e.Name);
-                Assert.Equal("Card", e.TypeLine);
                 Assert.Equal(RelatedCardComponent.ComboPiece, e.Component);
             });
     }

@@ -7,19 +7,12 @@ using MTG.Importer.Save.Interfaces;
 
 namespace MTG.Importer.Save;
 
-public class DatabaseSaver : IDatabaseSaver
+public class DatabaseSaver(IDatabaseMapper cardConverter) : IDatabaseSaver
 {
-    private readonly IDatabaseMapper _databaseMapper;
-    private readonly HttpClient _httpClient;
-
-    public DatabaseSaver(IDatabaseMapper cardConverter)
+    private readonly HttpClient _httpClient = new()
     {
-        _databaseMapper = cardConverter;
-        _httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7276/api/")
-        };
-    }
+        BaseAddress = new Uri("https://localhost:7276/api/")
+    };
 
     public void SaveCards(IList<Card> cards)
     {
@@ -39,14 +32,14 @@ public class DatabaseSaver : IDatabaseSaver
                     var cardDto = cardsDto.FirstOrDefault(x => x.Id == card.OracleId);
 
                     if (cardDto == null)
-                        cardsDto.Add(_databaseMapper.ConvertCard(languageGroup.First()));
+                        cardsDto.Add(cardConverter.ConvertCard(languageGroup.First()));
                     else
                     {
-                        cardDto.CardNames.AddRange(_databaseMapper.ConvertCardNames(card));
-                        cardDto.CardTexts.AddRange(_databaseMapper.ConvertCardTexts(card));
+                        cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(card));
+                        cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(card));
                         var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
                         if (cardSet == null)
-                            cardDto.CardSets.Add(_databaseMapper.ConvertCardSet(card));
+                            cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
                     }
                 }
                 else
@@ -56,18 +49,18 @@ public class DatabaseSaver : IDatabaseSaver
                         var cardDto = cardsDto.FirstOrDefault(x => x.Id == card.OracleId);
 
                         if (cardDto == null)
-                            cardsDto.Add(_databaseMapper.ConvertCard(languageGroup.First()));
+                            cardsDto.Add(cardConverter.ConvertCard(languageGroup.First()));
                         else
                         {
                             var cardName = cardDto.CardNames.FirstOrDefault(x => x.Language.Equals(card.Language));
                             if (cardName == null)
-                                cardDto.CardNames.AddRange(_databaseMapper.ConvertCardNames(card));
+                                cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(card));
                             var cardText = cardDto.CardTexts.FirstOrDefault(x => x.Language.Equals(card.Language));
                             if (cardText == null)
-                                cardDto.CardTexts.AddRange(_databaseMapper.ConvertCardTexts(card));
+                                cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(card));
                             var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
                             if (cardSet == null)
-                                cardDto.CardSets.Add(_databaseMapper.ConvertCardSet(card));
+                                cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
                         }
                     }
                 }

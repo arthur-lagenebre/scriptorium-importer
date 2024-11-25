@@ -7,15 +7,10 @@ namespace MTG.Importer.Save;
 
 public class DatabaseReader : IDatabaseReader
 {
-    private readonly HttpClient _httpClient;
-
-    public DatabaseReader()
+    private readonly HttpClient _httpClient = new()
     {
-        _httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7276/api/")
-        };
-    }
+        BaseAddress = new Uri("https://localhost:7276/api/")
+    };
 
     public IList<Artist>? GetArtists()
     {

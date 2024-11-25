@@ -12,22 +12,14 @@ using MTG.Scryfall.Models.Set;
 
 namespace MTG.Scryfall.Importer;
 
-public class ScryfallMapper : IScryfallMapper
+public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader databaseReader)
+    : IScryfallMapper
 {
-    private readonly IScryfallCardDirector _director;
-    private readonly IDatabaseReader _databaseReader;
-
-    public ScryfallMapper(IScryfallCardDirector director, IDatabaseReader databaseReader)
-    {
-        _director = director;
-        _databaseReader = databaseReader;
-    }
-
     public IList<Card> MapCards(IList<ScryfallCard> scryfallCards, List<Ruling> rulings)
     {
         var cards = new List<Card>();
-        var sets = _databaseReader.GetSets();
-        var artists = _databaseReader.GetArtists();
+        var sets = databaseReader.GetSets();
+        var artists = databaseReader.GetArtists();
 
         foreach (var scryfallCard in scryfallCards)
         {
@@ -38,7 +30,7 @@ public class ScryfallMapper : IScryfallMapper
             {
                 var setId = sets?.FirstOrDefault(x => x.Code == scryfallCard.Set)?.Id;
 
-                if (setId == null || !setId.HasValue)
+                if (setId is null)
                     continue;
 
                 if (scryfallCard.ArtistIds != null && !string.IsNullOrEmpty(scryfallCard.Artist) && artists != null)
@@ -52,7 +44,7 @@ public class ScryfallMapper : IScryfallMapper
                             cardFace.ArtistIds = scryfallCard.ArtistIds;
 
                 scryfallCard.SetId = setId.Value;
-                cards.Add(_director.BuildCard(scryfallCard, rulings.Where(x => x.OracleId == scryfallCard.OracleId).ToList()));
+                cards.Add(director.BuildCard(scryfallCard, rulings.Where(x => x.OracleId == scryfallCard.OracleId).ToList()));
             }
             catch (NotSupportedException)
             {
@@ -67,15 +59,7 @@ public class ScryfallMapper : IScryfallMapper
     {
         var name = CleanArtistName(artistName);
 
-        if (artistIds.Count == 1)
-            return [artists.First(x => x.Name == name).Id];
-
-        var ids = new List<Guid>();
-
-        foreach (var artist in name.Split(" & "))
-            ids.Add(artists.First(x => x.Name == artist).Id);
-
-        return ids;
+        return artistIds.Count == 1 ? [artists.First(x => x.Name == name).Id] : name.Split(" & ").Select(artist => artists.First(x => x.Name == artist).Id).ToList();
     }
 
     private static string CleanArtistName(string artistName)
@@ -103,76 +87,36 @@ public class ScryfallMapper : IScryfallMapper
 
     public IList<Artist> MapArtist(IList<string> artistsNames)
     {
-        var artists = new List<Artist>();
-
-        foreach (var artistName in artistsNames)
-            artists.Add(new Artist(Guid.NewGuid(), artistName));
-
-        return artists;
+        return artistsNames.Select(artistName => new Artist(Guid.NewGuid(), artistName)).ToList();
     }
 
     public IList<Supertype> MapSupertype(IList<string> supertypesNames)
     {
-        var supertypes = new List<Supertype>();
-
-        foreach (var supertypesName in supertypesNames)
-            supertypes.Add(new Supertype(Guid.NewGuid(), supertypesName));
-
-        return supertypes;
+        return supertypesNames.Select(supertypesName => new Supertype(Guid.NewGuid(), supertypesName)).ToList();
     }
 
     public IList<CardType> MapCardType(IList<string> cardtypesNames)
     {
-        var types = new List<CardType>();
-
-        foreach (var supertypesName in cardtypesNames)
-            types.Add(new CardType(Guid.NewGuid(), supertypesName));
-
-        return types;
+        return cardtypesNames.Select(supertypesName => new CardType(Guid.NewGuid(), supertypesName)).ToList();
     }
 
     public IList<Subtype> MapSubtype(IList<string> subtypesNames, string cardtype)
     {
-        var subtypes = new List<Subtype>();
-
-        foreach (var supertypesName in subtypesNames)
-            subtypes.Add(new Subtype(Guid.NewGuid(), cardtype, supertypesName));
-
-        return subtypes;
+        return subtypesNames.Select(supertypesName => new Subtype(Guid.NewGuid(), cardtype, supertypesName)).ToList();
     }
 
     public IList<Set> MapSets(IList<ScryfallSet> scryfallSets)
     {
-        var sets = new List<Set>();
-
-        foreach (var scryfallSet in scryfallSets)
-        {
-            if (scryfallSet.Digital || DateHelper.GetDate(scryfallSet.ReleasedAt) > DateTime.Today)
-                continue;
-
-            sets.Add(MapSet(scryfallSet));
-        }
-
-        return sets;
+        return (from scryfallSet in scryfallSets where !scryfallSet.Digital && DateHelper.GetDate(scryfallSet.ReleasedAt) <= DateTime.Today select MapSet(scryfallSet)).ToList();
     }
 
-    private Set MapSet(ScryfallSet scryfallSet)
+    private static Set MapSet(ScryfallSet scryfallSet)
     {
-        return new(Guid.NewGuid(), scryfallSet.Name, scryfallSet.Code, scryfallSet.Type, DateHelper.GetDate(scryfallSet.ReleasedAt), StringHelper.GetDefaultValue(scryfallSet.Block), StringHelper.GetDefaultValue(scryfallSet.BlockCode), StringHelper.GetDefaultValue(scryfallSet.ParentSetCode));
+        return new Set(Guid.NewGuid(), scryfallSet.Name, scryfallSet.Code, scryfallSet.Type, DateHelper.GetDate(scryfallSet.ReleasedAt), StringHelper.GetDefaultValue(scryfallSet.Block), StringHelper.GetDefaultValue(scryfallSet.BlockCode), StringHelper.GetDefaultValue(scryfallSet.ParentSetCode));
     }
 
     public IList<Ruling> MapRulings(IList<ScryfallRuling> scryfallRulings)
     {
-        var rulings = new List<Ruling>();
-
-        foreach (var scryfallRuling in scryfallRulings)
-        {
-            if (scryfallRuling.Source != "wotc")
-                continue;
-
-            rulings.Add(new Ruling(scryfallRuling.OracleId, "en", scryfallRuling.Comment, DateHelper.GetDate(scryfallRuling.PublishedAt)));
-        }
-
-        return rulings;
+        return (from scryfallRuling in scryfallRulings where scryfallRuling.Source == "wotc" select new Ruling(scryfallRuling.OracleId, "en", scryfallRuling.Comment, DateHelper.GetDate(scryfallRuling.PublishedAt))).ToList();
     }
 }

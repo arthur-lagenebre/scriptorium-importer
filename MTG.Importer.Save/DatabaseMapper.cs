@@ -19,7 +19,7 @@ public class DatabaseMapper : IDatabaseMapper
         return new CardDto(card.OracleId, card.Cost.ManaCost, card.Cost.ManaValue, (int)card.Colors, (int)card.ColorsIdentity, (int)card.ColorsIndicator, card.Layout ?? string.Empty, card.Keyword, card.ProducedMana, card.Power ?? string.Empty, card.Toughness ?? string.Empty, card.Loyalty ?? string.Empty, card.HandModifier ?? string.Empty, card.LifeModifier ?? string.Empty, cardNames, cardTexts, cardFaces, cardSets, cardTypelines, relatedCards, rulings);
     }
 
-    private List<RulingDto> ConvertRulings(Card card)
+    private static List<RulingDto> ConvertRulings(Card card)
     {
         return card.Rulings.Select(ruling => new RulingDto(Guid.NewGuid(), card.OracleId, ruling.Language, ruling.Rule, ruling.PublishedAt)).ToList();
     }

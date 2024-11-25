@@ -18,17 +18,12 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
 
         var scryfallCards = _reader.ReadCards(streamReader);
 
-        if (scryfallCards == null)
-            return [];
-
         foreach (var card in scryfallCards)
             if (card.AllParts != null && card.AllParts.Count != 0)
                 foreach (var part in card.AllParts)
                     part.OracleId = scryfallCards.FirstOrDefault(x => x.Name == part.Name)?.OracleId;
 
-        var cards = _mapper.MapCards(scryfallCards, rulings);
-
-        return cards;
+        return _mapper.MapCards(scryfallCards, rulings);
     }
 
     public IList<Set>? SetsImport()
@@ -36,12 +31,7 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
         var result = _getter.GetScryfallUrl("sets");
         var scryfallSets = _reader.ReadSets(result);
 
-        if (scryfallSets == null)
-            return [];
-        
-        var sets = _mapper.MapSets(scryfallSets).ToList();
-
-        return sets;
+        return _mapper.MapSets(scryfallSets).ToList();
     }
 
     public IList<Artist>? ArtistsImport()
@@ -49,12 +39,7 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
         var result = _getter.GetScryfallUrl("catalog/artist-names");
         var scryfallArtists = _reader.ReadCatalog(result);
 
-        if (scryfallArtists == null)
-            return [];
-
-        var artists = _mapper.MapArtist(scryfallArtists);
-
-        return artists;
+        return _mapper.MapArtist(scryfallArtists);
     }
 
     public IList<Supertype>? SupertypesImport()
@@ -62,12 +47,7 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
         var result = _getter.GetScryfallUrl("catalog/supertypes");
         var scryfallSupertypes = _reader.ReadCatalog(result);
 
-        if (scryfallSupertypes == null)
-            return [];
-
-        var supertypes = _mapper.MapSupertype(scryfallSupertypes);
-
-        return supertypes;
+        return _mapper.MapSupertype(scryfallSupertypes);
     }
 
     public IList<CardType>? TypesImport()
@@ -75,12 +55,7 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
         var result = _getter.GetScryfallUrl("catalog/card-types");
         var scryfallTypes = _reader.ReadCatalog(result);
 
-        if (scryfallTypes == null)
-            return [];
-
-        var types = _mapper.MapCardType(scryfallTypes);
-
-        return types;
+        return _mapper.MapCardType(scryfallTypes);
     }
 
     public IList<Subtype>? SubtypesImport(string cardtype)
@@ -88,12 +63,7 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
         var result = _getter.GetScryfallUrl($"catalog/{cardtype.ToLower()}-types");
         var scryfallSubtypes = _reader.ReadCatalog(result);
 
-        if (scryfallSubtypes == null)
-            return [];
-
-        var subtypes = _mapper.MapSubtype(scryfallSubtypes, cardtype);
-
-        return subtypes;
+        return _mapper.MapSubtype(scryfallSubtypes, cardtype);
     }
 
     public IList<Ruling>? RulingsImport()
@@ -102,11 +72,6 @@ public class ScryfallImporter(IScryfallGetter getter, IScryfallReader reader, IS
 
         var scryfallRulings = _reader.ReadRulings(streamReader);
 
-        if (scryfallRulings == null)
-            return [];
-
-        var rulings = _mapper.MapRulings(scryfallRulings);
-
-        return rulings;
+        return _mapper.MapRulings(scryfallRulings);
     }
 }

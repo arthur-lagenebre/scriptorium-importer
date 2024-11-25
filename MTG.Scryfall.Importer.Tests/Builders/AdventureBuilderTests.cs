@@ -38,15 +38,13 @@ public class AdventureBuilderTests
                     Id = "0001e77a-7fff-49d2-a55c-42f6fdf6db08",
                     Component = "combo_piece",
                     Name = "Obyra's Attendants // Desperate Parry",
-                    TypeLine = "Creature — Faerie Wizard // Instant — Adventure"
                 },
                 new ScryfallAllPart {
                     Id = "fcf4c7fb-7859-4c11-8552-6817f5119d2e",
                     Component = "combo_piece",
                     Name = "On an Adventure",
-                    TypeLine = "Card"
                 }
-                ],
+            ],
             CardFaces = [
                 new ScryfallCardFace {
                     OracleId = null,

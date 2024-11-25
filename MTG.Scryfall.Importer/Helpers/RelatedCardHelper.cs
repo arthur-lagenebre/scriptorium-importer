@@ -11,7 +11,7 @@ public static class RelatedCardHelper
 
         foreach (var part in scryfallAllParts)
             if (part.Id != scryfallId)
-                relatedCards.Add(new RelatedCard(part.OracleId, EnumHelper.GetRelatedCardComponent(part.Component), part.Name, part.TypeLine));
+                relatedCards.Add(new RelatedCard(part.OracleId, EnumHelper.GetRelatedCardComponent(part.Component), part.Name));
 
         return relatedCards;
     }
