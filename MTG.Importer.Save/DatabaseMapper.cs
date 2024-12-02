@@ -1,7 +1,6 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Importer.Save.Entities;
 using MTG.Importer.Save.Interfaces;
-using System.Linq;
 
 namespace MTG.Importer.Save;
 

@@ -4,16 +4,22 @@ using MTG.Importer.Models.Catalog;
 using MTG.Importer.Models.Set;
 using MTG.Importer.Save.Entities;
 using MTG.Importer.Save.Interfaces;
-using Newtonsoft.Json;
 
 namespace MTG.Importer.Save;
 
-public class DatabaseSaver(IDatabaseMapper cardConverter) : IDatabaseSaver
+public class DatabaseSaver : IDatabaseSaver
 {
-    private readonly HttpClient _httpClient = new()
+    private readonly IDatabaseMapper _cardConverter;
+    private readonly HttpClient _httpClient;
+
+    public DatabaseSaver(IDatabaseMapper cardConverter)
     {
-        BaseAddress = new Uri("https://localhost:7276/api/")
-    };
+        _cardConverter = cardConverter;
+        _httpClient = new()
+        {
+            BaseAddress = new Uri("https://localhost:7276/api/")
+        };
+    }
 
     public void SaveCards(IList<Card> cards)
     {
@@ -22,56 +28,54 @@ public class DatabaseSaver(IDatabaseMapper cardConverter) : IDatabaseSaver
 
         foreach (var group in groups)
         {
-            Console.WriteLine($"Converting {group.Key}");
-            var languageGroups = group.GroupBy(x => x.Language);
+            Console.WriteLine($"Processing {group.Key}");
 
-            CardDto? cardDto = null;
+            var enCards = group.Where(x => x.Language == "en").ToList();
+            var enCard = enCards.OrderByDescending(x => x.ReleasedDate).First();
+            enCards.Remove(enCard);
+            var cardDto = _cardConverter.ConvertCard(enCard);
+
+            foreach (var card in enCards)
+                cardDto.CardSets.Add(_cardConverter.ConvertCardSet(card));
+
+            var languageGroups = group.GroupBy(x => x.Language);
 
             foreach (var languageGroup in languageGroups)
             {
-                foreach (var card in languageGroup)
-                {
-                    if (cardDto == null)
-                        cardDto = cardConverter.ConvertCard(card);
-                    else
-                    {
-                        var cardName = cardDto.CardNames.FirstOrDefault(x => x.Language.Equals(card.Language));
-                        if (cardName == null)
-                            cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(card));
-                        var cardText = cardDto.CardTexts.FirstOrDefault(x => x.Language.Equals(card.Language));
-                        if (cardText == null)
-                            cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(card));
+                if (languageGroup.Key == "en")
+                    continue;
 
-                        var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
-                        if (cardSet == null)
-                            cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
-                        else
-                        {
-                            foreach (var cardSetFace in cardSet.CardSetFaces)
-                            {
-                                cardSetFace.CardSetFaceFlavors.AddRange(cardConverter.ConvertCardSetFaceFlavors(cardSetFace.Id, card.Set.CardSetFaces.First(x => x.FaceId == cardSetFace.FaceId)));
-                            }
-                        }
-                    }
+                var localizedCards = languageGroup.OrderByDescending(x => x.ReleasedDate).ToList();
+                var firstCard = localizedCards.First();
+                localizedCards.Remove(firstCard);
+
+                cardDto.CardNames.AddRange(_cardConverter.ConvertCardNames(firstCard));
+                cardDto.CardTexts.AddRange(_cardConverter.ConvertCardTexts(firstCard));
+                AddCardSet(cardDto, firstCard);
+
+                foreach (var localizedCard in localizedCards)
+                {
+                    AddCardSet(cardDto, localizedCard);
                 }
             }
 
             if (cardDto != null)
             {
-                cardsDto.Add(cardDto);
+                var response = _httpClient.PostAsJsonAsync("Cards", cardDto).Result;
+
+                response.EnsureSuccessStatusCode();
             }
         }
+    }
 
-        var text = JsonConvert.SerializeObject(cardsDto, Formatting.Indented);
-        File.WriteAllText(@"C:\Users\Arthur\Desktop\Test\Test.json", text);
-
-        //foreach (var cardDto in cardsDto)
-        //{
-        //    Console.WriteLine($"Saving {cardDto.Id}");
-        //    var response = _httpClient.PostAsJsonAsync("Cards", cardDto).Result;
-
-        //    response.EnsureSuccessStatusCode();
-        //}
+    private void AddCardSet(CardDto cardDto, Card card)
+    {
+        var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
+        if (cardSet == null)
+            cardDto.CardSets.Add(_cardConverter.ConvertCardSet(card));
+        else
+            foreach (var cardSetFace in cardSet.CardSetFaces)
+                cardSetFace.CardSetFaceFlavors.AddRange(_cardConverter.ConvertCardSetFaceFlavors(cardSetFace.Id, card.Set.CardSetFaces.First(x => x.FaceId == cardSetFace.FaceId)));
     }
 
     public void SaveArtists(IList<Artist> artists)

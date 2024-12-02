@@ -7,22 +7,16 @@ public class ScryfallGetter : IScryfallGetter
 {
     public StreamReader GetScryfallCardStreamReader()
     {
-        var path = @"D:\Cards Import\_MTG_\Scryfall_layout_adventure.json";
+        var path = @"D:\Cards Import\_MTG_\Scryfall_Forest.json";
 
-        if (string.IsNullOrEmpty(path) || !File.Exists(path))
-            throw new FileNotFoundException(path);
-
-        return new StreamReader(path);
+        return string.IsNullOrEmpty(path) || !File.Exists(path) ? throw new FileNotFoundException(path) : new StreamReader(path);
     }
 
     public StreamReader GetScryfallRulingStreamReader()
     {
         var path = @"D:\Cards Import\_MTG_\_rulings.json";
 
-        if (string.IsNullOrEmpty(path) || !File.Exists(path))
-            throw new FileNotFoundException(path);
-
-        return new StreamReader(path);
+        return string.IsNullOrEmpty(path) || !File.Exists(path) ? throw new FileNotFoundException(path) : new StreamReader(path);
     }
 
     public string GetScryfallUrl(string path)
@@ -32,13 +26,12 @@ public class ScryfallGetter : IScryfallGetter
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         client.DefaultRequestHeaders.UserAgent.Clear();
-        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MTG.Importer", ""));
+        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MTG.Importer", "1.0"));
 
         var response = client.GetAsync("https://api.scryfall.com/" + path).Result;
 
-        if (!response.IsSuccessStatusCode)
-            throw new Exception(response.Content.ToString());
-
-        return response.Content.ReadAsStringAsync().Result;
+        return !response.IsSuccessStatusCode
+            ? throw new Exception(response.Content.ToString())
+            : response.Content.ReadAsStringAsync().Result;
     }
 }

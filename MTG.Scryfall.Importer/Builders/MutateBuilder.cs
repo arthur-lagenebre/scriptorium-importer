@@ -29,7 +29,6 @@ public class MutateBuilder : IScryfallBuilder
     private string? _loyalty;
     private string? _handModifier;
     private string? _lifeModifier;
-    private List<Flavor> _flavors;
     private DateTime _releasedDate;
 
     public Layout Layout => new("mutate");
@@ -59,7 +58,6 @@ public class MutateBuilder : IScryfallBuilder
         _loyalty = null;
         _handModifier = null;
         _lifeModifier = null;
-        _flavors = [];
         _releasedDate = DateTime.MinValue;
     }
 

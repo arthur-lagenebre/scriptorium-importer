@@ -5,15 +5,15 @@ namespace MTG.Scryfall.Importer.Helpers;
 
 public static class CardFaceHelper
 {
-    public static (List<Face> Faces, List<Flavor> Flavors) CreateCardFacesInformations(List<ScryfallCardFace> cardFaces, string language)
+    public static (List<Face> Faces, Dictionary<int, Flavor> Flavors) CreateCardFacesInformations(List<ScryfallCardFace> cardFaces, string language)
     {
         var faces = new List<Face>();
-        var flavors = new List<Flavor>();
+        var flavors = new Dictionary<int, Flavor>();
 
         foreach (var cardFace in cardFaces.Select((ScryfallCardFace, Index) => (ScryfallCardFace, Index)))
         {
             faces.Add(CreateCardFace(cardFace.Index, cardFace.ScryfallCardFace, language));
-            flavors.Add(CreateFlavor(cardFace.ScryfallCardFace, language));
+            flavors.Add(cardFace.Index, CreateFlavor(cardFace.ScryfallCardFace, language));
         }
 
         return (faces, flavors);

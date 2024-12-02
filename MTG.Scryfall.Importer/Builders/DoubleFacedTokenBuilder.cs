@@ -28,7 +28,7 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
     private string? _loyalty;
     private string? _handModifier;
     private string? _lifeModifier;
-    private List<Flavor> _flavors;
+    private Dictionary<int, Flavor> _flavors;
     private DateTime _releasedDate;
 
     public Layout Layout => new("double_faced_token");
@@ -77,7 +77,7 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
         {
             var (Faces, Flavors) = CardFaceHelper.CreateCardFacesInformations(scryfallCardFaces, _language);
             _cardFaces.AddRange(Faces);
-            _flavors.AddRange(Flavors);
+            _flavors = Flavors;
             _name = new Name(_language, string.Join(" // ", _cardFaces.OrderBy(x => x.FaceId).Select(x => x.Name.Value)));
         }
         return this;
@@ -156,7 +156,10 @@ public class DoubleFacedTokenBuilder : IScryfallBuilder
 
     public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName)
     {
-        var cardSetFaces = new List<CardSetFace> { new(0, artistsId, _flavors) };
+        var cardSetFaces = new List<CardSetFace>();
+
+        foreach (KeyValuePair<int, Flavor> flavor in _flavors)
+            cardSetFaces.Add(new(flavor.Key, artistsId, [flavor.Value]));
 
         _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), cardSetFaces);
         return this;
