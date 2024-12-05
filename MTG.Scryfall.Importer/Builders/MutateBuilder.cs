@@ -1,6 +1,5 @@
 ﻿using MTG.Importer.Models.Card;
 using MTG.Importer.Models.Ruling;
-using MTG.Importer.Models.Set;
 using MTG.Scryfall.Importer.Helpers;
 using MTG.Scryfall.Importer.Interfaces;
 using MTG.Scryfall.Models;
@@ -143,12 +142,12 @@ public class MutateBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName)
+    public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, List<string> normalImagesUrl, List<string> smallImagesUrl, string? flavorText, string? flavorName)
     {
         var flavors = new List<Flavor> { new(_language, StringHelper.GetDefaultValue(flavorText), StringHelper.GetDefaultValue(flavorName)) };
         var cardSetFaces = new List<CardSetFace> { new(0, artistsId, flavors) };
 
-        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), cardSetFaces);
+        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), normalImagesUrl, smallImagesUrl, cardSetFaces);
         return this;
     }
 

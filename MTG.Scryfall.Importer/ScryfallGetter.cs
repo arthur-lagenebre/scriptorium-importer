@@ -7,14 +7,14 @@ public class ScryfallGetter : IScryfallGetter
 {
     public StreamReader GetScryfallCardStreamReader()
     {
-        var path = @"D:\Cards Import\_MTG_\Scryfall_Forest.json";
+        var path = @"C:\MTG\_scryfall\all-cards.json";
 
         return string.IsNullOrEmpty(path) || !File.Exists(path) ? throw new FileNotFoundException(path) : new StreamReader(path);
     }
 
     public StreamReader GetScryfallRulingStreamReader()
     {
-        var path = @"D:\Cards Import\_MTG_\_rulings.json";
+        var path = @"C:\MTG\_scryfall\rulings.json";
 
         return string.IsNullOrEmpty(path) || !File.Exists(path) ? throw new FileNotFoundException(path) : new StreamReader(path);
     }

@@ -154,14 +154,14 @@ public class SplitBuilder : IScryfallBuilder
         return this;
     }
 
-    public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, string? flavorText, string? flavorName)
+    public IScryfallBuilder AddSet(Guid setId, string? collectorNumber, string? rarity, List<Guid>? artistsId, List<string> normalImagesUrl, List<string> smallImagesUrl, string? flavorText, string? flavorName)
     {
         var cardSetFaces = new List<CardSetFace>();
 
         foreach (KeyValuePair<int, Flavor> flavor in _flavors)
             cardSetFaces.Add(new(flavor.Key, artistsId, [flavor.Value]));
 
-        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), cardSetFaces);
+        _set = new CardSet(setId, StringHelper.GetDefaultValue(collectorNumber), StringHelper.GetDefaultValue(rarity), normalImagesUrl, smallImagesUrl, cardSetFaces);
         return this;
     }
 

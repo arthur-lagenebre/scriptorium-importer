@@ -73,7 +73,7 @@ public class DatabaseSaver : IDatabaseSaver
         var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
         if (cardSet == null)
             cardDto.CardSets.Add(_cardConverter.ConvertCardSet(card));
-        else
+        else if (card.Set.CardSetFaces.Count == cardSet.CardSetFaces.Count)
             foreach (var cardSetFace in cardSet.CardSetFaces)
                 cardSetFace.CardSetFaceFlavors.AddRange(_cardConverter.ConvertCardSetFaceFlavors(cardSetFace.Id, card.Set.CardSetFaces.First(x => x.FaceId == cardSetFace.FaceId)));
     }

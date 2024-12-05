@@ -46,6 +46,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildAdventure(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -57,7 +60,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddReleasedDate(scryfallCard.ReleasedAt)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -65,6 +68,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildAugment(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -74,13 +80,16 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName);
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName);
 
         return builder.Build(rulings);
     }
 
     private static Card BuildCase(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -90,7 +99,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -98,6 +107,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildClass(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -107,7 +119,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -115,6 +127,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildDoubleFacedToken(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -126,7 +141,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -136,6 +151,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildEmblem(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -146,7 +164,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -154,6 +172,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildFlip(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -164,7 +185,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -173,6 +194,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildHost(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -182,7 +206,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -190,6 +214,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildLeveler(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -200,7 +227,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -209,6 +236,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildMeld(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -220,7 +250,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -230,6 +260,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildModalDfc(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -241,7 +274,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -249,6 +282,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildMutate(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -258,7 +294,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -267,6 +303,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildNormal(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -277,7 +316,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -287,6 +326,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildPlanar(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -297,7 +339,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -305,6 +347,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildPrototype(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -314,7 +359,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddKeywords(scryfallCard.Keywords)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -323,6 +368,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildReversibleCard(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.CardFaces[0].OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -334,7 +382,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -344,6 +392,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildSplit(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -355,7 +406,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -365,6 +416,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildSaga(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -375,7 +429,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -383,6 +437,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildScheme(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -392,7 +449,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id);
 
         return builder.Build(rulings);
@@ -400,6 +457,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildToken(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -410,7 +470,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness);
 
@@ -419,6 +479,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildTransform(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -430,7 +493,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddCardFaces(scryfallCard.CardFaces)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
                .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
                .AddPlaneswalker(scryfallCard.Loyalty);
@@ -440,6 +503,9 @@ public class ScryfallCardDirector : IScryfallCardDirector
 
     private static Card BuildVanguard(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
         builder.AddOracleId(scryfallCard.OracleId)
                .AddLanguage(scryfallCard.Lang)
                .AddName(scryfallCard.Name, scryfallCard.PrintedName)
@@ -450,9 +516,31 @@ public class ScryfallCardDirector : IScryfallCardDirector
                .AddKeywords(scryfallCard.Keywords)
                .AddProducedMana(scryfallCard.ProducedMana)
                .AddReleasedDate(scryfallCard.ReleasedAt)
-               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
                .AddVanguard(scryfallCard.HandModifier, scryfallCard.LifeModifier);
 
         return builder.Build(rulings);
+    }
+
+    private static List<string> GetNormalImagesUrl(ScryfallImageUris? scryfallImageUris, List<ScryfallCardFace>? scryfallCardFaces)
+    {
+        if (scryfallImageUris != null)
+            return [scryfallImageUris.Normal];
+        
+        if (scryfallCardFaces != null)
+            return scryfallCardFaces.Select(x => x.ImageUris.Normal).ToList();
+
+        return [];
+    }
+
+    private static List<string> GetSmallImagesUrl(ScryfallImageUris? scryfallImageUris, List<ScryfallCardFace>? scryfallCardFaces)
+    {
+        if (scryfallImageUris != null)
+            return [scryfallImageUris.Small];
+
+        if (scryfallCardFaces != null)
+            return scryfallCardFaces.Select(x => x.ImageUris.Small).ToList();
+
+        return [];
     }
 }

@@ -70,7 +70,7 @@ public class DatabaseMapper : IDatabaseMapper
         var cardSetId = Guid.NewGuid();
         var cardSetFaces = ConvertCardSetFaces(card, cardSetId);
 
-        return new CardSetDto(cardSetId, card.OracleId, card.Set.SetId, card.Set.CollectorNumber, card.Set.Rarity, cardSetFaces);
+        return new CardSetDto(cardSetId, card.OracleId, card.Set.SetId, card.Set.CollectorNumber, card.Set.Rarity, card.Set.NormalImagesUrl, card.Set.SmallImageUrl, cardSetFaces);
     }
 
     public List<CardSetFaceDto> ConvertCardSetFaces(Card card, Guid cardSetId)
