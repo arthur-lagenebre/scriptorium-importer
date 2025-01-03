@@ -51,6 +51,7 @@ public class DatabaseSaver : IDatabaseSaver
 
                 cardDto.CardNames.AddRange(_cardConverter.ConvertCardNames(firstCard));
                 cardDto.CardTexts.AddRange(_cardConverter.ConvertCardTexts(firstCard));
+                cardDto.CardTypelines.AddRange(_cardConverter.ConvertTypelines(firstCard));
                 AddCardSet(cardDto, firstCard);
 
                 foreach (var localizedCard in localizedCards)
