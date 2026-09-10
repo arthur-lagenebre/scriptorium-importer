@@ -44,7 +44,7 @@ public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader data
                             cardFace.ArtistIds = scryfallCard.ArtistIds;
 
                 scryfallCard.SetId = setId.Value;
-                cards.Add(director.BuildCard(scryfallCard, rulings.Where(x => x.OracleId == scryfallCard.OracleId).ToList()));
+                cards.Add(director.BuildCard(scryfallCard, [.. rulings.Where(x => x.OracleId == scryfallCard.OracleId)]));
             }
             catch (NotSupportedException)
             {
