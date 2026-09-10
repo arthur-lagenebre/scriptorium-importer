@@ -16,7 +16,7 @@
 
 ### What this is
 
-A .NET 8 console application that reads Scryfall's bulk data files (several gigabytes of JSON covering every Magic card ever printed, in every language it was printed in), normalises them into a relational model, and publishes them to [MTG.API](https://github.com/Swarmotte/MTG.API).
+A .NET 8 console application that reads Scryfall's bulk data files (several gigabytes of JSON covering every Magic card ever printed, in every language it was printed in), normalises them into a relational model, and publishes them to [MTG.API](https://github.com/arthur-lagenebre/MTG.API).
 
 It is the ingestion half of a project whose goal is to let a community translate Magic cards into languages Wizards of the Coast does not support.
 
@@ -75,13 +75,13 @@ Supported layouts: `adventure`, `augment`, `case`, `class`, `double_faced_token`
 **Prerequisites**
 
 - .NET 8 SDK
-- A running instance of [MTG.API](https://github.com/Swarmotte/MTG.API)
+- A running instance of [MTG.API](https://github.com/arthur-lagenebre/MTG.API)
 - Scryfall bulk data files: `all_cards` and `rulings`, downloadable from [scryfall.com/docs/api/bulk-data](https://scryfall.com/docs/api/bulk-data)
 
 **Run**
 
 ```bash
-git clone https://github.com/Swarmotte/MTG-Importer.git
+git clone https://github.com/arthur-lagenebre/MTG-Importer.git
 cd MTG-Importer
 dotnet restore
 dotnet run --project MTG.Importer
@@ -116,9 +116,9 @@ This importer sets an explicit `User-Agent` and `Accept` header on every request
 | Repository | Role |
 |---|---|
 | **MTG-Importer** | This repository — Scryfall ETL |
-| [MTG.API](https://github.com/Swarmotte/MTG.API) | REST API and database access |
-| [MTG.Database.Models](https://github.com/Swarmotte/MTG.Database.Models) | Shared EF Core model |
-| [card-tutor](https://github.com/Swarmotte/card-tutor) | Angular front end |
+| [MTG.API](https://github.com/arthur-lagenebre/MTG.API) | REST API and database access |
+| [MTG.Database.Models](https://github.com/arthur-lagenebre/MTG.Database.Models) | Shared EF Core model |
+| [card-tutor](https://github.com/arthur-lagenebre/card-tutor) | Angular front end |
 
 ---
 
@@ -126,7 +126,7 @@ This importer sets an explicit `User-Agent` and `Accept` header on every request
 
 ### De quoi s'agit-il
 
-Une application console .NET 8 qui lit les fichiers bulk de Scryfall (plusieurs gigaoctets de JSON couvrant toutes les cartes Magic jamais imprimées, dans toutes les langues où elles l'ont été), les normalise dans un modèle relationnel, et les publie vers [MTG.API](https://github.com/Swarmotte/MTG.API).
+Une application console .NET 8 qui lit les fichiers bulk de Scryfall (plusieurs gigaoctets de JSON couvrant toutes les cartes Magic jamais imprimées, dans toutes les langues où elles l'ont été), les normalise dans un modèle relationnel, et les publie vers [MTG.API](https://github.com/arthur-lagenebre/MTG.API).
 
 C'est la moitié « ingestion » d'un projet dont l'objectif est de permettre à une communauté de traduire les cartes Magic dans les langues que Wizards of the Coast ne prend pas en charge.
 
@@ -185,13 +185,13 @@ Layouts pris en charge : `adventure`, `augment`, `case`, `class`, `double_faced_
 **Prérequis**
 
 - SDK .NET 8
-- Une instance de [MTG.API](https://github.com/Swarmotte/MTG.API) en cours d'exécution
+- Une instance de [MTG.API](https://github.com/arthur-lagenebre/MTG.API) en cours d'exécution
 - Les fichiers bulk Scryfall `all_cards` et `rulings`, téléchargeables sur [scryfall.com/docs/api/bulk-data](https://scryfall.com/docs/api/bulk-data)
 
 **Lancer**
 
 ```bash
-git clone https://github.com/Swarmotte/MTG-Importer.git
+git clone https://github.com/arthur-lagenebre/MTG-Importer.git
 cd MTG-Importer
 dotnet restore
 dotnet run --project MTG.Importer
@@ -226,9 +226,9 @@ Cet importer positionne explicitement les en-têtes `User-Agent` et `Accept` sur
 | Dépôt | Rôle |
 |---|---|
 | **MTG-Importer** | Ce dépôt — ETL Scryfall |
-| [MTG.API](https://github.com/Swarmotte/MTG.API) | API REST et accès base de données |
-| [MTG.Database.Models](https://github.com/Swarmotte/MTG.Database.Models) | Modèle EF Core partagé |
-| [card-tutor](https://github.com/Swarmotte/card-tutor) | Front Angular |
+| [MTG.API](https://github.com/arthur-lagenebre/MTG.API) | API REST et accès base de données |
+| [MTG.Database.Models](https://github.com/arthur-lagenebre/MTG.Database.Models) | Modèle EF Core partagé |
+| [card-tutor](https://github.com/arthur-lagenebre/card-tutor) | Front Angular |
 
 ---
 
