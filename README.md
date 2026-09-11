@@ -4,6 +4,7 @@
 [![Tests](https://img.shields.io/badge/tests-46%20passing-brightgreen)](https://xunit.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-work%20in%20progress-orange)]()
+[![build](https://github.com/arthur-lagenebre/scriptorium-importer/actions/workflows/build.yml/badge.svg)](https://github.com/arthur-lagenebre/scriptorium-importer/actions/workflows/build.yml)
 
 > ETL pipeline turning Scryfall bulk JSON exports into a multilingual Magic: The Gathering database.
 > Chaîne ETL transformant les exports JSON de Scryfall en une base de cartes Magic multilingue.
