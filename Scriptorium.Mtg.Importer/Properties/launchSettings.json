@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "MTG.Importer": {
+    "Scriptorium.Mtg.Importer": {
       "commandName": "Project",
       "commandLineArgs": "--environment Development"
     },

@@ -8,10 +8,20 @@ using Scriptorium.Mtg.Scryfall.Importer;
 using Scriptorium.Mtg.Scryfall.Importer.Builders;
 using Scriptorium.Mtg.Scryfall.Importer.Interfaces;
 
-HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+{
+    Args = args,
+    ContentRootPath = AppContext.BaseDirectory
+});
 
 var scryfallOptions = builder.Configuration.GetSection("Scryfall").Get<ScryfallOptions>() ?? new ScryfallOptions();
 var apiOptions = builder.Configuration.GetSection("Api").Get<ApiOptions>() ?? new ApiOptions();
+
+if (string.IsNullOrWhiteSpace(apiOptions.BaseUrl))
+    throw new InvalidOperationException("Api:BaseUrl n'est pas configuré. Vérifiez appsettings.json à côté de l'exécutable.");
+
+if (string.IsNullOrWhiteSpace(scryfallOptions.BaseUrl))
+    throw new InvalidOperationException("Scryfall:BaseUrl n'est pas configuré. Vérifiez appsettings.json à côté de l'exécutable.");
 
 builder.Services.AddSingleton(scryfallOptions);
 builder.Services.AddSingleton(apiOptions);
