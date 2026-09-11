@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Scriptorium.Mtg.Importer.Models/Scriptorium.Mtg.Importer.Models.csproj" />
+  <Project Path="Scriptorium.Mtg.Importer.Save/Scriptorium.Mtg.Importer.Save.csproj" />
+  <Project Path="Scriptorium.Mtg.Importer/Scriptorium.Mtg.Importer.csproj" />
+  <Project Path="Scriptorium.Mtg.Scryfall.Importer.Tests/Scriptorium.Mtg.Scryfall.Importer.Tests.csproj" />
+  <Project Path="Scriptorium.Mtg.Scryfall.Importer/Scriptorium.Mtg.Scryfall.Importer.csproj" />
+  <Project Path="Scriptorium.Mtg.Scryfall.Models/Scriptorium.Mtg.Scryfall.Models.csproj" />
+</Solution>
