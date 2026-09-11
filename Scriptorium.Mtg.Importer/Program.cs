@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,11 +10,32 @@ using Scriptorium.Mtg.Scryfall.Importer.Interfaces;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
+var scryfallOptions = builder.Configuration.GetSection("Scryfall").Get<ScryfallOptions>() ?? new ScryfallOptions();
+var apiOptions = builder.Configuration.GetSection("Api").Get<ApiOptions>() ?? new ApiOptions();
+
+builder.Services.AddSingleton(scryfallOptions);
+builder.Services.AddSingleton(apiOptions);
+
+builder.Services.AddHttpClient<IScryfallGetter, ScryfallGetter>(client =>
+{
+    client.BaseAddress = new Uri(scryfallOptions.BaseUrl);
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+    client.DefaultRequestHeaders.UserAgent.Add(
+        new ProductInfoHeaderValue(scryfallOptions.UserAgentProduct, scryfallOptions.UserAgentVersion));
+});
+
+builder.Services.AddHttpClient<IDatabaseSaver, DatabaseSaver>(client =>
+{
+    client.BaseAddress = new Uri(apiOptions.BaseUrl);
+});
+
 builder.Services.AddSingleton<IScryfallCardDirector, ScryfallCardDirector>();
-builder.Services.AddSingleton<IScryfallGetter, ScryfallGetter>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
 builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
+
+builder.Services.AddSingleton<IDatabaseReader, DatabaseReader>();
+builder.Services.AddSingleton<IDatabaseMapper, DatabaseMapper>();
 
 builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, AugmentBuilder>();
@@ -38,28 +60,15 @@ builder.Services.AddSingleton<IScryfallBuilder, TokenBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, TransformBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, VanguardBuilder>();
 
-builder.Services.AddSingleton<IDatabaseSaver, DatabaseSaver>();
-builder.Services.AddSingleton<IDatabaseReader, DatabaseReader>();
-builder.Services.AddSingleton<IDatabaseMapper, DatabaseMapper>();
-
-var env = builder.Environment;
-
-builder.Configuration
-    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
-
 using var host = builder.Build();
 
 LaunchImport(host.Services);
-
-await host.RunAsync();
 return;
 
 static void LaunchImport(IServiceProvider services)
 {
     using var serviceScope = services.CreateScope();
     var provider = serviceScope.ServiceProvider;
-
-    provider.GetServices<IScryfallBuilder>();
 
     var importer = provider.GetRequiredService<IScryfallImporter>();
     var cardDatabaseSaver = provider.GetRequiredService<IDatabaseSaver>();
@@ -73,7 +82,7 @@ static void LaunchImport(IServiceProvider services)
     Console.WriteLine("Import supertypes");
     var supertypes = importer.SupertypesImport();
     Console.WriteLine($"{supertypes?.Count} supertypes found");
-    if (supertypes != null && supertypes.Count > 0)
+    if (supertypes is { Count: > 0 })
         cardDatabaseSaver.SaveSupertypes(supertypes);
 
     Console.WriteLine("Import types");

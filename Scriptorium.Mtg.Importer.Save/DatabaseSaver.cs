@@ -7,20 +7,8 @@ using Scriptorium.Mtg.Importer.Save.Interfaces;
 
 namespace Scriptorium.Mtg.Importer.Save;
 
-public class DatabaseSaver : IDatabaseSaver
+public class DatabaseSaver(IDatabaseMapper cardConverter, HttpClient httpClient) : IDatabaseSaver
 {
-    private readonly IDatabaseMapper _cardConverter;
-    private readonly HttpClient _httpClient;
-
-    public DatabaseSaver(IDatabaseMapper cardConverter)
-    {
-        _cardConverter = cardConverter;
-        _httpClient = new()
-        {
-            BaseAddress = new Uri("https://localhost:7276/api/")
-        };
-    }
-
     public void SaveCards(IList<Card> cards)
     {
         var cardsDto = new List<CardDto>();
@@ -33,10 +21,10 @@ public class DatabaseSaver : IDatabaseSaver
             var enCards = group.Where(x => x.Language == "en").ToList();
             var enCard = enCards.OrderByDescending(x => x.ReleasedDate).First();
             enCards.Remove(enCard);
-            var cardDto = _cardConverter.ConvertCard(enCard);
+            var cardDto = cardConverter.ConvertCard(enCard);
 
             foreach (var card in enCards)
-                cardDto.CardSets.Add(_cardConverter.ConvertCardSet(card));
+                cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
 
             var languageGroups = group.GroupBy(x => x.Language);
 
@@ -49,9 +37,9 @@ public class DatabaseSaver : IDatabaseSaver
                 var firstCard = localizedCards.First();
                 localizedCards.Remove(firstCard);
 
-                cardDto.CardNames.AddRange(_cardConverter.ConvertCardNames(firstCard));
-                cardDto.CardTexts.AddRange(_cardConverter.ConvertCardTexts(firstCard));
-                cardDto.CardTypelines.AddRange(_cardConverter.ConvertTypelines(firstCard));
+                cardDto.CardNames.AddRange(cardConverter.ConvertCardNames(firstCard));
+                cardDto.CardTexts.AddRange(cardConverter.ConvertCardTexts(firstCard));
+                cardDto.CardTypelines.AddRange(cardConverter.ConvertTypelines(firstCard));
                 AddCardSet(cardDto, firstCard);
 
                 foreach (var localizedCard in localizedCards)
@@ -62,7 +50,7 @@ public class DatabaseSaver : IDatabaseSaver
 
             if (cardDto != null)
             {
-                var response = _httpClient.PostAsJsonAsync("Cards", cardDto).Result;
+                var response = httpClient.PostAsJsonAsync("Cards", cardDto).Result;
 
                 response.EnsureSuccessStatusCode();
             }
@@ -73,17 +61,17 @@ public class DatabaseSaver : IDatabaseSaver
     {
         var cardSet = cardDto.CardSets.FirstOrDefault(x => x.SetId.Equals(card.Set.SetId));
         if (cardSet == null)
-            cardDto.CardSets.Add(_cardConverter.ConvertCardSet(card));
+            cardDto.CardSets.Add(cardConverter.ConvertCardSet(card));
         else if (card.Set.CardSetFaces.Count == cardSet.CardSetFaces.Count)
             foreach (var cardSetFace in cardSet.CardSetFaces)
-                cardSetFace.CardSetFaceFlavors.AddRange(_cardConverter.ConvertCardSetFaceFlavors(cardSetFace.Id, card.Set.CardSetFaces.First(x => x.FaceId == cardSetFace.FaceId)));
+                cardSetFace.CardSetFaceFlavors.AddRange(cardConverter.ConvertCardSetFaceFlavors(cardSetFace.Id, card.Set.CardSetFaces.First(x => x.FaceId == cardSetFace.FaceId)));
     }
 
     public void SaveArtists(IList<Artist> artists)
     {
         foreach (var artist in artists)
         {
-            var response = _httpClient.PostAsJsonAsync("Artists", artist).Result;
+            var response = httpClient.PostAsJsonAsync("Artists", artist).Result;
 
             response.EnsureSuccessStatusCode();
         }
@@ -93,7 +81,7 @@ public class DatabaseSaver : IDatabaseSaver
     {
         foreach (var supertype in supertypes)
         {
-            var response = _httpClient.PostAsJsonAsync("Supertypes", supertype).Result;
+            var response = httpClient.PostAsJsonAsync("Supertypes", supertype).Result;
 
             response.EnsureSuccessStatusCode();
         }
@@ -103,7 +91,7 @@ public class DatabaseSaver : IDatabaseSaver
     {
         foreach (var type in types)
         {
-            var response = _httpClient.PostAsJsonAsync("Types", type).Result;
+            var response = httpClient.PostAsJsonAsync("Types", type).Result;
 
             response.EnsureSuccessStatusCode();
         }
@@ -113,7 +101,7 @@ public class DatabaseSaver : IDatabaseSaver
     {
         foreach (var subtype in subtypes)
         {
-            var response = _httpClient.PostAsJsonAsync("Subtypes", subtype).Result;
+            var response = httpClient.PostAsJsonAsync("Subtypes", subtype).Result;
 
             response.EnsureSuccessStatusCode();
         }
@@ -123,7 +111,7 @@ public class DatabaseSaver : IDatabaseSaver
     {
         foreach (var set in sets)
         {
-            var response = _httpClient.PostAsJsonAsync("Sets", set).Result;
+            var response = httpClient.PostAsJsonAsync("Sets", set).Result;
 
             response.EnsureSuccessStatusCode();
         }

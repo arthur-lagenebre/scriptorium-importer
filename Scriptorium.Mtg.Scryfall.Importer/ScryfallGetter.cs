@@ -1,37 +1,29 @@
-using System.Net.Http.Headers;
 using Scriptorium.Mtg.Scryfall.Importer.Interfaces;
 
 namespace Scriptorium.Mtg.Scryfall.Importer;
 
-public class ScryfallGetter : IScryfallGetter
+public class ScryfallGetter(HttpClient httpClient, ScryfallOptions options) : IScryfallGetter
 {
-    public StreamReader GetScryfallCardStreamReader()
-    {
-        var path = @"D:\Cards Import\_MTG_\_cards.json";
+    public StreamReader GetScryfallCardStreamReader() => OpenFile(options.CardsFilePath);
 
-        return string.IsNullOrEmpty(path) || !File.Exists(path) ? throw new FileNotFoundException(path) : new StreamReader(path);
-    }
-
-    public StreamReader GetScryfallRulingStreamReader()
-    {
-        var path = @"D:\Cards Import\_MTG_\_rulings.json";
-
-        return string.IsNullOrEmpty(path) || !File.Exists(path) ? throw new FileNotFoundException(path) : new StreamReader(path);
-    }
+    public StreamReader GetScryfallRulingStreamReader() => OpenFile(options.RulingsFilePath);
 
     public string GetScryfallUrl(string path)
     {
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.UserAgent.Clear();
-        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Scriptorium.Mtg.Importer", "1.0"));
+        var response = httpClient.GetAsync(path).Result;
+        response.EnsureSuccessStatusCode();
 
-        var response = client.GetAsync("https://api.scryfall.com/" + path).Result;
+        return response.Content.ReadAsStringAsync().Result;
+    }
 
-        return !response.IsSuccessStatusCode
-            ? throw new Exception(response.Content.ToString())
-            : response.Content.ReadAsStringAsync().Result;
+    private static StreamReader OpenFile(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+            throw new InvalidOperationException("Aucun chemin configuré. Renseignez Scryfall:CardsFilePath et Scryfall:RulingsFilePath dans appsettings.json.");
+
+        if (!File.Exists(path))
+            throw new FileNotFoundException($"Fichier bulk introuvable : {path}", path);
+
+        return new StreamReader(path);
     }
 }

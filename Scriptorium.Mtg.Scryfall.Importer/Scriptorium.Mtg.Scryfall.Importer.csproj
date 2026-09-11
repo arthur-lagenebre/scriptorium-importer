@@ -20,5 +20,9 @@
     <ProjectReference Include="..\Scriptorium.Mtg.Importer.Save\Scriptorium.Mtg.Importer.Save.csproj" />
     <ProjectReference Include="..\Scriptorium.Mtg.Scryfall.Models\Scriptorium.Mtg.Scryfall.Models.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>
