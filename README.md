@@ -1,7 +1,7 @@
 # Scriptorium — Importer
 
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/)
-[![Tests](https://img.shields.io/badge/tests-xUnit-blue)](https://xunit.net/)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
+[![Tests](https://img.shields.io/badge/tests-46%20passing-brightgreen)](https://xunit.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-work%20in%20progress-orange)]()
 
@@ -18,7 +18,7 @@
 
 **Scriptorium** is a platform that lets a community translate trading card games into languages their publishers do not support. This repository is its ingestion half.
 
-A .NET console application that reads Scryfall's bulk data files — several gigabytes of JSON covering every Magic card ever printed, in every language it was printed in — normalises them into a relational model, and publishes them to [scriptorium-api](https://github.com/arthur-lagenebre/scriptorium-api).
+A .NET 10 console application that reads Scryfall's bulk data files — several gigabytes of JSON covering every Magic card ever printed, in every language it was printed in — normalises them into a relational model, and publishes them to [scriptorium-api](https://github.com/arthur-lagenebre/scriptorium-api).
 
 ### The hard part
 
@@ -60,25 +60,24 @@ This dispatch-on-discriminator structure is the part of the project most likely 
 - **Streaming, not buffering.** The bulk card file is read through `JsonTextReader` rather than loaded into a string, so memory stays flat regardless of file size.
 - **Language grouping.** Cards are grouped by `OracleId`, the most recent English printing becomes the oracle row, and every other language contributes translation rows for the same card. This is what turns a flat list of printings into a properly localised card.
 - **Catalogue pre-import.** Artists, types, supertypes and subtypes are imported first from Scryfall's catalogue endpoints so that cards can reference existing rows.
+- **Typed HTTP clients.** Both the Scryfall client and the API client are registered through `AddHttpClient`, so handlers are pooled and the Scryfall headers are configured once.
 
 ### Project layout
 
 | Project | Role |
 |---|---|
-| `MTG.Importer` | Console entry point, DI composition root, import orchestration |
-| `MTG.Scryfall.Models` | DTOs mirroring the Scryfall JSON schema |
-| `MTG.Scryfall.Importer` | Readers, director, the 22 builders, and helpers |
-| `MTG.Importer.Models` | Normalised domain model, independent of Scryfall's shape |
-| `MTG.Importer.Save` | Domain → API DTO mapping and HTTP publication |
-| `MTG.Scryfall.Importer.Tests` | xUnit + NSubstitute unit tests |
-
-> The `MTG.*` project names predate the Scriptorium rename. They will become `Scriptorium.Mtg.*` during the .NET 10 migration, so the files are only touched once.
+| `Scriptorium.Mtg.Importer` | Console entry point, DI composition root, import orchestration |
+| `Scriptorium.Mtg.Scryfall.Models` | DTOs mirroring the Scryfall JSON schema |
+| `Scriptorium.Mtg.Scryfall.Importer` | Readers, director, the 22 builders, and helpers |
+| `Scriptorium.Mtg.Importer.Models` | Normalised domain model, independent of Scryfall's shape |
+| `Scriptorium.Mtg.Importer.Save` | Domain → API DTO mapping and HTTP publication |
+| `Scriptorium.Mtg.Scryfall.Importer.Tests` | xUnit + NSubstitute unit tests |
 
 ### Getting started
 
 **Prerequisites**
 
-- .NET 8 SDK
+- .NET 10 SDK
 - A running instance of [scriptorium-api](https://github.com/arthur-lagenebre/scriptorium-api)
 - Scryfall bulk data files — `all_cards` and `rulings`, from [scryfall.com/docs/api/bulk-data](https://scryfall.com/docs/api/bulk-data)
 
@@ -86,27 +85,47 @@ This dispatch-on-discriminator structure is the part of the project most likely 
 git clone https://github.com/arthur-lagenebre/scriptorium-importer.git
 cd scriptorium-importer
 dotnet restore
-dotnet run --project MTG.Importer
 ```
 
-> ⚠️ **Known limitation:** the bulk file paths and the API base URL are hardcoded in `ScryfallGetter` and `DatabaseSaver`. Externalising them into `appsettings.json` is the first item on the roadmap. Until then, edit those two files to match your environment.
+**Configuration** lives in `Scriptorium.Mtg.Importer/appsettings.json`:
+
+| Key | Purpose |
+|---|---|
+| `Scryfall:BaseUrl` | Scryfall API root |
+| `Scryfall:CardsFilePath` | Path to the `all_cards` bulk file |
+| `Scryfall:RulingsFilePath` | Path to the `rulings` bulk file |
+| `Scryfall:UserAgentProduct` / `:UserAgentVersion` | Sent on every Scryfall request |
+| `Api:BaseUrl` | Where scriptorium-api is listening, e.g. `http://localhost:5141/api/` |
+
+The bulk file paths are machine-specific, so keep them out of source control with user secrets (loaded in the Development environment only):
 
 ```bash
+cd Scriptorium.Mtg.Importer
+dotnet user-secrets init
+dotnet user-secrets set "Scryfall:CardsFilePath" "/path/to/all-cards.json"
+dotnet user-secrets set "Scryfall:RulingsFilePath" "/path/to/rulings.json"
+```
+
+**Run**
+
+```bash
+dotnet run --project Scriptorium.Mtg.Importer
 dotnet test
 ```
 
+Configuration is read from the directory holding the executable, so the importer behaves the same whether launched through `dotnet run`, by double-click, or from a scheduled task.
+
 ### Scryfall API etiquette
 
-This importer sets an explicit `User-Agent` and `Accept` header on every request, as Scryfall requires. If you fork it, keep a `User-Agent` accurate to your own usage rather than letting the HTTP library pick one. Prefer the bulk data files over hammering the card endpoints — that is what they exist for.
+This importer sets an explicit `User-Agent` and `Accept` header on every request, as Scryfall requires. If you fork it, set a `User-Agent` accurate to your own usage rather than letting the HTTP library pick one. Prefer the bulk data files over hammering the card endpoints — that is what they exist for.
 
 ### Roadmap
 
-- [ ] Externalise configuration (bulk file paths, API URL) into `appsettings.json`
-- [ ] Migrate to .NET 10 (LTS) — .NET 8 support ends 10 November 2026 — and rename the projects to `Scriptorium.Mtg.*` in the same pass
-- [ ] Replace `System.Runtime.Caching` with `Microsoft.Extensions.Caching.Memory`
+- [ ] Convert the pipeline to async — `IScryfallGetter`, `IScryfallImporter` and `IDatabaseSaver` still block on `.Result`, which also wraps every failure in an `AggregateException`
+- [ ] Batch publication: the importer currently sends one `POST` per artist, per set and per card. A batch endpoint on the API side would cut import time dramatically.
 - [ ] Replace `Newtonsoft.Json` with `System.Text.Json` streaming (`DeserializeAsyncEnumerable`)
-- [ ] Remove blocking `.Result` calls in favour of full async
 - [ ] Complete unit tests for the remaining builders (currently only `AdventureBuilder` and the helpers are covered)
+- [ ] Fix the nullability warnings in `ScryfallCardDirector`
 - [ ] Incremental import — only process cards changed since the last run
 - [ ] GitHub Actions CI (build + test)
 - [ ] Structured logging in place of `Console.WriteLine`
@@ -127,7 +146,7 @@ This importer sets an explicit `User-Agent` and `Accept` header on every request
 
 **Scriptorium** est une plateforme permettant à une communauté de traduire des jeux de cartes à collectionner dans les langues que leurs éditeurs ne prennent pas en charge. Ce dépôt en constitue la moitié « ingestion ».
 
-Une application console .NET qui lit les fichiers bulk de Scryfall — plusieurs gigaoctets de JSON couvrant toutes les cartes Magic jamais imprimées, dans toutes les langues où elles l'ont été —, les normalise dans un modèle relationnel, et les publie vers [scriptorium-api](https://github.com/arthur-lagenebre/scriptorium-api).
+Une application console .NET 10 qui lit les fichiers bulk de Scryfall — plusieurs gigaoctets de JSON couvrant toutes les cartes Magic jamais imprimées, dans toutes les langues où elles l'ont été —, les normalise dans un modèle relationnel, et les publie vers [scriptorium-api](https://github.com/arthur-lagenebre/scriptorium-api).
 
 ### La vraie difficulté
 
@@ -169,25 +188,24 @@ Cette structure d'aiguillage par discriminant est la partie du projet la plus su
 - **Streaming, pas de mise en tampon.** Le fichier bulk est lu via `JsonTextReader` plutôt que chargé en chaîne, la mémoire reste donc constante quelle que soit la taille du fichier.
 - **Regroupement par langue.** Les cartes sont groupées par `OracleId` ; l'impression anglaise la plus récente devient la ligne oracle, et chaque autre langue apporte ses lignes de traduction pour la même carte. C'est ce qui transforme une liste plate d'impressions en une carte correctement localisée.
 - **Pré-import des catalogues.** Artistes, types, supertypes et sous-types sont importés en premier depuis les endpoints catalogue de Scryfall, afin que les cartes puissent référencer des lignes existantes.
+- **Clients HTTP typés.** Le client Scryfall et le client de l'API sont enregistrés via `AddHttpClient` : les handlers sont mutualisés et les en-têtes Scryfall configurés une seule fois.
 
 ### Organisation des projets
 
 | Projet | Rôle |
 |---|---|
-| `MTG.Importer` | Point d'entrée console, racine de composition DI, orchestration de l'import |
-| `MTG.Scryfall.Models` | DTO calqués sur le schéma JSON de Scryfall |
-| `MTG.Scryfall.Importer` | Lecteurs, director, les 22 builders et les helpers |
-| `MTG.Importer.Models` | Modèle de domaine normalisé, indépendant de la forme Scryfall |
-| `MTG.Importer.Save` | Mapping domaine → DTO d'API et publication HTTP |
-| `MTG.Scryfall.Importer.Tests` | Tests unitaires xUnit + NSubstitute |
-
-> Les noms de projets en `MTG.*` sont antérieurs au renommage Scriptorium. Ils deviendront `Scriptorium.Mtg.*` pendant la migration .NET 10, afin de ne toucher les fichiers qu'une seule fois.
+| `Scriptorium.Mtg.Importer` | Point d'entrée console, racine de composition DI, orchestration de l'import |
+| `Scriptorium.Mtg.Scryfall.Models` | DTO calqués sur le schéma JSON de Scryfall |
+| `Scriptorium.Mtg.Scryfall.Importer` | Lecteurs, director, les 22 builders et les helpers |
+| `Scriptorium.Mtg.Importer.Models` | Modèle de domaine normalisé, indépendant de la forme Scryfall |
+| `Scriptorium.Mtg.Importer.Save` | Mapping domaine → DTO d'API et publication HTTP |
+| `Scriptorium.Mtg.Scryfall.Importer.Tests` | Tests unitaires xUnit + NSubstitute |
 
 ### Démarrage
 
 **Prérequis**
 
-- SDK .NET 8
+- SDK .NET 10
 - Une instance de [scriptorium-api](https://github.com/arthur-lagenebre/scriptorium-api) en cours d'exécution
 - Les fichiers bulk Scryfall `all_cards` et `rulings`, depuis [scryfall.com/docs/api/bulk-data](https://scryfall.com/docs/api/bulk-data)
 
@@ -195,27 +213,47 @@ Cette structure d'aiguillage par discriminant est la partie du projet la plus su
 git clone https://github.com/arthur-lagenebre/scriptorium-importer.git
 cd scriptorium-importer
 dotnet restore
-dotnet run --project MTG.Importer
 ```
 
-> ⚠️ **Limitation connue :** les chemins des fichiers bulk et l'URL de base de l'API sont codés en dur dans `ScryfallGetter` et `DatabaseSaver`. Leur externalisation dans `appsettings.json` est le premier point de la feuille de route. En attendant, adaptez ces deux fichiers à votre environnement.
+**La configuration** se trouve dans `Scriptorium.Mtg.Importer/appsettings.json` :
+
+| Clé | Rôle |
+|---|---|
+| `Scryfall:BaseUrl` | Racine de l'API Scryfall |
+| `Scryfall:CardsFilePath` | Chemin du fichier bulk `all_cards` |
+| `Scryfall:RulingsFilePath` | Chemin du fichier bulk `rulings` |
+| `Scryfall:UserAgentProduct` / `:UserAgentVersion` | Envoyés à chaque requête Scryfall |
+| `Api:BaseUrl` | Adresse d'écoute de scriptorium-api, par ex. `http://localhost:5141/api/` |
+
+Les chemins des fichiers bulk sont propres à chaque machine : gardez-les hors du dépôt grâce aux user secrets, chargés uniquement en environnement Development.
 
 ```bash
+cd Scriptorium.Mtg.Importer
+dotnet user-secrets init
+dotnet user-secrets set "Scryfall:CardsFilePath" "D:\Cards Import\all-cards.json"
+dotnet user-secrets set "Scryfall:RulingsFilePath" "D:\Cards Import\rulings.json"
+```
+
+**Lancer**
+
+```bash
+dotnet run --project Scriptorium.Mtg.Importer
 dotnet test
 ```
 
+La configuration est lue depuis le répertoire de l'exécutable : l'importer se comporte donc de la même façon lancé par `dotnet run`, par double-clic, ou depuis une tâche planifiée.
+
 ### Bon usage de l'API Scryfall
 
-Cet importer positionne explicitement les en-têtes `User-Agent` et `Accept` sur chaque requête, comme Scryfall l'exige. Si vous forkez le projet, conservez un `User-Agent` correspondant à votre propre usage plutôt que de laisser la bibliothèque HTTP en choisir un. Préférez les fichiers bulk au martèlement des endpoints de cartes — c'est leur raison d'être.
+Cet importer positionne explicitement les en-têtes `User-Agent` et `Accept` sur chaque requête, comme Scryfall l'exige. Si vous forkez le projet, renseignez un `User-Agent` correspondant à votre propre usage plutôt que de laisser la bibliothèque HTTP en choisir un. Préférez les fichiers bulk au martèlement des endpoints de cartes — c'est leur raison d'être.
 
 ### Feuille de route
 
-- [ ] Externaliser la configuration (chemins des fichiers bulk, URL de l'API) dans `appsettings.json`
-- [ ] Migrer vers .NET 10 (LTS) — le support de .NET 8 s'arrête le 10 novembre 2026 — et renommer les projets en `Scriptorium.Mtg.*` dans la même passe
-- [ ] Remplacer `System.Runtime.Caching` par `Microsoft.Extensions.Caching.Memory`
+- [ ] Passer la chaîne en asynchrone — `IScryfallGetter`, `IScryfallImporter` et `IDatabaseSaver` bloquent encore sur `.Result`, ce qui emballe au passage chaque échec dans une `AggregateException`
+- [ ] Publication par lots : l'importer envoie aujourd'hui un `POST` par artiste, par édition et par carte. Un endpoint de traitement par lots côté API réduirait drastiquement la durée d'import.
 - [ ] Remplacer `Newtonsoft.Json` par le streaming `System.Text.Json` (`DeserializeAsyncEnumerable`)
-- [ ] Supprimer les appels bloquants `.Result` au profit d'un asynchrone complet
 - [ ] Compléter les tests unitaires des builders restants (seuls `AdventureBuilder` et les helpers sont couverts)
+- [ ] Corriger les avertissements de nullabilité de `ScryfallCardDirector`
 - [ ] Import incrémental — ne traiter que les cartes modifiées depuis la dernière exécution
 - [ ] CI GitHub Actions (build + tests)
 - [ ] Journalisation structurée en remplacement de `Console.WriteLine`
