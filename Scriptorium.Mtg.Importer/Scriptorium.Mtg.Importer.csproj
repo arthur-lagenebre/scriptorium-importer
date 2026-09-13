@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,6 +6,7 @@
     <RootNamespace>Scriptorium.Mtg.Importer</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>1099e602-f827-4e30-810c-cbad5e547292</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
