@@ -25,6 +25,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
             "double_faced_token" => BuildDoubleFacedToken(builder, scryfallCard, rulings),
             "emblem" => BuildEmblem(builder, scryfallCard, rulings),
             "flip" => BuildFlip(builder, scryfallCard, rulings),
+            "front_card" => BuildFrontCard(builder, scryfallCard, rulings),
             "host" => BuildHost(builder, scryfallCard, rulings),
             "leveler" => BuildLeveler(builder, scryfallCard, rulings),
             "meld" => BuildMeld(builder, scryfallCard, rulings),
@@ -32,6 +33,7 @@ public class ScryfallCardDirector : IScryfallCardDirector
             "mutate" => BuildMutate(builder, scryfallCard, rulings),
             "normal" => BuildNormal(builder, scryfallCard, rulings),
             "planar" => BuildPlanar(builder, scryfallCard, rulings),
+            "prepare" => BuildPrepare(builder, scryfallCard, rulings),
             "prototype" => BuildPrototype(builder, scryfallCard, rulings),
             "reversible_card" => BuildReversibleCard(builder, scryfallCard, rulings),
             "saga" => BuildSaga(builder, scryfallCard, rulings),
@@ -324,6 +326,33 @@ public class ScryfallCardDirector : IScryfallCardDirector
         return builder.Build(rulings);
     }
 
+    /// <summary>
+    /// Couverture de paquet Jumpstart : type « Card », sans cout de mana ni
+    /// illustrateur credite. Une seule face, comme une carte normale.
+    /// </summary>
+    private static Card BuildFrontCard(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
+    {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddProducedMana(scryfallCard.ProducedMana)
+               .AddReleasedDate(scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
+               .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
+               .AddPlaneswalker(scryfallCard.Loyalty);
+
+        return builder.Build(rulings);
+    }
+
     private static Card BuildPlanar(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
         var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
@@ -391,6 +420,35 @@ public class ScryfallCardDirector : IScryfallCardDirector
     }
 
     private static Card BuildSplit(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
+    {
+        var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+        var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
+
+        builder.AddOracleId(scryfallCard.OracleId)
+               .AddLanguage(scryfallCard.Lang)
+               .AddName(scryfallCard.Name, scryfallCard.PrintedName)
+               .AddTypeLine(scryfallCard.TypeLine, scryfallCard.PrintedTypeLine)
+               .AddText(scryfallCard.OracleText, scryfallCard.PrintedText)
+               .AddColors(scryfallCard.Colors, scryfallCard.ColorIdentity, scryfallCard.ColorIndicator)
+               .AddCost(scryfallCard.ManaCost, scryfallCard.ManaValue)
+               .AddKeywords(scryfallCard.Keywords)
+               .AddProducedMana(scryfallCard.ProducedMana)
+               .AddCardFaces(scryfallCard.CardFaces)
+               .AddReleasedDate(scryfallCard.ReleasedAt)
+               .AddSet(scryfallCard.SetId, scryfallCard.CollectorNumber, scryfallCard.Rarity, scryfallCard.ArtistIds, normalImagesUrl, smallImagesUrl, scryfallCard.FlavorText, scryfallCard.FlavorName)
+               .AddRelatedCards(scryfallCard.AllParts, scryfallCard.Id)
+               .AddCreature(scryfallCard.Power, scryfallCard.Toughness)
+               .AddPlaneswalker(scryfallCard.Loyalty);
+
+        return builder.Build(rulings);
+    }
+
+    /// <summary>
+    /// Layout « prepare », apparu avec Secrets of Strixhaven : une creature et
+    /// le sort qu'elle permet de lancer une fois preparee. Deux faces, comme
+    /// un split.
+    /// </summary>
+    private static Card BuildPrepare(IScryfallBuilder builder, ScryfallCard scryfallCard, List<Ruling> rulings)
     {
         var normalImagesUrl = GetNormalImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);
         var smallImagesUrl = GetSmallImagesUrl(scryfallCard.ImageUris, scryfallCard.CardFaces);

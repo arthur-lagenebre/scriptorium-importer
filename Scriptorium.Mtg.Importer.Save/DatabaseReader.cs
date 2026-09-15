@@ -5,16 +5,11 @@ using Newtonsoft.Json;
 
 namespace Scriptorium.Mtg.Importer.Save;
 
-public class DatabaseReader : IDatabaseReader
+public class DatabaseReader(HttpClient httpClient) : IDatabaseReader
 {
-    private readonly HttpClient _httpClient = new()
-    {
-        BaseAddress = new Uri("https://localhost:7276/api/")
-    };
-
     public IList<Artist>? GetArtists()
     {
-        var response = _httpClient.GetAsync("Artists").Result;
+        var response = httpClient.GetAsync("Artists").Result;
 
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.Content.ToString());
@@ -31,7 +26,7 @@ public class DatabaseReader : IDatabaseReader
 
     public IList<Supertype>? GetSupertypes()
     {
-        var response = _httpClient.GetAsync("Supertypes/en").Result;
+        var response = httpClient.GetAsync("Supertypes/en").Result;
 
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.Content.ToString());
@@ -48,7 +43,7 @@ public class DatabaseReader : IDatabaseReader
 
     public IList<CardType>? GetTypes()
     {
-        var response = _httpClient.GetAsync("Types/en").Result;
+        var response = httpClient.GetAsync("Types/en").Result;
 
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.Content.ToString());
@@ -65,7 +60,7 @@ public class DatabaseReader : IDatabaseReader
 
     public IList<Subtype>? GetSubtypes()
     {
-        var response = _httpClient.GetAsync("Subtypes/en").Result;
+        var response = httpClient.GetAsync("Subtypes/en").Result;
 
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.Content.ToString());
@@ -82,7 +77,7 @@ public class DatabaseReader : IDatabaseReader
 
     public IList<Set>? GetSets()
     {
-        var response = _httpClient.GetAsync("Sets").Result;
+        var response = httpClient.GetAsync("Sets").Result;
 
         if (!response.IsSuccessStatusCode)
             throw new Exception(response.Content.ToString());

@@ -2,8 +2,10 @@ namespace Scriptorium.Mtg.Scryfall.Models.Card;
 
 public enum ScryfallLanguage
 {
+    Unknown,
     ar,
     de,
+    dw,
     en,
     es,
     fr,
@@ -11,6 +13,7 @@ public enum ScryfallLanguage
     he,
     it,
     ja,
+    qya,
     ko,
     la,
     ph,

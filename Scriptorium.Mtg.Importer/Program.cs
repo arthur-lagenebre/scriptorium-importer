@@ -30,8 +30,7 @@ builder.Services.AddHttpClient<IScryfallGetter, ScryfallGetter>(client =>
 {
     client.BaseAddress = new Uri(scryfallOptions.BaseUrl);
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-    client.DefaultRequestHeaders.UserAgent.Add(
-        new ProductInfoHeaderValue(scryfallOptions.UserAgentProduct, scryfallOptions.UserAgentVersion));
+    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(scryfallOptions.UserAgentProduct, scryfallOptions.UserAgentVersion));
 });
 
 builder.Services.AddHttpClient<IDatabaseSaver, DatabaseSaver>(client =>
@@ -39,12 +38,17 @@ builder.Services.AddHttpClient<IDatabaseSaver, DatabaseSaver>(client =>
     client.BaseAddress = new Uri(apiOptions.BaseUrl);
 });
 
+builder.Services.AddHttpClient<IDatabaseReader, DatabaseReader>(client =>
+{
+    client.BaseAddress = new Uri(apiOptions.BaseUrl);
+});
+
+
 builder.Services.AddSingleton<IScryfallCardDirector, ScryfallCardDirector>();
 builder.Services.AddSingleton<IScryfallImporter, ScryfallImporter>();
 builder.Services.AddSingleton<IScryfallMapper, ScryfallMapper>();
 builder.Services.AddSingleton<IScryfallReader, ScryfallReader>();
 
-builder.Services.AddSingleton<IDatabaseReader, DatabaseReader>();
 builder.Services.AddSingleton<IDatabaseMapper, DatabaseMapper>();
 
 builder.Services.AddSingleton<IScryfallBuilder, AdventureBuilder>();
@@ -53,6 +57,7 @@ builder.Services.AddSingleton<IScryfallBuilder, CaseBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, ClassBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, DoubleFacedTokenBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, EmblemBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, FrontCardBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, FlipBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, HostCreatureBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, LevelerBuilder>();
@@ -61,6 +66,7 @@ builder.Services.AddSingleton<IScryfallBuilder, ModalDoublefaceBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, MutateBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, NormalBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, PlanarBuilder>();
+builder.Services.AddSingleton<IScryfallBuilder, PrepareBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, PrototypeBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, ReversibleCardBuilder>();
 builder.Services.AddSingleton<IScryfallBuilder, SagaBuilder>();

@@ -12,8 +12,7 @@ using Scriptorium.Mtg.Scryfall.Models.Set;
 
 namespace Scriptorium.Mtg.Scryfall.Importer;
 
-public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader databaseReader)
-    : IScryfallMapper
+public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader databaseReader) : IScryfallMapper
 {
     public IList<Card> MapCards(IList<ScryfallCard> scryfallCards, List<Ruling> rulings)
     {
@@ -55,11 +54,32 @@ public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader data
         return cards;
     }
 
+    private static readonly HashSet<string> UnknownArtists = [];
+
     private static List<Guid> GetArtistsId(IList<Artist> artists, IList<Guid> artistIds, string artistName)
     {
         var name = CleanArtistName(artistName);
 
-        return artistIds.Count == 1 ? [artists.First(x => x.Name == name).Id] : name.Split(" & ").Select(artist => artists.First(x => x.Name == artist).Id).ToList();
+        var names = artistIds.Count == 1 ? [name] : name.Split(" & ");
+
+        var ids = new List<Guid>();
+
+        foreach (var candidate in names)
+        {
+            var artist = artists.FirstOrDefault(x => x.Name == candidate);
+
+            if (artist is null)
+            {
+                if (UnknownArtists.Add(candidate))
+                    Console.WriteLine($"Artiste absent du catalogue, ignoré : {candidate}");
+
+                continue;
+            }
+
+            ids.Add(artist.Id);
+        }
+
+        return ids;
     }
 
     private static string CleanArtistName(string artistName)
@@ -69,7 +89,7 @@ public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader data
         if (young.Contains(artistName))
             return artistName;
 
-        artistName = Regex.Replace(artistName, @"(“.+” )|(, (a|A)ge \d+(½|¾)?)", "");
+        artistName = Regex.Replace(artistName, "([“\"].+?[”\"] )|(, (a|A)ge \\d+(½|¾)?)", "");
 
         return artistName switch
         {
@@ -81,6 +101,8 @@ public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader data
             "宋其金/Song Qijin" => "Song Qijin",
             "PuffyGator" => "Nana Qi",
             "Lars Grant-“Wild Wild”-West" => "Lars Grant-West",
+            "Aya Kato" => "Kato Ayaka",
+
             _ => artistName,
         };
     }

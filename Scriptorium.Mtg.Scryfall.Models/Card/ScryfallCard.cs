@@ -39,6 +39,7 @@ public class ScryfallCard
 
     // A language code for this printing.
     [JsonProperty("lang")]
+    [JsonConverter(typeof(ScryfallLanguageConverter))]
     public ScryfallLanguage Lang { get; set; }
 
     // The date this card was first released.
