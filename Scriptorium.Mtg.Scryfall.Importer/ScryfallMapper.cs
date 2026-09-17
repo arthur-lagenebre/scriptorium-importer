@@ -84,12 +84,15 @@ public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader data
 
     private static string CleanArtistName(string artistName)
     {
-        var young = new List<string> { "Aliya, age 5½", "Eli, age 8", "Hyan Tran, age 6", "Kira, age 5½", "Mohamed, age 4", "Said, age 6" };
+        var literal = new List<string> { "Aliya, age 5½", "Eli, age 8", "Hyan Tran, age 6", "Kira, age 5½", "Mohamed, age 4", "Said, age 6", "Ejiwa \"Edge\" Ebenebe", "Josiah \"Jo\" Cameron" };
 
-        if (young.Contains(artistName))
+        if (literal.Contains(artistName))
             return artistName;
 
-        artistName = Regex.Replace(artistName, "([“\"].+?[”\"] )|(, (a|A)ge \\d+(½|¾)?)", "");
+        artistName = Regex.Replace(artistName, @"[""“”].+?[""“”]\s*", "");
+        artistName = Regex.Replace(artistName, @", (a|A)ge \d+(½|¾)?", "");
+        artistName = Regex.Replace(artistName, @"-{2,}", "-");
+        artistName = Regex.Replace(artistName, @"\s+", " ").Trim();
 
         return artistName switch
         {
@@ -100,10 +103,8 @@ public class ScryfallMapper(IScryfallCardDirector director, IDatabaseReader data
             "Claymore J. Flapdoodle" => "Phil Foglio",
             "宋其金/Song Qijin" => "Song Qijin",
             "PuffyGator" => "Nana Qi",
-            "Lars Grant-“Wild Wild”-West" => "Lars Grant-West",
             "Aya Kato" => "Kato Ayaka",
-
-            _ => artistName,
+            _ => artistName
         };
     }
 
